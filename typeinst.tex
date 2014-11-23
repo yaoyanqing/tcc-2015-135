@@ -1,0 +1,1567 @@
+
+%%%%%%%%%%%%%%%%%%%%%%% file typeinst.tex %%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This is the LaTeX source for the instructions to authors using
+% the LaTeX document class 'llncs.cls' for contributions to
+% the Lecture Notes in Computer Sciences series.
+% http://www.springer.com/lncs       Springer Heidelberg 2006/05/04
+%
+% It may be used as a template for your own input - copy it
+% to a new file with a new name and use it as the basis
+% for your article.
+%
+% NB: the document class 'llncs' has its own and detailed documentation, see
+% ftp://ftp.springer.de/data/pubftp/pub/tex/latex/llncs/latex2e/llncsdoc.pdf
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\documentclass[12pt]{article}
+
+
+
+
+ \documentclass[runningheads]{llncs}
+
+
+
+\usepackage[margin=1in]{geometry}
+
+
+% \documentclass{article}
+
+
+
+
+
+\newcommand{\wuhao}{\fontsize{8pt}{\baselineskip}\selectfont}
+
+\usepackage{amssymb}
+\setcounter{tocdepth}{3}
+\usepackage{graphicx}
+
+\usepackage{bm}% bold math
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{latexsym}
+\usepackage{epsfig}
+\usepackage{amsbsy}
+\usepackage{array}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{slashbox}
+\usepackage{ctable, dashrule}
+\usepackage{color}
+
+\usepackage{graphicx}
+\usepackage{subfigure}
+
+%\renewenvironment{proof}{\addvspace{\medskipamount}\noindent{\em Proof. }}%
+%{\noindent \(\Box\)\par\addvspace{\medskipamount}}
+
+\renewenvironment{proof}{\addvspace{\medskipamount}\noindent{\em Proof. }}%
+{\rightline { $\Box$ }\par\addvspace{\medskipamount}}
+
+\usepackage{arydshln}
+\renewcommand{\arraystretch}{1.8}
+
+\newcommand{\tablepage}[2]{\begin{minipage}{#1}\vspace{0.5ex} #2 \vspace{0.5ex}\end{minipage}}
+\newcommand{\ignore}[1]{}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\weak}{\mathcal{W}eak}
+\newcommand{\sv}{\mathcal{SV}}
+\newcommand{\bcl}{\mathcal{BCL}}
+\newcommand{\Ext}{\textsf{Ext}}
+%\mathsf{Ext}}
+\newcommand{\Enc}{\textsf{Enc}}
+\newcommand{\sd}{\textsf{SD}}
+\newcommand{\rd}{\textsf{RD}}
+\newcommand{\bit}{\{0,1\}}
+\newcommand{\br}{\mathbf{r}}
+
+\newcommand{\supp}{\mathop{\mbox{supp}}}
+
+\usepackage{url}
+\urldef{\mailsa}\path| yaoyanqing1984@gmail.com,lizj@buaa.edu.cn|
+\newcommand{\keywords}[1]{\par\addvspace\baselineskip
+\noindent\keywordname\enspace\ignorespaces#1}
+
+%\begin{document}
+
+\mainmatter  % start of an individual contribution
+
+% first the title is needed
+\title{      Differential Privacy  with  Bias-Control Limited Sources   }
+%\title{On the Impossibility of Privacy and Differential Privacy with Imperfect Randomness}
+
+% a short form should be given in case it is too long for the running head
+\titlerunning{Differential Privacy  with  Bias-Control Limited Sources }
+
+% the name(s) of the author(s) follow(s) next
+%
+% NB: Chinese authors should write their first names(s) in front of
+% their surnames. This ensures that the names appear correctly in
+% the running heads and the author index.
+%
+\author{ Yanqing Yao$^{a,b}$,  Zhoujun Li$^{a,c}$ }
+%
+\authorrunning{Y.Q. Yao, Z.J. Li}
+% (feature abused for this document to repeat the title also on left hand pages)
+
+% the affiliations are given next; don't give your e-mail address
+% unless you accept that it will be published
+\institute{
+$^a$State Key Laboratory of Software Development Environment, Beihang University, Beijing 100191, China\\
+$^b$Department of Computer Science, New York University, New York 10012, USA\\
+$^c$Beijing Key Laboratory of Network Technology, Beihang University, Beijing, China\\
+\mailsa\\
+}
+
+%
+% NB: a more complex sample for affiliations and the mapping to the
+% corresponding authors can be found in the file "llncs.dem"
+% (search for the string "\mainmatter" where a contribution starts).
+% "llncs.dem" accompanies the document class "llncs.cls".
+%
+
+\toctitle{Lecture Notes in Computer Science}
+\tocauthor{Authors' Instructions}
+
+\begin{document}
+
+\begin{titlepage}
+\def\thepage{}
+
+ \maketitle
+
+
+\begin{abstract}
+Differential privacy aims at allowing the owner
+of a sensitive database $D$  to securely release some ``aggregate statistics" $f(D)$ while protecting the
+privacy of individual users whose data is in $D$.  Some randomness $\mathbf{r}$ is used to ``add enough noise" to the
+true answer $f(D)$. Traditionally, most papers assume that perfect randomness is available by default.
+However, in reality, `imperfect' random sources can only be obtained. Dodis et al. [CRYPTO'12] proposed that
+differential privacy can be achieved with Santha-Vazirani (SV)  source via adding a stronger property called
+SV-consistent sampling and left open the question if
+differential privacy is possible with more realistic (i.e., less structured) sources than the SV sources. Bias-Control Limited (BCL) source, introduced by Dodis [ICALP'01], is a generalization of
+the SV-source and  bit-fixing source, which is more realistic.
+Unfortunately, if we  nationally expand SV-consistent sampling to the BCL source, the expansion is  hopeless to achieve differential privacy. One main reason is that SV-consistent sampling requires consecutive strings, while some strings can't be generated from ``non-trivial'' BCL source. Motivated by these questions, we obtain the following results.
+
+\begin{itemize}
+
+
+
+\item   A new concept, called compact BCL-consistent sampling, is introduced to study differentially private mechanisms.  It should be noted that when $b=0$, the degenerated  BCL-consistent sampling is not the same as the SV-consistent sampling proposed by \cite{DLMV12}.
+
+\item   If the BCL source satisfies compact BCL-consistent sampling, then the corresponding mechanism is differentially private.
+       Even if the BCL source is degenerated into the SV-source, compared with \cite{DLMV12}, our theorem is more intuitive and our proof is much simpler.
+
+\item   A new truncation technique is proposed in the design  finite-precision mechanism to satisfy this property.
+
+\item   Rigorous proofs about differential privacy and accuracy of this kind of mechanism are shown.
+
+\item  While the result of \cite{DY14} implies a {\slshape possible } result about differentially private mechanisms: If there exist $( \mathcal{BCL}(\delta, b, n), \xi)-$differentially private and $(U_n, \rho)$-accurate mechanisms  for the Hammimg weight queries, then $ \rho > \frac{2^{b \cdot \log (1+ \delta) -9}}{\xi}$.  We build {\slshape explicit} such mechanisms and the parameters match the above condition.
+
+\end{itemize}
+
+
+
+ \ignore{
+ An extra fruit is that the precision of the specific mechanism of Dodis et al. [CRYPTO'12] can be modified via this technique such that it becomes a   SV-consistent sampling mechanism.
+}
+\keywords{ Differential Privacy; Bias-Control Limited  Source; Consistent Sampling; Laplace  Distribution; Finite-Precision Mechanism }
+\end{abstract}
+
+\end{titlepage}
+
+
+\newcommand{\mypar}[1]{\vspace{4pt} \noindent {\sc #1}\ }
+
+
+\setcounter{page}{1}
+\section{Introduction}
+
+
+Traditionally, cryptographic
+issues are studied under the assumption of the availability of perfect randomness, i.e., sources that output unbiased and independent
+random bits. However, in many settings  this assumption  seems unrealistic, and one must deal with various imperfect sources of randomness. Some well known
+examples of such imperfect random sources are
+physical sources \cite{BST03,BH05}, biometric data \cite{BDK$^+$05,DORS08},
+secrets with partial leakage, and group elements from Diffie-Hellman key exchange \cite{GKR04,K10}.
+To abstract this concept, several formal models of realistic imperfect sources have been described (e.g., \cite{vN51,CFG$^+$85,B86,SV86,CG88,LLS89,Zuc96,ACRT99,D01}). Roughly speaking, they can be divided into extractable and non-extractable. Extractable sources (e.g., \cite{vN51,CFG$^+$85,B86,LLS89}) allow for deterministic extraction of nearly perfect randomness. Moreover, while the question of optimizing the extraction rate and efficiency has been very interesting, from the qualitative perspective such sources are good for any application where perfect randomness is sufficient. Unfortunately,  it was quickly realized that many realistic sources are non-extractable~\cite{SV86,CG88,D01}. The simplest example  is the Santha-Vazirani (SV) source~\cite{SV86}. However, despite the fact that each bit has almost one bit of fresh entropy, Santha and Vazirani~\cite{SV86} showed that there exists no deterministic
+extractor $\Ext: \bit^n\rightarrow \bit$ capable of extracting even a {\em single} bit of bias {\em strictly} less than $\delta$ from the $\delta$-SV source, irrespective of how many SV bits $x_1, x_2, \ldots, x_n$ it is willing to wait for.
+
+Despite this pessimistic result, ruling out the ``black-box compiler'' from perfect to imperfect (e.g., SV) randomness for {\em all} applications, one may still hope that specific ``non-extractable'' sources, such as SV-sources, might  be sufficient for {\em concrete} applications, such as simulating probabilistic algorithms or cryptography. Indeed, a series of results~\cite{VV85,SV86,CG88,Zuc96,ACRT99} showed that very ``weak'' sources
+(including SV-sources and even much more realistic ``weak'' sources) are sufficient for simulating probabilistic polynomial-time
+algorithms; namely, for problems which do not inherently need randomness, but which could potentially
+be sped up using randomization. Moreover, even in the area of cryptography --- where randomness is {\em essential} (e.g., for key generation) --- it turns out that many ``non-extractable''  sources (again, including SV sources and more) are sufficient for {\em authentication} applications, such as the designs of MACs~\cite{MW97,DKRS06} and even signature schemes~\cite{DOPS04,ACMPS14} (under appropriate hardness assumptions). Intuitively, the reason for the latter ``success story'' is that authentication applications only require that it is hard for the attacker to completely guess (i.e., ``forge'') some long string, so having (min-)entropy in our source should be sufficient to achieve this goal.
+
+Unfortunately, the situation appears to be much less bright when dealing with {\em privacy} applications, such as encryption, commitment, zero-knowledge, and some others. First, McInnes and Pinkas~\cite{MP90} showed that unconditionally secure symmetric encryption cannot be based on SV sources, even if one is restricted to encrypting a single bit. This result was subsequently strengthened by Dodis et al.~\cite{DOPS04}, who showed that SV sources are not sufficient for building even computationally secure encryption (again, even of a single bit), and, in fact, essentially any other cryptographic task involving ``privacy'' (e.g., commitment, zero-knowledge, secret sharing and others). This was again strengthened by Austrin et al.~\cite{ACMPS14}, who showed that the negative results still hold even if the SV source is efficiently samplable.  Bosley and Dodis~\cite{BD07} showed an even more negative result: if a source of randomness $\R$ is ``good enough'' to generate a secret key capable of encrypting $k$ bits, then one can deterministically extract nearly $k$ almost uniform bits from $\R$, suggesting that traditional privacy {\em requires} an ``extractable'' source of randomness.
+
+While the above series of negative results seem to strongly point in the direction that privacy inherently requires extractable randomness, a recent work of Dodis et al.~\cite{DLMV12} put a slight dent into this consensus, by showing that SV sources are provably sufficient for achieving a more recent notion of privacy, called {\em differential privacy}~\cite{DMNS06}.
+The  motivating scenario of differential privacy is a statistical database. The purpose of
+a privacy-preserving statistical database is to enable the user to learn released  statistical facts without
+compromising the privacy of the individual users whose data is in the database.
+Differential privacy ensures the removal or addition of a single database item does not
+(substantially) affect the outcome of any analysis \cite{Dwo08}.   More formally,
+a differentially private mechanism $M(D, \br)$ uses its randomness $\br$ to add some ``noise'' to the true answer $q(D)$, where $D$ is some sensitive database of users, and $q$ is some useful aggregate information (query) about the users of $D$.
+  On one hand, to preserve  individual users' privacy, we want  $M$ to satisfy $\xi$-differential privacy, that is, for any neighboring databases $D_1$ and $D_2$ (i.e., $D_1$ and $D_2$  differ on a single record), and for any possible output $z$,
+$ e^{-\xi}  \leq \Pr \limits_{ \mathbf{r}} [M(D_1, f; \mathbf{r})=z] / \Pr \limits_{ \mathbf{r}} [M(D_2, f; \mathbf{r})=z]  \leq e^{\xi}$ for
+small $ \xi > 0$.  On the other hand,  to keep the  utility (or accuracy) of $M$, we hope  the expected value
+ of $|f(D)-M(D, f; \mathbf{r})|$ over random  $\mathbf{r}$ to be as small as possible. Usually, we should make a tradeoff between differential privacy and utility.
+
+
+Additive-noise mechanisms \cite{DLMV12,DMNS06,GRS09,HT10} with perfect
+randomness were introduced in
+the original work of  \cite{BDMN05,DN03,DMNS06,DN04}. Dwork et al. \cite{DMNS06} designed an additive-noise mechanism
+$M(D, f; r)= f(D) + X(\mathbf{r}) $,  where $X(\mathbf{r})$ is the Laplace distribution, which is private and accurate.
+However, we can not generate a ``good enough" sample of the
+Laplace distribution  with the Santha-Vazirani (SV) sources.  In
+fact, any accurate and private additive-noise mechanism for a source $R$ implies the existence of a
+randomness extractor for $R$, essentially collapsing the notion of differential privacy to that of traditional
+privacy, and showing the impossibility of accurate and private additive-noise mechanisms for
+SV sources \cite{DLMV12}.  From another perspective,  an additive-noise mechanism must satisfy $T_1 \cap T_2 = \emptyset$,
+based on which a SV adversary can always succeed in amplifying the ratio $\Pr[\mathbf{r} \in  T_1] / \Pr[\mathbf{r} \in  T_2]$ (see \cite{DLMV12}), or $ | \Pr[\mathbf{r} \in  T_1] -\Pr[\mathbf{r} \in  T_2]  |$ (see \cite{DY14}),
+where $T_i$ is the set of coins $ \mathbf{r}$ with $M(D, f;  \mathbf{r})=z$.
+
+Dodis et al. \cite{DLMV12} observed a necessary condition, called  consistent sampling (i.e., informally, $|T_1 \cap T_2| \approx |T_1 |  \approx |T_2|$), to  build SV-robust mechanisms.  This property is similar to the concept of ``consistent sampling" \cite{Man94,Hol07}
+ with applications in differential privacy \cite{MMP$^+$10}, web search  \cite{BGMZ97} and parallel repetition theorems \cite{Hol07}, among others.
+ They also introduced another condition to match the bit-by-bit property of SV sources.  The combination of the above two conditions
+is called SV-consistent sampling (see Definition \ref{SVCS}). They builded a concrete accurate and private Laplace mechanism by using some rounding and arithmetic coding
+techniques.  Such mechanism  is capable to work with all such distributions, provided that the utility $\rho$ is now relaxed to be polynomial of $1/\eps$, whose degree and coefficients depend on $\delta$, but {\em not} on the size of the database $D$.
+Coupled with the impossibility of traditional privacy with SV sources, this result suggested a qualitative gap between traditional and differential privacy, but left the following open problem.
+
+
+
+
+\mypar{ \underline{Open Question.}}  {\slshape  Is  differential privacy  possible with more realistic (i.e., less structured) sources than the SV sources? }
+
+
+
+
+
+Dodis et al. \cite{D01} introduced more realistic  source, called Bias-Control Limited (BCL) source, which  realistically generalizes the SV source of Santha and Vazirani  \cite{SV86} and the bit-fixing source of Lichtenstein, Linial and Saks \cite{LLS89}.   BCL source  generates
+$n$ bits $x_1, x_2, \ldots,  x_n$, where for $i =1, 2, \ldots, n$, the value  of $x_i$
+can depend on  $x_1, x_2, \ldots,  x_{i-1}$ in one of the following two ways: (A) $x_i$ is determined by $x_1, \ldots, x_{i-1}$, but this happens for at most $b$ bits, or (B)  $  \frac{1- \delta}{2}  \leq   \Pr[x_i=1 \mid x_1,  x_2, \ldots, x_{i-1}]  \leq \frac{1+\delta}{2}$, where $ 0 \leq \delta < 1$.  In particular, when
+$b=0$, it degenerates into the SV source; when $\delta =0$, it yields   the bit-fixing source; when $b=0$ and  $\delta =0$, it corresponds to the
+perfect randomness. If $b \neq 0$ and  $\delta \neq 0$, we say the BCL source is non-trivial.   The BCL source models the problem that each of the bits produced by a
+streaming source is unlikely to be perfectly random: slight errors ( due to noise, measurement errors, and imperfections)
+of the source are inevitable,  and  the situation that some of the bits could have non-trivial dependencies on the previous bits (due to internal
+correlations, poor measurement or improper setup), to the point of being completely determined by them.
+Hence, compared with the SV source, BCL source appears much more realistic, especially if the number of interventions $b$ is somewhat moderate.
+From our perspective, the BCL source will be especially interesting when we deal with differential privacy. Indeed, since it naturally (and realistically!) relaxes the SV source, for which non-trivial differential privacy is possible, it will be interesting to see whether
+existing results can be expanded by using BCL source.
+However, SV-consistent sampling is useless to BCL source as some strings can't be generated from BCL source, which is crucial to the SV-consistent sampling property. Recently, Dodis and Yao \cite{DY14} have shown an impossibility result for BCL source: when $b \geq  \Omega( \log( \xi \rho )/ \delta)$, it's impossible to achieve  $( \mathcal{BCL}(b, \delta, n), \xi)$-differentially private and $(\mathcal{BCL}(b, \delta, n),  \rho)$-accurate mechanism for Hamming weight queries. In other words, if  there exists a   $( \mathcal{BCL}(b, \delta, n), \xi)$-differentially private and $(\mathcal{BCL}(b, \delta, n),  \rho)$-accurate mechanism for Hamming weight queries, then $b \leq O(\log( \xi \rho )/ \delta)$.  This result gives us a bit hope to
+design differentially private and accurate mechanisms for some $b$.
+
+
+% BCL source relates to the study of ``discrete control processes" and the problem of coin-flipping.
+
+\mypar{Our Results and Techniques.}
+
+
+
+We try to naturally expand SV-consistent sampling to BCL-consistent sampling, but can't get optimistic results. Due to space limitations, we omit the concrete pessimistic  results.   It's not surprising,
+as the ``interval'' property (see Definition \ref{SVCS}) is used to achieve SV-differential privacy, while the mechanism based
+on $\mathcal{BCL}(b, \delta, n)$ with $b \neq 0$ can't be an interval one.
+
+Essentially, in order to achieve differential privacy,
+we need to restrict the upper bound of $ \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [ \mathbf{r} \in T_1   \backslash T_2 ] / \Pr \limits_{ \mathbf{r} \leftarrow BCL(\delta, b, n)} [\mathbf{r} \in T_2] $.  Similar to \cite{DLMV12}, consistent sampling  is a   necessary  condition  for building BCL-robust, differentially private mechanisms.  From the generation  procedure of $BCL(\delta, b, n)$,
+we can upper bound the numerator and  lower bound the denominator  by introducing the common prefix $ \mathbf{u} $ of $ T_1$  and $T_2$.
+Instead of limiting  $|\textmd{SUFFIX} ( \mathbf{u}, n)  | / |T_1 \cup T_2|= 2^{n-|\mathbf{u}| } / |T_1 \cup T_2|$  like in \cite{DLMV12}, we limit $n-|\mathbf{u}|$. The concept of compact BCL-consistent sampling (Definition \ref{BCLCSCON}) emerges from this motivation.  Even if $BCL(\delta, b, n)$ degenerates into $ \mathcal{SV}(\delta, n)$, compared with \cite{DLMV12}, our idea is more intuitive and the proof is much simpler (Theorem  \ref{CSDP} and Corollary \ref{CSVCSDP}).
+
+However, we are confronted with some difficulties to construct explicit differentially private mechanisms.
+According to the method of yielding finite precision mechanisms in \cite{DLMV12}, we can't upper bound $n-|\mathbf{u}|$ as a constant! To solve this problem, we find a new truncation trick (see step 2 of Section 4) and prove that this kind of mechanism can achieve the upper bound of $n-|\mathbf{u}|$
+to be a constant (see Theorem \ref{BCLCS}).  Our contributions are as follows.
+
+
+
+
+
+
+
+
+
+
+\ignore{
+
+Aiming at negative results about differential privacy, Dodis and Yao \cite{DY14}  considered the simplest concrete example of differential privacy, where a ``record'' $D(i)$ is a single bit, and $q$ is the Hamming weight $wt(D)$ of the corresponding bit-vector $D$ (i.e., $wt(D) = \sum D(i)$). In this case, a very simple $\eps$-DP mechanism~\cite{DMNS06}  $M(D,\br)$ would simply return $wt(D)+e(\br)$ (possibly truncated to always be between $0$ and $|D|$), where $e(\br)$ is an appropriate noise\footnote{So called Laplacian distribution, but the details do not matter here.} with $\rho= \mathbb{E}[|q(\br)|] \approx 1/\eps$. Intuitively, this setting ensures that when the value $D(i)$ changes from $0$ to $1$, the answer distribution $M(D, \br)$ does not ``change'' by more than $\eps$.
+
+}
+
+
+
+% In this paper, we propose a differentially private  and accurate mechanism based on BCL sources.
+\begin{itemize}
+
+
+
+
+\item   We introduce a new  concept, called compact BCL-consistent sampling (see Definition \ref{BCLCSCON}) to study differentially private mechanisms.  It should be noted that the degenerated  BCL-consistent sampling is not the same as the SV-consistent sampling proposed by \cite{DLMV12}.
+
+\item   We prove that if the BCL source satisfies this property, then the corresponding mechanism is differentially private (see Theorem \ref{CSDP}).
+       Even if the BCL source is degenerated into the SV-source, compared with \cite{DLMV12}, our theorem is more intuitive and our proof is much simpler(see Corollary \ref{CSVCSDP} and Theorem 4.4 of \cite{DLMV12}).
+
+\item   We use a new truncation technique in the design  finite-precision mechanism to satisfy this property (see Step 2 of Section 4.1).
+
+\item  We also give rigorous proofs about differential privacy and accuracy of this kind of mechanism(Theorems \ref{bcl-dp} and \ref{bcl-u}).
+
+\item  While the result of \cite{DY14} implies that if  there exists a $( \mathcal{BCL}(\delta, b, n), \xi)-$differentially private and $(U_n, \rho)$-accurate mechanism  for the Hammimg weight queries, then the parameters should satisfy $ \rho > \frac{2^{b \cdot \log (1+ \delta) -9}}{\xi}$, we build {\slshape explicit} such mechanisms and the parameters match the above condition (Theorem \ref{spe}).  Thus we have made some progress.
+
+\end{itemize}
+\ignore{
+$  \bullet $   An extra fruit is that the precision of the specific mechanism based on Laplace distribution introduced by Dodis et al. \cite{1} can be modified via this technique such that it becomes a compact SV-consistent sampling mechanism.
+
+}
+
+
+
+\mypar{Organization.} The remainder of the paper is organized as follows. In Section 2,  we review some
+notations and concepts.  In Section 3,  we introduce the concept of   compact  BCL-consistent sampling, and prove that it's sufficient to achieve differential privacy.
+In Section 4, we show the concrete construction of finite-precision mechanisms, and give rigorous proofs about differential privacy and accuracy of this kind of mechanism.
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Preliminaries}
+
+
+In this section, we present some notations and definitions that will be used later.
+\vspace{0.15cm}
+
+We call a family of distributions over $\{0, 1\}^*$ a source, denoted as $ \mathcal{R}$. Denote $ \mathcal{U} $  as the uniform source, which
+ is the set containing only the distribution $U$  on $\{0, 1\}^*$ that samples each bit independently and uniformly at random. For a set $S$, we write $U_S$ to denote the uniform distribution over $S$.  For a distribution or a random variable $R$, let $\mathbf{r} \leftarrow R$
+denote the operation of sampling a random   $\mathbf{r}$  according to $R$.
+For a positive integer $n$, let $[n] \overset{def}{=}  \{1, 2, \ldots, n\}$.   Denote  $ \lfloor \cdot \rceil$ as the nearest integer function.
+
+
+Consider a statistical database as an array of rows from some countable set. Two databases are neighboring if they differ in exactly one row.
+Let $ \mathcal{D}$ be the space of all databases.  For simplicity, we only consider the query function $f:  \mathcal{D} \rightarrow \mathbb{Z}$.
+ We assume that the randomness $  \mathbf{r}  $ as input of  the mechanism $M$  is in $ \{0, 1\}^*$.  For a fixed outcome $z$, $M$ needs only a finite number of coins $n = n(D, f, z)$ to determine whether $M(D, f) = z$.  Therefore,
+we assume that  if  $ M(D,f; \mathbf{r}) = z   $ where $ \mathbf{r} \in \{0, 1\}^n$, then for any $\mathbf{r}'$ with $\mathbf{r}$
+as its prefix, we still have $ M(D, f;  \mathbf{r}')=z$, that is, providing $M$ with extra coins does not change its output, which is
+consistent with the model in \cite{DLMV12}.
+
+
+
+
+\begin{definition}
+
+ (\cite{SV86}) {\slshape
+ Let   $x_1, x_2, \ldots$  be a sequence of Boolean random
+variables and $ 0 \leq \delta < 1$.   A probability distribution $ X  = x_1 x_2   \ldots $  over $  \{0, 1\}^* $
+is a  $ \delta$-Santha-Vazirani (SV) distribution, denoted by $SV(\delta)$,  if for all $i \in \mathbb{Z}^+$ and for every string $s$ of length $ i-1$,
+we have
+$$ \frac{1-\delta}{2} \leq \Pr[x_i=1 \mid x_1 x_2  \ldots x_{i-1} = s] \leq \frac{1+ \delta}{2}.$$
+We define the $\delta$-Santha-Vazirani source $\mathcal{SV}(\delta)$ to be the set of all-Santha-Vazirani distributions.
+For a distribution $SV(\delta) \in \mathcal{SV}(\delta)$,  we define $SV(\delta, n)$  as the distribution $SV(\delta)$
+restricted to the first $n$ coins $ x_1 x_2  \ldots x_n$. We let $\mathcal{SV}(\delta, n)$ to be the set of all distributions $SV(\delta, n)$.
+}
+
+\end{definition}
+
+
+
+\begin{definition}
+(\cite{D01}) {\slshape  Assume that   $ 0 \leq \delta < 1$.  The $(\delta, b, n)$-Bias-Control Limited (BCL) source   $\mathcal{BCL}(\delta, b, n)$  generates
+$n$ bits $x_1, x_2, \ldots,  x_n$, where for $i =1, 2, \ldots, n$, the value  of $x_i$
+can depend on  $x_1, x_2, \ldots,  x_{i-1}$ in one of the following two ways:
+
+(A) $x_i$ is determined by $x_1, \ldots, x_{i-1}$, but this happens for at most $b$ bits. This process of determining
+a bit is called intervention.
+
+(B)  $  \frac{1- \delta}{2}  \leq   \Pr[x_i=1   \mid  x_1  x_2 \ldots x_{i-1}]  \leq \frac{ 1 + \delta}{2}$.
+
+Every distribution over $\{0, 1\}^n$ generated from $\mathcal{BCL}(\delta, b, n)$ is called  a
+ $(\delta, b, n)$-BCL distribution  BCL$(\delta, b, n)$.
+
+}
+
+
+\end{definition}
+
+
+
+
+This source models the facts that physical sources can never produce  completely perfect bits and some of the bits generated by a physical source could be determined from the previous bits.
+
+
+In particular, when $b = 0$,   $ \mathcal{BCL}(\delta, b, n)$   degenerates into $ \mathcal{SV}(\delta, n)$ \cite{SV86}; when $ \delta=0$, it yields the sequential-bit-fixing source of Lichtenstein, Linial and Saks \cite{LLS89}.
+
+
+Recall some concepts mentioned in \cite{DLMV12} as follows.
+
+\begin{definition}
+
+{\slshape  Let $\xi \geq 0$, $ \mathcal{R}$ be a source, and  $\mathcal{F} = \{f:  \mathcal{D} \rightarrow \mathbb{Z} \}$ be a
+family of functions. A mechanism $M$ is $(\mathcal{R}, \xi)$-differentially private for  $\mathcal{F}$ if for all neighboring databases  $D_1, D_2 \in \mathcal{D}$, all $f \in \mathcal{F}$,  all possible outputs $z \in \mathbb{Z}$, and  all  distributions $R \in   \mathcal{R}$:
+  $$ \frac{\Pr[M(D_1, f; \mathbf{r})=z  ]}{ \Pr[M(D_2, f; \mathbf{r})=z ]}  \leq 1+ \xi.$$
+
+}
+
+
+\end{definition}
+
+
+
+
+In this paper we employ the upper bound of the ratio of probabilities introduced in \cite{DLMV12} other than the traditional upper bound ``$e^{\xi}$''
+to make later calculations a little simpler.  It's reasonable since when $ \xi \in [0, 1]$, which is the main useful range,
+we have $ e^{\xi} \approx 1+ \xi$, and when $ \xi \geq 0$, we always have $1+ \xi \leq e^{\xi}$.
+
+
+ Denote $ T(D, f, z )  \overset{def}{=} \{  \mathbf{r} \in \{0, 1\}^n \mid z = M(D, f; \mathbf{r}) \}$ as   the set of all coins   $\mathbf{r} $
+such that $M$ outputs $z$ when  running on  database $D$, query $f$, and randomness $\mathbf{r}$.
+
+
+
+
+\begin{definition}
+{\slshape  Let $ \rho >  0$,  $ \mathcal{R}$ be a source, and  $\mathcal{F} = \{f:  \mathcal{D} \rightarrow \mathbb{Z} \}$ be a
+family of functions. A mechanism $M$ has $(\mathcal{R}, \rho)$-utility if for all databases $D \in   \mathcal{D}$, all queries $f \in \mathcal{F}$, and all distributions  $ R \in \mathcal{R}$:
+$$ \mathbb{E}_{ \mathbf{r} \leftarrow  R} [ |M(D, f; \mathbf{r}) -  f(D)| ] \leq \rho.$$
+
+}
+
+\end{definition}
+
+One core problem in the area of differential privacy is to design accurate and private mechanisms.
+
+\begin{definition}  {\slshape   We say a  function family  $\mathcal{F}$ admits accurate
+and private mechanisms w.r.t. $ \mathcal{R}$  if there exists a function $g(\cdot)$  such that for all $ \xi > 0$ there exists
+a mechanism  $M_{(\xi)}$  that is $(\mathcal{R}, \xi)$-differentially private and has $(\mathcal{R},  g( \xi))$-utility. $ \mathcal{M} =  \{ M_{(\xi)}\}$ is called  a class of accurate and private mechanisms for   $\mathcal{F}$    w.r.t.  $\mathcal{R}$.
+}
+\end{definition}
+
+Though there are already some infinite additive mechanisms based on gaussian, binomial, and Laplace distributions, we must
+ specify how to approximate them under finite precision in practice.  When perfect randomness $\mathcal{U}$
+ is available, we can  simply approximate a continuous sample  within some ``good enough" finite precision, which is often omitted  in most differential privacy papers \cite{DLMV12}. Dodis et al. \cite{DLMV12} builded  finite-precision mechanisms under imperfect randomness $\mathcal{SV}(\delta)$.
+
+\begin{definition}
+
+ {\slshape  For $f: \mathcal{D} \rightarrow \mathbb{Z}$,  the sensitivity of $f$ is defined as
+$$ \Delta f  \overset{def}{=} \max \limits_{D_1, D_2} \| f(D_1) -f(D_2)\|$$
+for all neighboring databases $D_1, D_2 \in \mathcal{D}$. For $d \in  \mathbb{Z}^+$,  denote $\mathcal{F}_d = \{f:  \mathcal{D} \rightarrow \mathbb{Z} \mid \Delta f \leq d\}$
+as the class of functions with sensitivity at most $d$.  }
+
+\end{definition}
+
+For clarity, in this paper we only consider  the case $d = 1$. It's straightforward to extend all our results to any sensitivity
+bound $d$.
+
+
+
+
+\begin{definition}
+
+ {\slshape  The  Laplace (or double exponential) distribution with mean $ \mu$ and standard
+deviation $\frac{\sqrt{2}}{\varepsilon}$, denoted as $ \textsf{Lap}_{\mu, \frac{1}{\varepsilon}}$,  has  probability density function
+  \begin{equation}
+ \textsf{PDF}^{\textsf{Lap}}_{\mu,  \frac{1}{\varepsilon}} (x)=
+\begin{aligned}
+ \frac{\varepsilon }{2}  \cdot e^{ - \varepsilon |x- \mu|}.   \nonumber \\
+\end{aligned}
+\end{equation}
+
+
+The cumulative distribution function is given by
+
+\ignore{
+
+\begin{equation}
+\textsf{CDF}^{\textsf{Lap} }_{\mu, \frac{1}{\varepsilon}} (x)=
+\begin{aligned}
+ \frac{1}{2} + \frac{1}{2} \cdot  sgn (x- \mu)  \cdot (1-   e^{ - \frac{|x- \mu|}{b}}). \\
+\end{aligned}
+\end{equation}
+ }
+
+
+\begin{equation}
+\textsf{CDF}^{\textsf{Lap}}_{\mu,  \frac{1}{\varepsilon}} (x)   =
+\left\{
+\begin{aligned}
+ \frac{1}{2} \cdot e^{ \varepsilon \cdot ( x-\mu) },~~~~ ~~if~  x <  \mu; \nonumber \\
+  1 -  \frac{1}{2} \cdot e^{ - \varepsilon \cdot (x-\mu)  }, ~~if~  x \geq \mu. \nonumber \\
+\end{aligned}
+\right.
+\end{equation}
+
+
+
+(Equivalently,  $ \textsf{CDF}^{\textsf{Lap} }_{\mu, \frac{1}{\varepsilon} } (x)=
+ \frac{1}{2} + \frac{1}{2} \cdot  sgn (x- \mu)  \cdot (1-   e^{ - \varepsilon \cdot |x- \mu| })$.)
+
+If a  random variable $X$ has this distribution, denote $ X \sim \textsf{Lap}_{\mu, \frac{1}{\varepsilon} }$.
+}
+
+ \end{definition}
+
+ In what follows, we consider the case that  $ \frac{1}{\varepsilon} \in \mathbb{Z}$.
+
+
+
+
+
+
+
+\section{ Compact BCL-Consistent Sampling and SV-Consistent Sampling   }
+
+Dodis et al. \cite{DLMV12}  introduced  the  concept of SV-consistent sampling. However, the
+proof of ``SV-consistent sampling implies differential privacy" (see Theorem 4.4 in \cite{DLMV12} for details) is complex. Moreover,  its natural expansion to BCL source is difficult and unknown  to achieve differential privacy, as the proof of Theorem 4.4 in \cite{DLMV12} depends on the fact that the values in $T_2$ (resp.  $T_1$) constitutes an interval, while it may not be the case for $BCL$ sources.
+
+
+In this section, we introduce the  concept  of compact  $(\zeta, c)$-BCL-consistent sampling. When $b =0$, we get the concept of  compact $(\zeta', c)$-SV-consistent sampling.
+Then we observe
+that these concepts are sufficient to design finite-precision accurate and differentially private mechanisms based on  BCL and SV sources.
+
+
+For a bit sequence $\mathbf{x} =x_1, \ldots,  x_m \in \{0, 1\}^m$, denote $ \textmd{SUFFIX}(\mathbf{x}) \overset{def}{=} \{  \mathbf{y} = y_1, y_2, \ldots \in \{0, 1\}^* \mid x_i = y_i~for~all~i \in [m]\}$ as the set of all bit strings that have $\mathbf{x}$ as a prefix.  Define $ \textmd{SUFFIX}(\mathbf{x}, n)
+ \overset{def}{=} \textmd{SUFFIX}(\mathbf{x}) \cap \{0, 1\}^n$.
+
+Assume that $z = \frac{k}{\varepsilon} \in \mathbb{Z}$, where $k \in \mathbb{Z}$.   Denote $n \overset{def}{=} n( \min (f(D_1), f(D_2)), k)$.
+ Let $T_1 \overset{def}{=} T(D_1, f, z)$,  $T_2 \overset{def}{=} T(D_2, f, z)$, and  $$\mathbf{u} \overset{def}{=} argmax \{|\mathbf{u}'|  \mid
+ \mathbf{u}' \in \{0, 1\}^{ \leq n  } ~and ~ T_1 \cup T_2 \subseteq \textmd{SUFFIX} ( \mathbf{u}', n)\}.$$  Then the ratio is
+$$  \frac{  \Pr \limits_{\mathbf{r} \leftarrow BCL (\delta, b,  n)} [ \mathbf{r} \in T_1    \backslash T_2  ]}{\Pr \limits_{ \mathbf{r} \leftarrow BCL (\delta, b,  n)} [\mathbf{r} \in T_2] } = \frac{\Pr \limits_{\mathbf{r} \leftarrow BCL (\delta, b,  n)} [ \mathbf{r} \in T_1  \backslash T_2 \mid  \mathbf{r} \in \textmd{SUFFIX} ( \mathbf{u} ) ]}{\Pr \limits_{ \mathbf{r} \leftarrow BCL (\delta, b,  n)} [ \mathbf{r} \in T_2  \mid  \mathbf{r} \in \textmd{SUFFIX} ( \mathbf{u})]}.$$ Since SV source and BCL source both generate strings bit by bit,
+the calculation of the  ratio can be simplified.
+
+\vspace{0.15cm}
+
+\begin{definition}  \label{cv}
+ {\slshape  Let  $ \zeta  > 0$. A  mechanism $M$ has $ \zeta$-consistent sampling
+if for all potential  outputs $z \in \mathbb{Z}$, all queries $f \in \mathcal{F}$,  all neighboring databases  $D_1, D_2 \in \mathcal{D}$:
+$$ \frac{|T_1 \setminus T_2|}{| T_2|} \leq \zeta,$$
+where $ T_1 \overset{def}{=} T(D_1, f, z)$, $ T_2 \overset{def}{=} T(D_2, f, z) \neq \emptyset.$
+
+ }
+
+\end{definition}
+
+\vspace{0.15cm}
+
+
+
+
+
+
+
+Recall that the concept of SV-consistent sampling \cite{DLMV12} is as follows.
+\vspace{0.15cm}
+
+\begin{definition}
+\label{SVCS}
+ {\slshape  Let $ \tilde{c} > 1$ be a constant and $\zeta > 0$.  We say that a mechanism M is an interval mechanism \cite{DLMV12} if for all queries $f \in \mathcal{F}$, all
+databases $D \in \mathcal{D}$, and all possible outcomes $z \in \mathbb{Z}$, $T \overset{def}{=} T(D,f, z)$, $\{ \sum \limits_{i=1}^n r_i \cdot 2^{n-i} \mid r_1\ldots r_n \in T \}$ contains consecutive integers.
+ An {\slshape \underline{interval}} mechanism has $(\zeta, \tilde{c})$-SV-consistent sampling if it has $\zeta$-consistent sampling and for all queries $f \in \mathcal{F}$, all neighboring
+databases $D_1, D_2 \in \mathcal{D}$, and all possible outcomes $z \in \mathbb{Z}$, which define $T_1, T_2$ and $\mathbf{u}$ as above,  we have $
+\frac{|\textmd{SUFFIX} ( \mathbf{u}, n)  | }{|T_1 \cup T_2|} \leq \tilde{c}.$
+ }
+
+\end{definition}
+
+
+
+
+
+
+
+
+\vspace{0.15cm}
+
+It should  be noted that when $b \neq 0$,  $\mathcal{BCL}(\delta, b, n)$  can't generate all $n$-bit strings. The corresponding mechanism can't be an interval mechanism.  Though Dodis et al.  \cite{DLMV12} proposed that if M has $(\zeta, \tilde{c})$-SV-consistent sampling, then   M is $(\mathcal{SV}(\delta), \xi)$-differentially private. In that proof, the ``interval'' property is a basic condition, we can't follow that thought.
+We resort to a new property instead.
+
+
+
+
+
+
+
+
+
+\begin{definition}
+ \label{BCLCSCON}
+ {\slshape  Let $c$ be a constant and $\zeta > 0$. A mechanism is a compact  $(\zeta, c)$-BCL-consistent sampling mechanism  if it has $\zeta$-consistent sampling and for all queries $f \in \mathcal{F}$, all neighboring
+databases $D_1$, $D_2 \in \mathcal{D}$, and all possible outcomes $z \in \mathbb{Z}$, which define $T_1, T_2$ and $\mathbf{u}$ as above,  we have $ n- |\mathbf{u}| \leq c.$  This kind of mechanism is denoted as $ \overline{M}^{\textsf{CBCLCS} }_{(\zeta) }$ for simplicity.     }
+
+\end{definition}
+
+
+
+
+
+\begin{definition}
+
+  {\slshape  Let $c$ be a constant and $\zeta' > 0$. A mechanism is  a compact $(\zeta', c)$-SV-consistent sampling mechanism  if it has $\zeta'$-consistent sampling and for all queries $f \in \mathcal{F}$, all neighboring
+databases $D_1$, $D_2 \in \mathcal{D}$, and all possible outcomes $z \in \mathbb{Z}$, which define $T_1, T_2$ and $\mathbf{u}$ as above,  we have $ n- |\mathbf{u}| \leq c.$  This kind of mechanism is denoted as $ \overline{M}^{ \textsf{CSVCS} }_{(\zeta')}$ for simplicity.
+ }
+\end{definition}
+
+
+
+
+
+
+
+
+
+\begin{theorem}
+\label{CSDP}
+  {\slshape  If Mechanism $M$ is a  compact $(\zeta, c)$-BCL-consistent sampling mechanism for $(\delta, b, n)$-BCL-sources,  then $M$ is $(\mathcal{BCL}(\delta, b, n), \xi)$-differentially private,
+where $ \xi \leq (\frac{1+ \delta }{1- \delta})^{c } \cdot  [\frac{1}{2}(1+ \delta)]^{-b}    \cdot  \zeta$.
+In particular, for $\delta \in [0, 1)$, and $c=O(1)$, we have $\lim \limits_{\zeta \rightarrow 0}   (\frac{1+ \delta }{1- \delta})^{c} \cdot  [\frac{1}{2}(1+ \delta)]^{-b}    \cdot  \zeta   =0$. }
+
+
+\end{theorem}
+
+
+\begin{proof} Assume that $\frac{| T_1 \backslash T_2|}{| T_2|} \leq \zeta$.
+
+
+
+For any $ \mathbf{r} \in \{0, 1\}^n$ and $\mathbf{r}' \in \{0, 1\}^n$, denote $\mathbf{r}=r_1 r_2 \ldots r_n$ where $r_i \in \{0, 1\}$ for $ i \in [n]$
+ and  $\mathbf{r}'=r'_1 r'_2 \ldots r'_n$ where $r'_i \in \{0, 1\}$ for $ i \in [n]$.
+
+Assume that $n- |\mathbf{u}| \leq c$, then
+
+
+
+\vspace{0.15cm}
+
+
+ {\wuhao{
+\begin{align*}
+& \frac{  \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [ \mathbf{r} \in T_1    \backslash T_2  ] }{\Pr \limits_{ \mathbf{r} \leftarrow BCL(\delta, b, n)} [\mathbf{r} \in T_2] } = \frac{\Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [ \mathbf{r} \in T_1  \backslash T_2 \mid  \mathbf{r} \in \textmd{SUFFIX} ( \mathbf{u} ) ]}{\Pr \limits_{ \mathbf{r} \leftarrow BCL(\delta, b, n)} [ \mathbf{r} \in T_2  \mid  \mathbf{r} \in \textmd{SUFFIX} ( \mathbf{u} )] }\\&
+  = \frac{ \sum \limits_{ \mathbf{r}' \in  T_1  \backslash T_2 }  \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [\mathbf{r} = \mathbf{r}' | \mathbf{r}' \in \textmd{SUFFIX} ( \mathbf{u}) ] }{    \sum \limits_{ \mathbf{r}' \in  T_2 }  \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [\mathbf{r}  = \mathbf{r}' | \mathbf{r}' \in \textmd{SUFFIX} ( \mathbf{u}) ]}\\&
+  =  \frac{   \sum \limits_{ \mathbf{r}' \in  T_1  \backslash T_2 }   \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [r_{ |\mathbf{u}|+1} = r'_{ |\mathbf{u}|+1} | r_1 \ldots r_{|\mathbf{u}|    } =\mathbf{u}   ]  \ldots
+   \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)}  [r_n =r'_n  \mid r_1 \ldots r_{n-1} = \mathbf{u} r'_{ |\mathbf{u}|+1} \ldots r'_{n-1} ] }  { \sum \limits_{ \mathbf{r}' \in T_2 }
+  \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [r_{ |\mathbf{u}|+1} = r'_{ |\mathbf{u}|+1} | r_1 \ldots r_{|\mathbf{u}|    } =\mathbf{u}] \ldots  \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [r_n =r'_n  |  r_1 \ldots r_{n-1} = \mathbf{u} r'_{ |\mathbf{u}|+1} \ldots r'_{n-1} ]  }\\&
+  \leq \frac{  [ \frac{1}{2}(1+ \delta)]^{n- | \mathbf{u}  |-b}  }{ [ \frac{1}{2}(1- \delta)]^{n- | \mathbf{u}  |} }  \cdot \frac{|T_1 \backslash T_2|}{|T_2|}
+  \leq (\frac{1+ \delta }{1- \delta})^{n- | \mathbf{u}  | } \cdot  [\frac{1}{2}(1+ \delta)]^{-b}    \cdot  \zeta \leq  (\frac{1+ \delta }{1- \delta})^{c} \cdot  [\frac{1}{2}(1+ \delta)]^{-b}    \cdot  \zeta
+\end{align*}
+}  }
+
+
+
+\end{proof}
+
+
+\ignore{
+
+
+\begin{theorem}
+{\slshape  If Mechanism $M$ is a  compact $(\zeta, c)$-SV-consistent sampling mechanism, then $M$ is $(\mathcal{SV}(\delta), \xi)$-differentially private,
+where $ \xi \leq (\frac{1+ \delta }{1- \delta})^c \cdot \zeta$.
+In particular, for $\delta \in [0, 1)$, and $c=O(1)$, we have $\lim \limits_{\zeta \rightarrow 0}  (\frac{1+ \delta }{1- \delta})^c \cdot \zeta  =0$. }
+
+\end{theorem}
+
+
+\begin{proof}
+Assume that $\frac{| T_1 \backslash T_2|}{| T_2|} \leq \zeta$.
+
+\vspace{0.15cm}
+
+
+ For any $ \mathbf{r} \in \{0, 1\}^n$ and $\mathbf{r}' \in \{0, 1\}^n$, denote $\mathbf{r}=r_1 r_2 \ldots r_n$ where $r_i \in \{0, 1\}$ for $ i \in [n]$
+ and  $\mathbf{r}'=r'_1 r'_2 \ldots r'_n$ where $r'_i \in \{0, 1\}$ for $ i \in [n]$.
+
+Assume that $n- |\mathbf{u}| \leq c$, then
+
+
+ {\wuhao{
+\begin{align*}
+&  \frac{  \Pr \limits_{\mathbf{r} \leftarrow SV (\delta, n)} [ \mathbf{r} \in T_1    \backslash T_2  ] }{\Pr \limits_{ \mathbf{r} \leftarrow SV (\delta, n)} [\mathbf{r} \in T_2] }  = \frac{\Pr \limits_{\mathbf{r} \leftarrow SV (\delta, n)} [ \mathbf{r} \in T_1  \backslash T_2 \mid  \mathbf{r} \in \textmd{SUFFIX} ( \mathbf{u} ) ]}{\Pr \limits_{ \mathbf{r} \leftarrow SV (\delta, n)} [ \mathbf{r} \in T_2  \mid  \mathbf{r} \in \textmd{SUFFIX} ( \mathbf{u} )] }\\&
+  = \frac{ \sum \limits_{ \mathbf{r}' \in  T_1  \backslash T_2 }  \Pr \limits_{\mathbf{r} \leftarrow SV (\delta, n)} [\mathbf{r} = \mathbf{r}' \mid \mathbf{r}' \in \textmd{SUFFIX} ( \mathbf{u}) ] }{    \sum \limits_{ \mathbf{r}' \in  T_2 }  \Pr \limits_{\mathbf{r} \leftarrow SV (\delta, n)} [\mathbf{r}  = \mathbf{r}' \mid \mathbf{r}' \in \textmd{SUFFIX} ( \mathbf{u}) ]}\\&
+  =  \frac{   \sum \limits_{ \mathbf{r}' \in  T_1  \backslash T_2 }   \Pr \limits_{\mathbf{r} \leftarrow SV (\delta, n)} [r_{ |\mathbf{u}|+1} = r'_{ |\mathbf{u}|+1} \mid r_1 \ldots r_{|\mathbf{u}|    } =\mathbf{u}   ] \cdot \ldots
+   \Pr \limits_{\mathbf{r} \leftarrow SV (\delta, n)}  [r_n =r'_n \mid  r_1 \ldots r_{n-1} = \mathbf{u} r'_{ |\mathbf{u}|+1} \ldots r'_{n-1} ] }  { \sum \limits_{ \mathbf{r}' \in T_2 }
+  \Pr \limits_{\mathbf{r} \leftarrow SV (\delta, n)} [r_{ |\mathbf{u}|+1} = r'_{ |\mathbf{u}|+1} \mid r_1 \ldots r_{|\mathbf{u}|    } =\mathbf{u}]  \cdot \ldots  \Pr \limits_{\mathbf{r} \leftarrow SV (\delta, n)} [r_n =r'_n  \mid  r_1 \ldots r_{n-1} = \mathbf{u} r'_{ |\mathbf{u}|+1} \ldots r'_{n-1} ]  }\\&
+  \leq \frac{ [ \frac{1}{2}(1+ \delta)]^{n- | \mathbf{u}  |}}{ [ \frac{1}{2}(1- \delta)]^{n- | \mathbf{u}  |} }  \cdot \frac{|T_1 \backslash T_2|}{|T_2|}
+  \leq (\frac{1+ \delta }{1- \delta})^c \cdot \zeta
+\end{align*}
+}
+}
+
+
+
+
+\end{proof}
+
+
+
+}
+
+Let $b=0$. We get that
+
+\begin{corollary}
+\label{CSVCSDP}
+{\slshape  If Mechanism $M$ is a  compact $(\zeta', c)$-SV-consistent sampling mechanism, then $M$ is $(\mathcal{SV}(\delta), \xi)$-differentially private,
+where $ \xi \leq (\frac{1+ \delta }{1- \delta})^c \cdot \zeta'$.
+In particular, for $\delta \in [0, 1)$, and $c=O(1)$, we have $\lim \limits_{\zeta' \rightarrow 0}  (\frac{1+ \delta }{1- \delta})^c \cdot \zeta'  =0$. }
+\end{corollary}
+
+
+
+
+
+
+
+
+
+\section{ Accurate and Private BCLCS Mechanisms   }
+
+
+In this section, we construct  finite-precision  mechanisms that achieve compact $(\zeta, O(1) )$-BCL-consistent sampling  with sensitivity 1.  We also propose that  the precision of the specific mechanism based on Laplace distribution introduced by Dodis et al. \cite{DLMV12} can be modified via this technique such that it becomes a compact SV-consistent sampling mechanism.
+Then by Theorems 1 and 2, the mechanism here and the modified mechanism of \cite{DLMV12} are  $(\mathcal{BCL}(\delta, b, n), \xi)$-differentially private and $( \mathcal{SV}(\delta), \xi')$-differentially private, where  $\xi'$ is a specific $\xi$ by letting $b=0$.
+We also show that these mechanisms have  good bound on utility  when the random sampling is generated from the BCL source.
+
+\subsection{ Explicit Construction }
+ We construct an infinite-precision mechanism, called $M^{   \textsf{CBCLCS} }_{\varepsilon}$, then modify it to a finite precision one, denoted as $ \overline{M}^{   \textsf{CBCLCS} }_{\varepsilon}$.
+Recall that some  truncation method was proposed in \cite{DLMV12} in order to get a finite  mechanism,
+ which leads to the nonintuitive notion of SV-consistent sampling.  However, it can't be transplanted to BCL sources.
+ In this section, we develop another truncation technique.  The finite-precision mechanism is designed as follows.
+\vspace{0.15cm}
+
+
+
+ ${\textsf{Explicit~Construction~of~the~Mechanism}}$:
+\vspace{0.15cm}
+
+$ {\textsf{  Step~1}}$  {\slshape   On input any neighboring databases  $D_1, D_2 \in \mathcal{D}$,  $f \in \mathcal{F}$, the  infinite-precision mechanism $M^{   \textsf{CBCLCS} }_{\varepsilon}$ computes $f(D_1)$ and $f(D_2)$. Without  loss of generality, assume that
+$f(D_1)=y$ and $f(D_2)=y-1$. $M^{   \textsf{CBCLCS} }_{\varepsilon}(D_1, f)$ (resp.   $M^{   \textsf{CBCLCS} }_{\varepsilon}(D_2, f)$)
+ outputs $ z_1 \leftarrow \frac{1}{ \varepsilon } \cdot \lfloor  \varepsilon \cdot (y +  \textsf{Lap}_{0,   \frac{1}{\varepsilon} }  ) \rceil$ (resp. $ z_2 \leftarrow \frac{1}{ \varepsilon } \cdot \lfloor  \varepsilon \cdot (y -1 +  \textsf{Lap}_{0,   \frac{1}{\varepsilon}}) \rceil$).    Denote  $Z_y$ (resp.  $Z_{y-1}$ ) as  the output distribution
+of $ M^{   \textsf{CBCLCS} }_{\varepsilon}(D_1, f)$ (resp. $ M^{   \textsf{CBCLCS} }_{\varepsilon}(D_2, f)$) using arithmetic coding (see \cite{DLMV12}).
+ }
+
+\vspace{0.15cm}
+
+
+ ${\textsf{Step~2}}$  {\slshape Suppose that $y$ is $\underline{fixed}$. Let $ s_y(k) \overset{def}{=}  \textsf{CDF}^{\textsf{Lap} }_{y, \frac{1}{\varepsilon} } ( \frac{k+ \frac{1}{2}}{  \varepsilon})$ and $s_{y-1}(k) \overset{def}{=}  \textsf{CDF}^{\textsf{Lap} }_{y-1, \frac{1}{\varepsilon} } ( \frac{k+ \frac{1}{2}}{  \varepsilon})$ for all $k \in \mathbb{Z}$.  Denote $I_y(k) = [s_{y}(k-1), s_{y}(k))$ and $I_{y-1}(k) = [s_{y-1}(k-1), s_{y-1}(k))$.
+Let $ \bar{s}_{y-1}(k-1)$ (resp. $ \bar{s}_{y-1}(k)$) be  $s_{y-1}(k-1)$ (resp. $s_{y-1}(k)$), rounded  to its  $n \overset{def}{=}n(y-1,  k)$ most significant figures.
+ We round $s_{y}(k-1)$ (resp.  $s_{y}(k)$) to its $n \overset{def}{=}n(y-1, k)$  most significant figures. Assume the binary decimal representation of the rounded $s_{y}(k-1)$ (resp.  $s_{y}(k)$) is $0. 0 \ldots 0 r_1 r_2 \ldots r_n$ (resp.  $0.0 \ldots 0 q_1 q_2 \ldots q_n$), then let
+ $ \bar{s}_{y}(k-1) = 0.0 \ldots 0 r_1 r_2 \ldots r_n + 0.0 \ldots 0 r'_1 r'_2 \ldots r'_n$ (resp. $\bar{s}_{y}(k) = 0.0 \ldots 0 q_1 q_2 \ldots q_n + 0.0 \ldots 0 q'_1 q'_2 \ldots q'_n$), where the position of $r_1$ after the binary point is the same as that of $r'_1$, $ r'_i = 0$ for $i \in  [n-1]$,  and  $r'_n=1$ (resp. the position of $q_1$ after the binary point is the same as that of $q'_1$,  $ q'_i = 0$ for $i \in  [n-1]$ and  $q'_n=1$).
+Denote $ \bar{I}_{y-1}(k) = [ \bar{s}_{y-1}(k-1), \bar{s}_{y-1}(k))$ and $\bar{I}_y(k) = [\bar{s}_{y}(k-1),\bar{s}_{y}(k))$.
+
+ }
+
+\vspace{0.15cm}
+
+ ${\textsf{Step~3}}$ {\slshape  Denote $\overline{Z}_y$ (resp. $\overline{Z}_{y-1}$) as the  output distribution of  $ \overline{M}^{   \textsf{CBCLCS} }_{\varepsilon}(D_1, f)$ (resp. $ \overline{M}^{   \textsf{CBCLCS} }_{\varepsilon}(D_2, f)$), which approximates  $Z_y$ (resp. $Z_{y-1}$).   Let  $ S_0 = \{ \mathbf{r} \in \{0,  1\}^n  \mid \Pr[ Y= \mathbf{r}] \neq 0   \}$, where $Y$ is a $(\delta, b, n)$-BCL distribution.
+ For any sequence $\mathbf{r}=r_1, r_2, \ldots, r_n \in \{0, 1\}^n$,  the real representation of $\mathbf{r}$ is $REAL( \mathbf{r} ) \overset{def}{=}0.r_1 r_2 \ldots r_n \in [0, 1]$.
+ We obtain distribution $\overline{Z}_y$ (resp. $\overline{Z}_{y-1}$) from $U_{ S_0}$
+by sampling a sequence of bits $\mathbf{r}=r_1, r_2, \ldots, r_n \in \{0, 1\}^n$ (resp. $\mathbf{r}'=r'_1, r'_2, \ldots, r'_n \in \{0, 1\}^n$)
+and outputting  $ \frac{k_1}{\varepsilon} $ (resp. $ \frac{k_2}{\varepsilon}$) where $k_1 \in \mathbb{Z}$ (resp. $k_2 \in \mathbb{Z}$) is the unique integer such that $REAL( \mathbf{r}) \in \bar{I}_y(k_1)$ (resp. $REAL( \mathbf{r}') \in \bar{I}_{y-1}(k_2)$).
+
+}
+\rightline{$ \Box $}
+
+\vspace{0.15cm}
+
+From the above construction, for all  $ k \in \mathbb{Z}$, we  have
+ $$ \frac{\Pr[M^{    \textsf{CBCLCS} }_{\varepsilon}(D_1, f) = \frac{k}{ \varepsilon }  ]}{ \Pr[M^{ \textsf{CBCLCS}}_{\varepsilon}(D_2, f) = \frac{k}{ \varepsilon }  ]  }=
+\frac{\Pr[ \frac{k- \frac{1}{2}}{\varepsilon } \leq y +   \textsf{Lap}_{0, \frac{1}{ \varepsilon}}  <   \frac{k+ \frac{1}{2}}{\varepsilon }  ]}{\Pr[\frac{k- \frac{1}{2}}{\varepsilon } \leq y -1 +   \textsf{Lap}_{0,  \frac{1}{ \varepsilon}}  <   \frac{k+ \frac{1}{2}}{\varepsilon }   ]} = \frac{\Pr[ \frac{k- \frac{1}{2}}{\varepsilon } \leq    \textsf{Lap}_{y,  \frac{1}{ \varepsilon}}  <   \frac{k+ \frac{1}{2}}{\varepsilon }  ]}{\Pr[\frac{k- \frac{1}{2}}{\varepsilon } \leq   \textsf{Lap}_{y -1,  \frac{1}{ \varepsilon}}  <   \frac{k+ \frac{1}{2}}{\varepsilon }  ]}. $$
+$$ \frac{\Pr[ \overline{M}^{    \textsf{CBCLCS} }_{\varepsilon}(D_1, f) = \frac{k}{ \varepsilon }  ]}{ \Pr[ \overline{M} ^{ \textsf{ CBCLCS} } _{\varepsilon}(D_2, f) = \frac{k}{ \varepsilon }  ]  }=
+\frac{\Pr[  \overline{Z}_y = \frac{k}{ \varepsilon}] }{\Pr[\overline{Z}_{y-1}= \frac{k}{ \varepsilon}    ]} =  \frac{ | \bar{I}_y(k) | }{| \bar{I}_{y-1}(k) |}.  $$
+
+
+
+\vspace{0.15cm}
+
+
+
+
+
+\begin{remark}
+ It's easy to prove that $I_{y-1}(k) \cap  I_{y}(k) \neq \emptyset$; in fact, we can view $I_{y-1}(k) $ as having ``shifted" $I_{y}(k)$
+slightly to the right.  The  set of points  $\{ s_y(k)\}_{k \in \mathbb{Z}}$  partitions the
+interval [0, 1] into infinitely many intervals $\{  I_y(k) \overset{def}{=} [s_y(k-1), s_y(k)) \}_{k \in   \mathbb{Z}}$.
+Similarly,  the set of points $\{ s_{y-1}(k)\}_{k \in  \mathbb{Z}}$  partitions the
+interval [0, 1] into infinitely many intervals $\{  I_{y-1}(k) \overset{def}{=} [s_{y-1}(k-1), s_{y-1}(k)) \}_{k \in   \mathbb{Z}}$.
+
+\end{remark}
+
+
+
+
+
+\begin{remark}
+   When $b=0$, the above construction degenerates into the mechanism based on SV source. Correspondingly,
+   $ \overline{M}^{   \textsf{CBCLCS} }_{\varepsilon}$ will be  replaced with
+$ \overline{M}^{   \textsf{CSVCS} }_{\varepsilon}$.
+\end{remark}
+
+
+\ignore{
+
+
+\begin{remark}
+The rounding method in \cite{DLMV12} can be replaced with the one in Step 3 here.
+\end{remark}
+
+}
+
+
+
+
+\subsection{Proofs of Differential Privacy and Accuracy  }
+
+In this section, we first show that  our construction satisfies compact $(\zeta, O(1) )$-BCL-consistent sampling, and then prove its accuracy. Finally, we give a relation between the result of \cite{DY14} and ours.
+
+The lemma below is one core step to achieve consistent sampling. Though it has essentially been proved by Dodis et al. \cite{DLMV12},  in \cite{DLMV12} there  exist some typos and the upper bound is not tight. Hence, we modify the Lemma A.1 of \cite{DLMV12} and prove it for completeness.  The comparison
+of them can be seen in the Appendix.
+
+
+\begin{lemma}
+  {\slshape  Denote $I'_y(k)  \overset{def}{=} I_y(k) \setminus I_{y-1}(k) = [s_y(k-1), s_{y-1}(k-1))$.  For all $y, k  \in \mathbb{Z}$ and $  \varepsilon \in (0, 1)$, we have
+$$ \frac{|I'_y(k)|}{|I_{y-1}(k)|} <   e  \cdot  \varepsilon.$$    }
+\end{lemma}
+
+\begin{proof}
+ \ignore{
+ Recall that  $ s_y(k) \overset{def}{=}  \textsf{CDF}^{\textsf{Lap} }_{y, \frac{1}{\varepsilon} } ( \frac{k+ \frac{1}{2}}{  \varepsilon})$  for all $k \in \mathbb{Z}$   and
+
+  \begin{equation}
+\textsf{CDF}^{\textsf{Lap}}_{y,  \frac{1}{\varepsilon} } (x) =
+\left\{
+\begin{aligned}
+ \frac{1}{2} \cdot e^{  \varepsilon ( x- y )}, ~~if~  x < y; \nonumber \\
+  1 -  \frac{1}{2} \cdot e^{ -  \varepsilon (x- y) }, ~~if~  x \geq y. \nonumber \\
+\end{aligned}
+\right.
+\end{equation}
+}
+Note that if $ x < y$, $\textsf{CDF}^{\textsf{Lap}}_{y,  \frac{1}{\varepsilon} } (x) < \frac{1}{2}$; otherwise,  $\textsf{CDF}^{\textsf{Lap}}_{y,  \frac{1}{\varepsilon} } (x) \geq \frac{1}{2}$.
+
+\begin{align*}
+& \frac{|I'_y(k)|}{|I_{y-1}(k)|} = \frac{s_{y-1}(k-1) - s_y(k-1)   }{ s_{y-1}(k) - s_{y-1}(k-1)  } = \frac{\textsf{CDF}^{\textsf{Lap}}_{y-1,  \frac{1}{\varepsilon} } ( \frac{k- \frac{1}{2}}{ \varepsilon} )-\textsf{CDF}^{\textsf{Lap}}_{y,  \frac{1}{\varepsilon} } ( \frac{k- \frac{1}{2}}{ \varepsilon})}{  \textsf{CDF}^{\textsf{Lap}}_{y-1,  \frac{1}{\varepsilon} } ( \frac{k + \frac{1}{2}}{ \varepsilon} )-\textsf{CDF}^{\textsf{Lap}}_{y-1,  \frac{1}{\varepsilon} } ( \frac{k- \frac{1}{2}}{ \varepsilon})}. \\
+\end{align*}
+
+
+
+
+We consider four cases:
+
+$\textsf{Case 1}$: If $ \frac{1}{2} \leq s_y(k-1) < s_{y-1}(k-1) < s_{y-1}(k)$, then
+$ \frac{|I'_y(k)|}{|I_{y-1}(k)|} = \frac{e^{ \varepsilon +1} - e}{e-1}$.
+
+
+$\textsf{Case 2}$:   If $ s_y(k-1) < \frac{1}{2} \leq  s_{y-1}(k-1) < s_{y-1}(k)$, then
+
+$$ \frac{|I'_y(k)|}{|I_{y-1}(k)|} = \frac{  1 -  \frac{1}{2} \cdot e^{ -  \varepsilon [  \frac{k -   \frac{1}{2}}{ \varepsilon }  - (y-1) ] } -  \frac{1}{2} \cdot e^{  \varepsilon (  \frac{k -   \frac{1}{2}}{ \varepsilon }   - y )} }{   1 -  \frac{1}{2} \cdot e^{ -  \varepsilon [ \frac{k +   \frac{1}{2}}{ \varepsilon }- (y-1)]} -  \{ 1 -  \frac{1}{2} \cdot e^{ -  \varepsilon [\frac{k -   \frac{1}{2}}{ \varepsilon }- (y-1)] } \} } .$$
+For simplicity, denote $ v \overset{def}{=}  \frac{k -   \frac{1}{2}}{ \varepsilon }  - y$.   By the assumption, we have that $ -1 \leq    v < 0$.  Correspondingly,
+$$  \frac{|I'_y(k)|}{|I_{y-1}(k)|} = \frac{1-  \frac{1}{2} e^{- \varepsilon (v+1)}  -   \frac{1}{2} e^{ \varepsilon v}}{ - \frac{1}{2} e^{- \varepsilon (v+1 + \frac{1}{ \varepsilon})} +  \frac{1}{2} e^{- \varepsilon (v+1)}}= \frac{ -(e^{ \varepsilon v}-1)^2 - e^{- \varepsilon}  +1    }{ -e^{ -1 - \varepsilon} + e^{- \varepsilon}} \leq  \frac{ - e^{- \varepsilon}  +1    }{ -e^{ -1 - \varepsilon} + e^{- \varepsilon}} = \frac{e^{ \varepsilon +1}-e}{e-1}. $$
+
+$\textsf{Case 3}$:    If $ s_y(k-1) <   s_{y-1}(k-1) <   \frac{1}{2} \leq  s_{y-1}(k)$, then
+$$ \frac{|I'_y(k)|}{|I_{y-1}(k)|} =  \frac{  \frac{1}{2} \cdot e^{  \varepsilon [   \frac{k -   \frac{1}{2}}{ \varepsilon }  - (y-1)]} - \frac{1}{2} \cdot e^{  \varepsilon (   \frac{k -   \frac{1}{2}}{ \varepsilon }   - y  )}   }{
+  1 -  \frac{1}{2} \cdot e^{ -  \varepsilon [ \frac{k +   \frac{1}{2}}{ \varepsilon }- (y-1)] } -\frac{1}{2} \cdot e^{  \varepsilon [\frac{k -   \frac{1}{2}}{ \varepsilon }- (y-1)] }    } .$$
+For simplicity, denote $ v \overset{def}{=}  \frac{k -   \frac{1}{2}}{ \varepsilon }  - y$.   By the assumption, we have that $ -1 - \frac{1}{ \varepsilon} \leq  v < -1$.  Correspondingly,
+
+
+\begin{align*}
+&  \frac{|I'_y(k)|}{|I_{y-1}(k)|} =  \frac{  \frac{1}{2} \cdot e^{  \varepsilon ( v +1)} - \frac{1}{2} \cdot e^{ \varepsilon  v} }{ 1 -  \frac{1}{2} \cdot e^{ -  \varepsilon ( v + \frac{1}{ \varepsilon}  +1  ) } -\frac{1}{2} \cdot e^{  \varepsilon ( v +1) }    } \\ &
+~~~~~~~~~~~~= \frac{e^\varepsilon -1}{ 2 \cdot e^{- \varepsilon v} - e^{-2 \varepsilon v - \varepsilon -1} -e^\varepsilon  }  \\&
+~~~~~~~~~~~~= \frac{e^\varepsilon -1 }{- ( e^{- \varepsilon v - \frac{1+ \varepsilon}{2}}  - e^{   \frac{1+ \varepsilon}{2} })^2  + e^{1+ \varepsilon} -e^\varepsilon} \\&
+~~~~~~~~~~~~ < \frac{e^\varepsilon -1 }{ - ( e^{ \frac{ \varepsilon -1}{2}}  - e^{   \frac{1+ \varepsilon}{2} })^2   + e^{1+ \varepsilon} -e^\varepsilon  }\\&
+~~~~~~~~~~~~= \frac{1- e^{- \varepsilon}}{  1- e^{-1}}.
+\end{align*}
+
+
+
+$\textsf{Case 4}$:   If $ s_y(k-1) <   s_{y-1}(k-1) <  s_{y-1}(k) < \frac{1}{2}$, then
+$$ \frac{|I'_y(k)|}{|I_{y-1}(k)|} = \frac{  \frac{1}{2} \cdot e^{  \varepsilon [   \frac{k -   \frac{1}{2}}{ \varepsilon }  - (y-1)]} - \frac{1}{2} \cdot e^{  \varepsilon (   \frac{k -   \frac{1}{2}}{ \varepsilon }   - y  )}   }{
+    \frac{1}{2} \cdot e^{   \varepsilon [ \frac{k +   \frac{1}{2}}{ \varepsilon }- (y-1)] } -\frac{1}{2} \cdot e^{  \varepsilon [\frac{k -   \frac{1}{2}}{ \varepsilon }- (y-1)] }    }    =\frac{1-e^{- \varepsilon}}{e-1} .$$
+
+
+For  $  \varepsilon  \in (0, 1)$, we have
+$$ \frac{1-e^{- \varepsilon}}{e-1}  < \frac{1- e^{- \varepsilon}}{  1- e^{-1}}  = \frac{e- e^{1- \varepsilon}}{e-1} <  \frac{ e^\varepsilon \cdot (e- e^{1- \varepsilon})}{e-1} =   \frac{e^{ \varepsilon +1 } - e}{e-1} < e \cdot \varepsilon.$$
+
+ The last inequality holds according to the following three facts: (1)    $g_1(x)   \overset{def}{=}   \frac{e^{ x +1 } - e}{e-1} $ is a convex function; (2)   $g_2(x)   \overset{def}{=}  e \cdot x$ is a linear function; (3) $g_1(0)= g_2(0)$  and $g_1(1)= g_2(1)$.
+
+
+
+\end{proof}
+
+
+
+
+
+
+
+\ignore{
+
+Since
+\begin{align*}
+& \frac{ |I_y(k) | }{ |I_{y-1}(k) |}  = \frac{ s_y(k)- s_y(k-1)}{  s_{y-1}(k)- s_{y-1}(k-1)   } \\
+& = \frac{e^{-\varepsilon ( \frac{k- \frac{1}{2}}{\varepsilon } -y  )}  -    e^{-\varepsilon ( \frac{k + \frac{1}{2}}{\varepsilon } -y  )}  }{e^{-\varepsilon ( \frac{k- \frac{1}{2}}{\varepsilon } -y +1 )}  -    e^{-\varepsilon ( \frac{k + \frac{1}{2}}{\varepsilon } -y +1 )}  }\\
+& = e^{\varepsilon } > 1\\
+\end{align*}
+for $\varepsilon  \in (0, 1)$,  we have  $n(y, k) \leq n(y-1,k)$. Therefore, $$ n \overset{def}{=} \max \{ n(y, k), n(y-1,k)\}=n(y-1,k).$$
+
+}
+
+
+
+Denote $I''_y(k)  \overset{def}{=} I_{y-1}(k) \setminus I_y(k) = [s_y(k), s_{y-1}(k))$.  Similarly, we can get that that there exists a constant $C$ such that $ \frac{|I''_y(k)|}{|I_y(k)|}  < C \cdot  \varepsilon$  for $y, k  \in \mathbb{Z}$ and $  \varepsilon \in (0, 1)$.  Due to space limitations, we will omit the corresponding discussion.
+
+
+\begin{lemma}
+\label{f-inf}   {\slshape
+ % Denote  $  n(y-1,k) \overset{def}{=} \log  \frac{1}{| I_{y-1}(k)|} + c_0$,
+% and   $  n(y-1,k) \overset{def}{=} \log  \frac{1}{| I_{y-1}(k)|} + c_0$,
+% where $c_0$ is a constant such that  $2^{c_0 -b } -2^{-b} \geq 1$.
+  For all $y, k  \in \mathbb{Z}$,
+we have
+$$    | \bar{I}'_y(k) | \leq | I'_y(k)|, $$
+$$    |  \bar{I}_{y-1}(k)| \geq |I_{y-1}(k)|- 2^{-n( y-1, k )},  $$
+$$  |I_{y}(k)| + 2^{-n(y-1, k)}  \geq |  \bar{I}_{y}(k)| \geq |I_{y}(k)|- 2^{-n(y-1, k)}.  $$
+ }
+
+
+\end{lemma}
+
+
+
+\begin{proof} Since $s_{y-1}(k-1) \geq  \bar{s}_{y-1}(k-1)$, and $\bar{s} _{y}(k-1) \geq s _{y}(k-1) - 2^{-n(y-1, k)} + 2^{-n(y-1, k)}$, we get $    | \bar{I}'_y(k) | \leq | I'_y(k)|$.
+
+ Since $  \bar{s}_{y-1}(k) \geq s _{y-1}(k) - 2^{-n(y-1, k)}$ and $  \bar{s}_{y-1}(k-1) \leq s _{y-1}(k-1 )$,  we have  $ |  \bar{I}_{y-1}(k)| \geq |I_{y-1}(k)|- 2^{-n(y-1, k)}. $
+
+ Since  $ \bar{s}_{y}(k) \geq s _{y}(k) - 2^{-n(y-1, k)} + 2^{-n(y-1, k)} $ and $  \bar{s}_{y}(k-1) \leq s _{y}(k-1) + 2^{-n(y-1, k)}$,  we have  $ |  \bar{I}_{y}(k)| \geq |I_{y}(k)|- 2^{-n(y-1, k)}. $
+
+ Since $ \bar{s}_{y}(k) \leq   s _{y}(k) + 2^{-n(y-1, k)}$ and $  \bar{s}_{y}(k-1) \geq s_y(k-1)$, we have $|  \bar{I}_{y}(k)| \leq   |I_{y}(k)| + 2^{-n(y-1, k)}$.
+
+
+\end{proof}
+
+\ignore{
+
+
+\begin{lemma}
+
+
+For all $y, k  \in \mathbb{Z}$, we have $  s_{y-1}(k-1)   \leq s_y(k).$
+
+
+\end{lemma}
+
+
+
+\begin{proof}
+
+
+
+
+
+
+\end{proof}
+
+
+
+\begin{lemma}
+
+
+For all $y, k  \in \mathbb{Z}$, we have $\frac{ |I_y(k) | }{ |I_{y-1}(k) |}  \geq  ???  $
+
+
+\end{lemma}
+
+
+\begin{proof}
+
+
+
+
+
+\end{proof}
+
+
+}
+
+
+Assume that $Y$ is a $(\delta, b, n)$-BCL distribution, and $ S_0 = \{ \mathbf{r} \in \{0,  1\}^n \mid \Pr[ Y= \mathbf{r}] \neq 0 \}$.
+Denote $\textmd{STR }(I, n) \overset{def}{=} \{ \textbf{r} \in \{0, 1\}^n \mid \textmd{REAL} (  \textbf{r} ) \in I   \}$ as the
+the set of all $n$-bit strings whose real representation lies in $I$.
+Let $T_1=  \textmd{STR }(\bar{I}_y(k), n)  \cap  S_0 $ and $ T_2=  \textmd{STR }(\bar{I}_{y-1}(k), n) \cap  S_0$. Then $ T_1 \setminus T_2 = \textmd{STR }(\bar{I}'_y(k), n)  \cap  S_0$.
+
+
+
+
+
+\begin{lemma}
+
+  {\slshape    $$  2^{n-b} \leq  | S_0|   \leq 2^n.  $$     }
+
+
+\end{lemma}
+
+
+
+
+\begin{proof}
+We can easily prove it by induction.
+
+% Assume that  $N$ is fixed. If $b=1$, then it's trivial that $ 2^{N-1} \leq   |S|   \leq 2^N$.
+% Assume that  when $b=i$, we have $ 2^{N-i} \leq  |S|   \leq 2^N$.   Then
+
+
+
+
+
+
+\end{proof}
+
+
+\begin{lemma}
+\label{ori}
+{\slshape  Denote $ n(y-1,k) \overset{def}{=} \log  \frac{1}{| I_{y-1}(k)|} + \log(2^b+1)$.   For all $y, k  \in \mathbb{Z}$,
+we have
+$$ |\textmd{STR }( \bar{I'}_y (k), n(y-1,k) ) \cap S_0|  \leq   (2^{-b} +1) \cdot e \cdot \varepsilon,~  |\textmd{STR }( \bar{I}_{y-1}(k), n(y-1,k)) \cap S_0 | \geq 1.$$
+
+\ignore{
+
+$$|\textmd{STR }( \bar{I}_{y}(k), n(y-1,k)) \cap S_0 | \geq    e^\varepsilon  \cdot (2^{-b} +1) -2^{-b}. $$
+
+}
+
+
+}
+
+\end{lemma}
+
+
+
+\begin{proof}   Let  $n \overset{def}{=} n(y-1, k)$ for shorthand.
+Consider $ |\bar{I'}_y (k)| $ as the probability of sampling a sequence $\mathbf{r}$ from $U_{S_0}$  such that $\mathbf{r} \in
+\textmd{STR }( \bar{I'}_y (k), n) \cap S_0,$  where $  2^{n-b} \leq  |S_0|   \leq 2^n$.  Hence,
+$$|\bar{I'}_y (k) | = \sum \limits_{ \mathbf{r} \in STR(\bar{I'}_y (k),   n) \cap S_0}  \frac{1}{ |S_0| }    \geq   \sum \limits_{ \mathbf{r} \in STR(\bar{I'}_y (k),   n) \cap S_0} \frac{1}{2^{n}}= | STR(\bar{I'}_y (k),   n) \cap S_0| \cdot  \frac{1}{2^{n}}.$$
+Therefore,
+
+\begin{align*}
+& |\textmd{STR }(\bar{I'}_y (k), n) \cap S_0 | \leq  2^{n} \cdot |\bar{I'}_y (k) | \leq 2^{n}  \cdot  |I'_y(k)|  \\
+& =(2^b +1 ) \cdot \frac{  |I'_y(k)| }{ |I_{y-1}(k)| } \leq  ( 2^b +1  ) \cdot e \cdot \varepsilon.\\
+\end{align*}
+
+
+
+
+Since $$|\bar{I}_{y-1} (k) | =  \sum \limits_{ \mathbf{r} \in \textmd{STR }(\bar{I}_{y-1} (k),   n) \cap S_0 }  \frac{1}{|S_0| } \leq  \sum \limits_{ \mathbf{r} \in \textmd{STR }(\bar{I}_{y-1} (k),   n) \cap S_0} ( \frac{1}{2})^{n-b} = | \textmd{STR }(\bar{I}_{y-1} (k),   n) \cap S_0| \cdot  ( \frac{1}{2})^{n-b},$$
+$$|\bar{I}_y (k) | =  \sum \limits_{ \mathbf{r} \in \textmd{STR }(\bar{I}_{y-1} (k),   n) \cap S_0 }  \frac{1}{|S_0| } \leq   \sum \limits_{ \mathbf{r} \in \textmd{STR }(\bar{I}_y (k),   n) \cap S_0 } ( \frac{1}{2})^{n-b} = | \textmd{STR }(\bar{I}_y (k),   n) \cap S_0| \cdot  ( \frac{1}{2})^{n-b},$$
+ we get
+$$  |\textmd{STR }(\bar{I}_{y-1} (k), n) \cap S_0 | \geq   2^{n-b}   \cdot |\bar{I}_{y-1} (k) | \geq  2^{n-b} \cdot ( |I_{y-1} (k)| -2^{-n} ) = 2^{-b} + 1 - 2^{-b}=1.$$
+
+\ignore{
+$$ |\textmd{STR }(\bar{I}_{y} (k), n) \cap S_0 | \geq    2^{n-b} \cdot |\bar{I}_{y} (k) | \geq  2^{n-b} \cdot ( |I_{y} (k)| -2^{-n} ) =    e^{\varepsilon} \cdot (1 + 2^{-b})-2^{-b} , $$
+where the last equality follows by  $\frac{ |I_y(k) | }{ |I_{y-1}(k) |}= ????$.
+
+}
+
+
+
+\end{proof}
+
+
+\begin{remark}
+  We can guarantee  that  $n$ is  legal, in the
+sense that the modification of the endpoints in  $ I_{y-1} (k)$  and $I_{y} (k) $ with respect to $n$ does not cause intervals to ``disappear" or for consecutive intervals to ``overlap".
+\end{remark}
+
+
+
+
+\begin{theorem}
+
+\label{CS}
+  {\slshape    Denote $ n(y-1,k) \overset{def}{=} \log  \frac{1}{| I_{y-1}(k)|} + \log(2^b+1)$.     For all $y, k  \in \mathbb{Z}$,
+we have $$ \frac{|\textmd{STR }( \bar{I'}_y (k), n(y-1,k)) \cap S_0 |}{|\textmd{STR }( \bar{I}_{y-1}(k), n(y-1,k)) \cap S_0 |} \leq  (2^b+1)  \cdot e \cdot \varepsilon. $$   }
+
+\end{theorem}
+
+\begin{proof}
+ It's straightforward  from Lemma  \ref{ori}.
+
+~
+\end{proof}
+
+\begin{theorem}
+\label{BCLCS}
+{\slshape  Denote $ n(y-1,k) \overset{def}{=} \log  \frac{1}{| I_{y-1}(k)|} + \log(2^b+1)$.  Let $\textbf{u}$ be the longest common prefix of all strings in  $ \bar{I} \overset{def}{=} \bar{I}_y(k) \cup  \bar{I}_{y-1}(k)$.  Then
+$$|\textmd{SUFFIX}( \mathbf{u}, n(y-1,k) ) \cap S_0 |  \leq   \frac{e \cdot  (2^b+1) }{1-e^{-1}}.$$    }
+
+\end{theorem}
+
+
+
+\begin{proof}  For simplicity, let  $n \overset{def}{=} n(y-1, k)$.
+Let  $\textbf{u}'$ be the longest common prefix of all strings in $I \overset{def}{=} I_y(k) \cup  I_{y-1}(k)$.
+Then we have $ |\textmd{SUFFIX}(\textbf{u}, n)| \leq |\textmd{SUFFIX}(\textbf{u}', n)|$.
+We bound  $|\textmd{SUFFIX}(\textbf{u}, n)| $ by bounding the number of $n$-bit strings to the left or right of $\bar{I}$ (depending on which endpoint of the interval [0, 1] is closer to $I$).
+
+Now we calculate the size of the interval $[s_y(k-1), 1]$ (resp. $[0, s_{y-1}(k)]$), which is an approximation of the size of $[\bar{s}_y(k-1), 1]$ (resp.
+$[0, \bar{s}_{y-1}(k)]$). Then we can upper bound how many $n$-bit strings there are in the interval  $[\bar{s}_y(k-1), 1]$ (resp. $[0, \bar{s}_{y-1}(k)]$).  Let $S \overset{def}{=} [s_y(k-1), 1]$.
+
+Recall that $ s_y(k) \overset{def}{=}  \textsf{CDF}^{\textsf{Lap} }_{y, \frac{1}{\varepsilon} } ( \frac{k+ \frac{1}{2}}{  \varepsilon})$  for all $k \in \mathbb{Z}$   and
+  \begin{equation}
+\textsf{CDF}^{\textsf{Lap}}_{y,  \frac{1}{\varepsilon} } (x) =
+\left\{
+\begin{aligned}
+ \frac{1}{2} \cdot e^{  \varepsilon ( x- y )}, ~~~~ ~~if~  x < y; \nonumber \\
+  1 -  \frac{1}{2} \cdot e^{ -  \varepsilon (x- y) }, ~~if~  x \geq y. \nonumber \\
+\end{aligned}
+\right.
+\end{equation}
+
+Note that if $ x < y$, $\textsf{CDF}^{\textsf{Lap}}_{y,  \frac{1}{\varepsilon} } (x) < \frac{1}{2}$; otherwise,  $\textsf{CDF}^{\textsf{Lap}}_{y,  \frac{1}{\varepsilon} } (x) \geq \frac{1}{2}$.
+
+ $ I'_y(k)=[s_y(k-1), s_{y-1}(k-1))$ and $ I'_{y+1}(k)=[s_{y+1}(k-1), s_{y}(k-1))$.
+
+  For simplicity, denote  $v \overset{def}{=} \frac{k   - \frac{1}{2}}{ \varepsilon} -y$.  We consider four cases.
+
+$\textsf{Case~1}$:  Assume that $ \frac{1}{2}  \leq s_{y+1}(k-1) < s_y(k-1) <    s_{y-1}(k-1)$.  Then $v \geq 1$.
+$$ \frac{|I'_y(k)|}{|I'_{y+1}(k)|}  = \frac{ 1 -  \frac{1}{2} \cdot e^{ -  \varepsilon [\frac{k   - \frac{1}{2}}{ \varepsilon}   - (y-1)] } -  1 +  \frac{1}{2} \cdot e^{ -  \varepsilon (\frac{k   - \frac{1}{2}}{ \varepsilon}   - y) } }{ 1 -  \frac{1}{2} \cdot e^{ -  \varepsilon ( \frac{k   - \frac{1}{2}}{ \varepsilon}   - y) } - 1 +  \frac{1}{2} \cdot e^{ -  \varepsilon  [\frac{k   - \frac{1}{2}}{ \varepsilon}   - (y+1)]   } } = \frac{1}{e^\varepsilon}.$$
+
+$\textsf{Case~2}$:   Assume that $   s_{y+1}(k-1) <  \frac{1}{2} \leq s_y(k-1) <    s_{y-1}(k-1)$.  Then $0 \leq  v < 1$.
+$$ \frac{|I'_y(k)|}{|I'_{y+1}(k)|} =  \frac{e^{- \varepsilon v } - e^{- \varepsilon(v +1 )}  }{ 2 - e^{- \varepsilon v}  - e^{\varepsilon (v -1)}  }= \frac{1 - e^{- \varepsilon}}{ - e^{- \varepsilon} (e^{ \varepsilon v} - e^\varepsilon)^2 + e^\varepsilon -1}.$$
+Hence,   $$ \frac{1}{e^\varepsilon} <   \frac{|I'_y(k)|}{|I'_{y+1}(k)|}  \leq 1.$$
+
+$\textsf{Case~3}$:   Assume that $   s_{y+1}(k-1) <  s_y(k-1) <  \frac{1}{2} \leq  s_{y-1}(k-1)$.   Then    $ -1 \leq v < 0$.
+
+\begin{align*}
+& \frac{|I'_y(k)|}{|I'_{y+1}(k)|} =  \frac{  1 -  \frac{1}{2} \cdot e^{ -  \varepsilon [   \frac{k   - \frac{1}{2}}{ \varepsilon}   - (y-1)] }  -  \frac{1}{2} \cdot e^{  \varepsilon ( \frac{k   - \frac{1}{2}}{ \varepsilon}  - y )}   }{\frac{1}{2} \cdot e^{  \varepsilon ( \frac{k   - \frac{1}{2}}{ \varepsilon}  - y )}-\frac{1}{2} \cdot e^{  \varepsilon [\frac{k   - \frac{1}{2}}{ \varepsilon}    -  (y+1) ]}}\\
+& =  \frac{  1 -  \frac{1}{2} \cdot e^{ -  \varepsilon (  v+1) }  -  \frac{1}{2} \cdot e^{  \varepsilon v}   }{\frac{1}{2} \cdot e^{  \varepsilon v}-\frac{1}{2} \cdot e^{  \varepsilon (v-1 )}}\\
+&= \frac{  - ( e^{- \varepsilon v - \frac{\varepsilon}{2}}  - e^{ \frac{\varepsilon}{2}  } )^2 + e^\varepsilon -1}{1-e^{- \varepsilon}}. \\
+\end{align*}
+Therefore,  $$   1 < \frac{|I'_y(k)|}{|I'_{y+1}(k)|} \leq  e^\varepsilon.$$
+
+$\textsf{Case~4}$:   Assume that $   s_{y+1}(k-1) <  s_y(k-1) < s_{y-1}(k-1) <  \frac{1}{2}$.   Then  $ v < -1$.
+
+\begin{align*}
+&  \frac{|I'_y(k)|}{|I'_{y+1}(k)|} =   \frac{  \frac{1}{2} \cdot e^{  \varepsilon [ \frac{k   - \frac{1}{2}}{ \varepsilon}  - (y-1) ]}    -  \frac{1}{2} \cdot e^{  \varepsilon ( \frac{k   - \frac{1}{2}}{ \varepsilon}  - y )}   }{\frac{1}{2} \cdot e^{  \varepsilon ( \frac{k   - \frac{1}{2}}{ \varepsilon}  - y )}-\frac{1}{2} \cdot e^{  \varepsilon [\frac{k   - \frac{1}{2}}{ \varepsilon}    -  (y+1) ]}}  =  \frac{    \frac{1}{2} \cdot e^{  \varepsilon ( v+1 )}   -  \frac{1}{2} \cdot e^{  \varepsilon v}   }{\frac{1}{2} \cdot e^{  \varepsilon v}-\frac{1}{2} \cdot e^{  \varepsilon (v-1 )}} = e^\varepsilon.\\
+\end{align*}
+
+We only analyze $\textsf{Case~1}$, the other cases are analogous.
+
+
+
+
+Since  $ I'_y(k)$ and   $ I'_{y+1}(k)$  are  consecutive  intervals for all $y \in \mathbb{Z}$,
+we have
+$$|S|= \sum \limits_{j=- \infty}^y | I'_j(k) | \leq \sum \limits_{j=- \infty}^y | I'_y(k) | (e^{-\varepsilon })^{y-j} =| I'_y(k) |  \sum \limits_{i=0}^{\infty}(e^{-\varepsilon })^{i} = \frac{| I'_y(k) | }{1- e^{-\varepsilon}} \leq \frac{| I'_y(k) |  }{ (1- \frac{1}{e} ) \cdot \varepsilon}.$$
+
+
+The last inequality holds from the facts: (1)  $g_1(x) \overset{def}{=} 1 -  e^{-x} $ is a concave function; (2) $g_2(x) \overset{def}{=} (1- \frac{1}{e} ) \cdot x$ is a linear function; (3) $g_1(0) =g_2(0)$ and $ g_1(1) =g_2(1)$.
+
+
+ \ignore{
+ $ 1- e^{-x} \geq  b \cdot x >0$ for all $x \in  (0, 1)$ implies $0 < b \leq 1- \frac{1}{e}$. In fact, $ 1- e^{-x} \geq  b \cdot x$ is equivalent to
+ $1- b \cdot x \geq    e^{-x} $.  From the images of the functions
+ $g'_1(x)   \overset{def}{=}  1- b \cdot x $ and $g'_2(x) \overset{def}{=} e^{-x}$, $b$ only needs to
+satisfy that $g'_1(1) \geq g'_2(1)$.  Hence, $0 < b \leq 1- \frac{1}{e}$.
+}
+
+
+
+
+Let $ \bar{S} \overset{def}{=} [\bar{s}_y(k-1), 1]$. Then  $| \bar{S}| \leq |S| \leq \frac{| I'_y(k) |  }{ (1- \frac{1}{e} ) \cdot \varepsilon}$.
+
+On the other hand,
+ $| \bar{S}|$ can be considered as the probability of sampling a sequence $ \mathbf{r}$ from the uniform distribution $U_{S_0 }$  such that
+$ \mathbf{r}  \in \textmd{STR }( \bar{S}, n ) \cap S_0$  and $  2^{n-b}  \leq  |S_0| \leq 2^{n}$.
+
+Therefore,
+$$ | \bar{S}| = \sum \limits_{\mathbf{r} \in \textmd{STR }(\bar{S}, n) \cap S_0 }  \frac{1}{ |S_0|  }  \geq  \sum \limits_{\mathbf{r} \in \textmd{STR }(\bar{S}, n) \cap S_0 } ( \frac{1}{2})^n = | \textmd{STR } (\bar{S}, n) \cap S_0| \cdot ( \frac{1}{2})^n.$$
+
+Correspondingly, $$ | \textmd{STR }(\bar{S}, n) \cap S_0| \leq   2^n \cdot | \bar{S}| \leq 2^n \cdot  \frac{| I'_y(k) |  }{  (1- \frac{1}{e} ) \cdot \varepsilon} = (2^b+1) \cdot \frac{| I'_y(k) |}{ |I_{y-1}(k) |} \cdot \frac{1}{ (1- \frac{1}{e} ) \cdot \varepsilon} \leq \frac{e \cdot (2^b+1) }{1-e^{-1}}.$$
+Hence, $$|\textmd{SUFFIX}( \mathbf{u}, n ) \cap S_0| \leq  | \textmd{STR }(\bar{S}, n) \cap S_0|  \leq   \frac{e \cdot  (2^b+1) }{1-e^{-1}}.$$
+\end{proof}
+
+
+\begin{theorem}
+ \label{bcl-dp}
+
+  {\slshape    Mechanism $\overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }$ is a
+ compact $(   (  2^b+1 ) \cdot e \cdot \varepsilon,  \log (\frac{e \cdot (2^b+1) }{1-e^{-1}}) )$-BCL-consistent sampling mechanism for $(  \delta, b, n )$-BCL sources.
+Therefore,  $\overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }$ is
+$ (\mathcal{U}, 2 e \cdot \varepsilon)$-differentially private and $(\mathcal{BCL}( \delta, b, n ), \xi)$-differentially private  for  $ \xi =     (\frac{1+ \delta }{1- \delta})^{ \log ( \frac{e \cdot  ( 2^b+1  ) }{1-e^{-1}})  } \cdot (\frac{1+ \delta}{2})^{-b} \cdot  (  2^b+1 ) \cdot e \cdot \varepsilon$.
+
+
+}
+
+\end{theorem}
+
+\begin{proof}  The result follows from  Theorems \ref{CSDP}, \ref{CS}, and \ref{BCLCS}.
+
+\end{proof}
+
+
+\begin{theorem}   \label{bcl-u}
+
+  {\slshape Mechanism $\overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }$
+has    $( \mathcal{BCL} ( \delta, b, n), O(\frac{1}{\varepsilon} \cdot   \frac{1}{1- \delta}))$-utility and $(\mathcal{U}, O(\frac{1}{\varepsilon}))$-utility.
+     }
+
+\end{theorem}
+
+
+\begin{proof}  For any $BCL(\delta, b, n)$ distribution, we calculate the  upper bound of $$ \mathbb{E}_{ \textbf{r} \leftarrow  BCL (\delta, b, n) }
+[| \overline{M} ^{  \textsf{CBCLCS} }_{\varepsilon } (D, f; \textbf{r}) - f(D) |]$$ as follows.
+Let $f(D)=y$. Then
+
+\begin{align*}
+& \mathbb{E}_{ \textbf{r} \leftarrow BCL(\delta, b, n) } [|  \overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }(D, f; \textbf{r})-y|]\\
+& = \sum \limits_{k = - \infty}^{\infty} \Pr \limits_{ \textbf{r} \leftarrow  BCL (\delta, b, n) } [  \overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }(D, f; \textbf{r}) = \frac{k}{ \varepsilon}] \cdot | \frac{k}{ \varepsilon} - y|.\\
+\end{align*}
+
+
+Let $\textbf{a}$ be the longest common  prefix of all strings in $\textmd{STR } (\bar{I}_y(k), n)$. Denote $I_0  \overset{def}{=} \textmd{SUFFIX} (\textbf{a}0, n) \cap \textmd{STR} (\bar{I}_y(k), n)$ and $I_1 \overset{def}{=} \textmd{SUFFIX} (\textbf{a}1, n) \cap \textmd{STR} (\bar{I}_y(k), n)$. Thus, $I_0 \cup I_1 =  \textmd{STR} (\bar{I}_y(k), n)$.
+Correspondingly,  we have
+$$ \Pr \limits_{ \textbf{r} \leftarrow BCL(\delta, b, n) } [  \overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }(D, f; \textbf{r}) = \frac{k}{\varepsilon}] \leq ( \frac{1+ \delta}{2})^{|\textbf{a}0 |}  + ( \frac{1+ \delta}{2})^{|\textbf{a}1 |} \leq 2 \cdot ( \frac{1+ \delta}{2})^{  \log ( \frac{1}{ | \bar{I}_y(k)|}  )}.$$
+
+
+
+\begin{claim}
+
+For all $y, k \in \mathbb{Z}$, we have $|I_y(k)|  \leq \frac{1}{2} \cdot  e^{- \frac{1}{2}} \cdot  (e-1) \cdot e^{-|k- \varepsilon y|}$.
+
+\end{claim}
+
+\begin{proof}  We consider three cases.
+
+\textsf{Case~1}: Assume that $ \frac{k - \frac{1}{2}}{\varepsilon} - y \geq 0$  and  $ \frac{k + \frac{1}{2}}{\varepsilon} - y \geq 0$.
+Then $$ | I_y(k) | = 1 - \frac{1}{2} \cdot  e^{ - \varepsilon ( \frac{k + \frac{1}{2}}{\varepsilon} - y  )   }  - [ 1 - \frac{1}{2} \cdot  e^{ - \varepsilon ( \frac{k - \frac{1}{2}}{\varepsilon} - y  ) } ]  = \frac{1}{2} \cdot  e^{- \frac{1}{2}} \cdot  (e-1) \cdot e^{-|k- \varepsilon y|}.$$
+
+\textsf{Case~2}: Assume that $ \frac{k - \frac{1}{2}}{\varepsilon} - y  < 0$  and  $ \frac{k + \frac{1}{2}}{\varepsilon} - y \geq 0$.
+From the fact that $ 1 - \frac{1}{2}  x  \leq  \frac{1}{2}   \cdot \frac{1}{x}$ for all $x > 0$, we obtain
+ $$|I_y(k)| =  1 - \frac{1}{2} \cdot  e^{ - \varepsilon ( \frac{k + \frac{1}{2}}{\varepsilon} - y  )   } -  \frac{1}{2} \cdot  e^{  \varepsilon ( \frac{k - \frac{1}{2}}{\varepsilon} - y  )   }   \leq \frac{1}{2} \cdot  e^{- \frac{1}{2}} \cdot  (e-1) \cdot e^{-|k- \varepsilon y|}.$$
+
+\textsf{Case~3}: Assume that $ \frac{k - \frac{1}{2}}{\varepsilon} - y  <  0$  and  $ \frac{k + \frac{1}{2}}{\varepsilon} - y  < 0$.
+Then $ | I_y(k)|  = \frac{1}{2} \cdot  e^{- \frac{1}{2}} \cdot  (e-1) \cdot e^{-|k- \varepsilon y|}$.
+
+\end{proof}
+
+ By Lemma \ref{f-inf},  $ |\bar{I}_y(k)| \leq |I_y(k)| + 2^{-n(k-1,y)} = |I_y(k)| +    \frac{1}{2^b+1}   |I_{y-1}(k)|$.  Hence,
+ $$\log ( \frac{1}{ | \bar{I}_y(k)|}  ) \geq  \log \frac{1}{ \frac{1}{2} e^{- \frac{1}{2}} (e-1) (1+ \frac{1}{2^b+1}  ) }  + \log ( e^ {\min \{ | k- \varepsilon y |,   | k- \varepsilon y + \varepsilon | \} } ) \geq  \min \{ | k- \varepsilon y |,   | k- \varepsilon y + \varepsilon | \}  \geq  | k- \varepsilon y | -1.$$
+Therefore,
+
+\ignore{
+\begin{align*}
+&  \sum \limits_{k = - \infty}^{\infty} \Pr \limits_{ \textbf{r} \leftarrow \textsf{BCL} (\delta, b, n) } [  \overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }(D, f; \textbf{r}) = \frac{k}{ \varepsilon}] \cdot | \frac{k}{ \varepsilon} - y | \\
+& \leq \sum \limits_{k =\lceil \varepsilon y \rceil}^{\infty} 2 \cdot ( \frac{1+ \delta}{2})^{ k -\varepsilon y -1} \cdot (\frac{k}{ \varepsilon} - y)  \\
+& = 2 \cdot  \frac{1}{\varepsilon} \cdot  ( \frac{1+ \delta}{2})^{-\varepsilon y -1} \cdot \sum \limits_{k =\lceil \varepsilon y \rceil}^{\infty} ( \frac{1+ \delta}{2})^k \cdot (k- \varepsilon y) \\
+&= 2 \cdot  \frac{1}{\varepsilon} \cdot  ( \frac{1+ \delta}{2})^{-\varepsilon y -1} \cdot  [\sum \limits_{k =\lceil \varepsilon y \rceil}^{\infty} ( \frac{1+ \delta}{2})^k \cdot k -  \sum \limits_{k =\lceil \varepsilon y \rceil}^{\infty} ( \frac{1+ \delta}{2})^k \cdot  \varepsilon y ]\\
+& =  2 \cdot \frac{1}{\varepsilon} \cdot  ( \frac{1+ \delta}{2})^{-\varepsilon y -1} \cdot  [ \frac{ ( \frac{1+ \delta}{2})^{  \lceil \varepsilon y \rceil -1  } \cdot   \lceil \varepsilon y \rceil  + ( \frac{1+ \delta}{2})^{  \lceil \varepsilon y \rceil  }  \cdot \frac{1}{1- \frac{1+\delta}{2}}}{( \frac{1+ \delta}{2})^{-1}-1   } - \varepsilon y \cdot  ( \frac{1+ \delta}{2})^{ \lceil \varepsilon y \rceil } \cdot \frac{1}{1- \frac{1+\delta}{2}}]\\
+& = 2 \cdot \frac{1}{\varepsilon} \cdot  ( \frac{1+ \delta}{2})^{  \lceil \varepsilon y \rceil  -\varepsilon y -1} \cdot [ \frac{2 \cdot \lceil \varepsilon y \rceil }{1- \delta} - \frac{2 \varepsilon y}{ 1- \delta} + \frac{2(1+ \delta)}{(1- \delta)^2}]\\
+& = O(\frac{1}{\varepsilon} \cdot   \frac{1}{(1- \delta)^2}) \\
+\end{align*}
+
+
+\begin{align*}
+&  \sum \limits_{k = - \infty}^{\infty} \Pr \limits_{ \textbf{r} \leftarrow \textsf{BCL} (\delta, b, n) } [  \overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }(D, f; \textbf{r}) = \frac{k}{ \varepsilon}] \cdot | \frac{k}{ \varepsilon} - y | \\
+& \leq  \sum \limits_{k = -\infty}^{\lfloor \varepsilon y - \varepsilon \rfloor} 2 \cdot (\frac{1+ \delta}{2}  )^{  \varepsilon y  -k -\varepsilon}  \cdot (y- \frac{k}{\varepsilon}) +  \sum \limits_{k = \lceil \varepsilon y \rceil    }^{ \infty}  2 \cdot (\frac{1+ \delta}{2}  )^{k- \varepsilon y} \cdot (  \frac{k}{ \varepsilon} - y  ) + 2 \cdot (\frac{1+ \delta}{2}  )^{ \varepsilon y - \lceil \frac{2 \varepsilon y - \varepsilon }{2}\rceil  } \\
+& ~~~\cdot (y - \lceil \frac{2 \varepsilon y - \varepsilon }{2}\rceil \cdot \frac{1}{\varepsilon}) +  2 \cdot (\frac{1+ \delta}{2}  )^{- \varepsilon y + \lfloor \frac{2 \varepsilon y - \varepsilon }{2} \rfloor + \varepsilon } \cdot (y - \lfloor  \frac{2 \varepsilon y - \varepsilon }{2} \rfloor \cdot \frac{1}{\varepsilon})\\
+& = 2 \cdot  \frac{1}{\varepsilon} \cdot  ( \frac{1+ \delta}{2})^{-\varepsilon y -1} \cdot \sum \limits_{k =\lceil \varepsilon y \rceil}^{\infty} ( \frac{1+ \delta}{2})^k \cdot (k- \varepsilon y) \\
+&= 2 \cdot  \frac{1}{\varepsilon} \cdot  ( \frac{1+ \delta}{2})^{-\varepsilon y -1} \cdot  [\sum \limits_{k =\lceil \varepsilon y \rceil}^{\infty} ( \frac{1+ \delta}{2})^k \cdot k -  \sum \limits_{k =\lceil \varepsilon y \rceil}^{\infty} ( \frac{1+ \delta}{2})^k \cdot  \varepsilon y ]\\
+& =  2 \cdot \frac{1}{\varepsilon} \cdot  ( \frac{1+ \delta}{2})^{-\varepsilon y -1} \cdot  [ \frac{ ( \frac{1+ \delta}{2})^{  \lceil \varepsilon y \rceil -1  } \cdot   \lceil \varepsilon y \rceil  + ( \frac{1+ \delta}{2})^{  \lceil \varepsilon y \rceil  }  \cdot \frac{1}{1- \frac{1+\delta}{2}}}{( \frac{1+ \delta}{2})^{-1}-1   } - \varepsilon y \cdot  ( \frac{1+ \delta}{2})^{ \lceil \varepsilon y \rceil } \cdot \frac{1}{1- \frac{1+\delta}{2}}]\\
+& = 2 \cdot \frac{1}{\varepsilon} \cdot  ( \frac{1+ \delta}{2})^{  \lceil \varepsilon y \rceil  -\varepsilon y -1} \cdot [ \frac{2 \cdot \lceil \varepsilon y \rceil }{1- \delta} - \frac{2 \varepsilon y}{ 1- \delta} + \frac{2(1+ \delta)}{(1- \delta)^2}]\\
+& = O(\frac{1}{\varepsilon} \cdot   \frac{1}{(1- \delta)^2}) \\
+\end{align*}
+
+The   ??  ?? equality follows from the following claim.
+
+\begin{claim}
+
+Assume that $ 0 < a < 1$ and $l_0 \in \mathbb{Z}$. Then $ \sum \limits_{l=l_0}^\infty l \cdot a^l =  \frac{l_0 \cdot a^{l_0}}{1-a} + \frac{a^{l_0 +1}}{(1-a)^2}$ and
+$ \sum \limits_{l= - \infty}^{l_0} l \cdot a^l =  ?$.
+\end{claim}
+}
+
+\begin{align*}
+&  \sum \limits_{k = - \infty}^{\infty} \Pr \limits_{ \textbf{r} \leftarrow \textsf{BCL} (\delta, b, n) } [  \overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }(D, f; \textbf{r}) = \frac{k}{ \varepsilon}] \cdot | \frac{k}{ \varepsilon} - y | \\
+& \leq  \sum \limits_{k = -\infty}^{0}  2 \cdot (\frac{1+ \delta}{2}  )^{ |  \varepsilon y  -k | -1}  \cdot |y- \frac{k}{\varepsilon}| +  \sum \limits_{k = 1}^{ \infty}  2 \cdot (\frac{1+ \delta}{2}  )^{|k- \varepsilon y| -1} \cdot | \frac{k}{ \varepsilon} - y |   \\
+& \leq  \frac{2}{ \varepsilon} \cdot (\frac{1+ \delta}{2}  )^{-1} \cdot [ \sum \limits_{k = 1}^{ \infty}  (\frac{1+ \delta}{2}  )^{k-1} \cdot k +  \sum \limits_{k = -\infty}^{0}  (\frac{1+ \delta}{2}  )^{-k } \cdot (-k+1)    ]\\
+& =   (\frac{1+ \delta}{2}  )^{-1} \cdot \frac{4}{\varepsilon} \cdot \frac{1}{1- ( \frac{1+ \delta}{2}  )^2} = O(\frac{1}{\varepsilon} \cdot \frac{1}{1- \delta}).\\
+\end{align*}
+
+
+
+When $\delta =0$ and $b=0$, the BCL source degenerates into the uniform source.
+
+Therefore, the mechanism $\overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }$ has
+$( \mathcal{BCL} ( \delta, b, n),   O(\frac{1}{\varepsilon} \cdot   \frac{1}{1- \delta}))$-utility and $(\mathcal{U}, O(\frac{1}{\varepsilon}))$-utility.
+
+\end{proof}
+
+
+From Theorems \ref{bcl-dp} and  \ref{bcl-u},   we get that
+
+\begin{theorem}
+\label{spe}
+  {\slshape  There exists an explict   $(\mathcal{BCL}(\delta, b, n), \xi)-$differentially private and $(U_n, \rho)$-accurate mechanism M for the
+ Hammimg weight queries where  $$\rho = \frac{ 2^{b \cdot \log (1+ \delta) -9}  }{ \xi } \cdot   (\frac{2}{1+ \delta})^{b+1} \cdot \frac{2^b+1}{(1+ \delta)^b} \cdot (\frac{1+ \delta}{1-\delta})^{\log  \frac{(2^b+1) e}{1-e^{-1}}   }  \cdot \frac{2^{11}}{1- (\frac{1+ \delta}{2})^2} \cdot e  >  \frac{ 2^{b \cdot \log (1+ \delta) -9}  }{ \xi }.$$   }
+
+
+\end{theorem}
+
+
+
+
+One the other hand, recall that Dodis and Yao \cite{DY14} obtained the following result.
+
+\begin{theorem} \label{bcl-imp}
+{\slshape   If     $b   \geq \frac{  \log ( \xi \rho )  + 9 }{  \log(1+ \delta)} = \Omega (  \frac{\log( \xi \rho)+1}{ \delta})$,    then no $( \mathcal{BCL}(\delta, b, n), \xi  )-$differentially private and $(U_n, \rho)$-accurate mechanism for the Hammimg weight queries exists.          }
+\end{theorem}
+
+Therefore, we conclude that
+
+\begin{corollary}
+\label{gen}
+  {\slshape  Assume that the mechanism M is  $( \mathcal{BCL}(\delta, b, n), \xi)-$differentially private and $(U_n, \rho)$-accurate for the
+ Hammimg weight queries, then
+  $ \rho > \frac{2^{b \cdot \log (1+ \delta) -9}}{\xi}$.
+ }
+
+\end{corollary}
+
+Corollary \ref{gen}  implies that  it's possible to construct a   $( \mathcal{BCL}(\delta, b, n), \xi)-$differentially private and $(U_n, \rho)$-accurate mechanism for  Hammimg weight queries, where $ \rho > \frac{2^{b \cdot \log (1+ \delta) -9}}{\xi}$.  In this paper, we show an explicit  construction of such mechanisms.
+
+
+%  Therefore, Corollary \ref{spe} is a special case of Corollary \ref{gen}.
+
+
+
+
+
+\begin{remark}
+
+ If we  replace the rounding method in \cite{DLMV12}  with the one in Step 2 of this paper, we can prove
+that the modified mechanism in \cite{DLMV12} satisfies the   compact $(\zeta', O(1) )$-SV-consistent sampling.
+Therefore, the resulting mechanism is differentially private as well. We can also prove that it's accurate. The proofs are similar to Theorems \ref{bcl-dp} and  \ref{bcl-u}.
+Due to space limitations,  we will omit the analysis.
+
+\end{remark}
+
+
+
+
+
+\subsubsection*{Acknowledgments.}
+
+We would like to thank  Yevgeniy Dodis,  Adriana  L\'{o}pez-Alt,  and  Frank Mcsherry for helpful discussions. In particular, we thank Prof. Yevgeniy Dodis for proposing the project ``Do differential privacy with BCL sources for reasonably high b''. 
+This work is supported by the Natural Science Foundation of China
+(60973105, 61370126, and 61170189), the Fund for the Doctoral
+Program of Higher Education of China (20111102130003), the Fund of the State Key Laboratory of Software Development Environment (SKLSDE-2013ZX-19, SKLSDE-2012ZX-11), the Innovation Foundation of Beihang University for Ph.D. Graduates under Grant No. 2011106014,
+the Fund of the Scholarship Award for Excellent Doctoral Student granted
+by Ministry of Education (400618), and the Fund for CSC
+Scholarship Programme (201206020063).
+
+
+
+
+
+
+
+
+\begin{thebibliography}{999999999} % 100 is a random guess of the total number of
+%references
+\setlength{\labelwidth}{0.6in}
+%\addtolength{\leftmargin}{10em} % sets up alignment with the following line.
+%\setlength{\marginparwidth}{3in}
+\setlength{\itemindent}{0in}
+%\setlength{\leftmargin}{-7in}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\bibitem[ACM$^+$14]{ACMPS14} Per Austrin, Kai-Min Chung, Mohammad Mahmoody, Rafael Pass, and Karn Seth. On the Impossibility of Cryptography with Tamperable Randomness. {\slshape CRYPTO},  volume 8616 of {\slshape LNCS},  pages 462-479.  Springer, 2014.
+\vspace{0.11cm}
+\bibitem[ACRT99]{ACRT99} Alexander E. Andreev, Andrea E.F. Clementi, Jos$\acute{e}$ D.P. Rolim, and Luca Trevisan. Weak
+random sources, hitting sets, and BPP simulations. {\slshape  SIAM J. Comput.}, 28(6): 2103-2116,
+1999.
+\vspace{0.11cm}
+\bibitem[Blu86]{B86} Manuel Blum. Independent unbiased coin-flips from a correclated biased source-a finite state Markov
+chain.  {\slshape Combinatorica}, 6(2): 97-108, 1986.
+\vspace{0.11cm}
+\bibitem[BD07]{BD07} Carl Bosley and Yevgeniy Dodis. Does privacy require true randomness? In Salil P.
+Vadhan, editor, {\slshape TCC}, volume 4392 of {\slshape LNCS}, pages 1-20. Springer, 2007.
+\vspace{0.11cm}
+\bibitem[BDK$^+$05]{BDK$^+$05} Xavier Boyen, Yevgeniy Dodis, Jonathan Katz, Rafail Ostrovsky, and Adam Smith. Secure remote
+authentication using biometric data. In Ronald Cramer, editor, {\slshape  Advances in Cryptology—
+EUROCRYPT 2005}, volume 3494 of {\slshape LNCS}, pages 147-163. Springer-Verlag, 2005.
+\vspace{0.11cm}
+  \bibitem[BDMN05]{BDMN05}   Avrim Blum, Cynthia Dwork, Frank McSherry, and Kobbi Nissim. Practical privacy: the
+sulq framework. In Chen Li, editor,  {\slshape  PODS}, pages 128-138. ACM, 2005.
+\vspace{0.11cm}
+\bibitem[BH05]{BH05} Boaz Barak and Shai Halevi. A model and architecture for pseudo-random generation with applications
+to /dev/random. In {\slshape  Proceedings of the 12th ACM Conference on Computer and Communication
+Security}, pages 203-212, 2005.
+\vspace{0.11cm}
+\bibitem[BST03]{BST03} Boaz Barak, Ronen Shaltiel, and Eran Tromer. True random number generators secure in a
+changing environment. In {\slshape Proceedings of the 5th Cryptographic Hardware and Embedded Systems},
+pages 166-180, 2003.
+\vspace{0.11cm}
+\bibitem[CFG$^+$85]{CFG$^+$85}  Benny Chor, Oded Goldreich, Johan H{\aa}stad, Joel Friedman, Steven Rudich, and Roman Smolensky.
+ The Bit Extraction Problem
+or $t$-resilient Functions. In {\slshape Proc. of 26th FOCS}, pages 396-407, 1985.
+\vspace{0.11cm}
+\bibitem[CG88]{CG88} Benny Chor and Oded Goldreich. Unbiased bits from sources of weak randomness and
+probabilistic communication complexity. {\slshape SIAM J. Comput.}, 17(2): 230-261, 1988.
+\vspace{0.11cm}
+\bibitem[CW79]{CW79} Larry Carter and Mark N. Wegman.  Universal Classes of Hash Functions. {\slshape J. Comput. Syst. Sci.}, 18(2): 143-154, 1979.
+\vspace{0.11cm}
+\bibitem[DKRS06]{DKRS06} Yevgeniy Dodis, Jonathan Katz, Leonid Reyzin, and Adam Smith. Robust fuzzy extractors
+and authenticated key agreement from close secrets. In Cynthia Dwork, editor, {\slshape CRYPTO},
+volume 4117 of {\slshape LNCS}, pages 232-250. Springer, 2006.
+\vspace{0.11cm}
+ \bibitem[DLMV12]{DLMV12} Yevgeniy Dodis, Adriana L\'{o}pez-Alt, Ilya Mironov, and Salil P. Vadhan.  Differential Privacy with Imperfect Randomness. {\slshape CRYPTO 2012},  pages   497-516.
+\vspace{0.11cm}
+ \bibitem[DMNS06]{DMNS06} Cynthia Dwork, Frank McSherry, Kobbi Nissim, and Adam Smith. Calibrating noise to
+sensitivity in private data analysis. In Shai Halevi and Tal Rabin, editors, {\slshape TCC}, volume
+3876 of {\slshape LNCS}, pages 265-284. Springer, 2006.
+\vspace{0.11cm}
+\bibitem[DN03]{DN03} Irit Dinur and Kobbi Nissim. Revealing information while preserving privacy. In Frank
+Neven, Catriel Beeri, and Tova Milo, editors, {\slshape PODS}, pages 202-210. ACM, 2003.
+\vspace{0.11cm}
+\bibitem[DN04]{DN04}     Cynthia Dwork and Kobbi Nissim. Privacy-preserving datamining on vertically partitioned
+databases. In Matthew K. Franklin, editor,  {\slshape CRYPTO}, volume 3152 of  {\slshape LNCS}, pages 528-544. Springer, 2004.
+\vspace{0.11cm}
+\bibitem[Dod01]{D01} Yevgeniy Dodis. New Imperfect Random Source with Applications to Coin-Flipping. {\slshape ICALP 2001}, pages 297-309.
+\vspace{0.11cm}
+\bibitem[DOPS04]{DOPS04} Yevgeniy Dodis, Shien Jin Ong, Manoj Prabhakaran, and Amit Sahai. On the
+(im)possibility of cryptography with imperfect randomness.   {\slshape FOCS 2004}, pages 196-205.
+\vspace{0.11cm}
+\bibitem[DORS08]{DORS08} Yevgeniy Dodis, Rafail Ostrovsky, Leonid Reyzin, and Adam Smith. Fuzzy extractors: How to
+generate strong keys from biometrics and other noisy data. {\slshape SIAM Journal on Computing}, 38(1): 97-139, 2008.
+\vspace{0.11cm}
+\bibitem[DS02]{DS02} Yevgeniy Dodis and Joel Spencer.  On the (non)Universality of the One-Time Pad. {\slshape Foundations of Computer Science (FOCS)}, 376-385,   2002.
+    \vspace{0.11cm}
+   \bibitem[Dwo08]{Dwo08}  Cynthia Dwork. Differential Privacy: A Survey of Results.  {\slshape TAMC 2008}, pages 1-19.
+    \vspace{0.11cm}
+\bibitem[DY14]{DY14} Yevgeniy Dodis and Yanqing Yao. Privacy and Imperfect Randomness. IACR Cryptology ePrint Archive 2014: 623 (2014).
+ \vspace{0.11cm}
+\bibitem[GKR04]{GKR04} Rosario Gennaro, Hugo Krawczyk, and Tal Rabin. Secure hashed diffie-hellman over non-ddh
+groups. In Christian Cachin and Jan Camenisch, editors, {\slshape Advances in Cryptology EUROCRYPT
+2004}, volume 3027 of {\slshape LNCS}, pages 361-381. Springer-Verlag, 2004.
+\vspace{0.11cm}
+\bibitem[GRS09]{GRS09}  Arpita Ghosh, Tim Roughgarden, and Mukund Sundararajan. Universally utilitymaximizing
+privacy mechanisms. In Michael Mitzenmacher, editor, {\slshape STOC}, pages 351-360.
+ACM, 2009.
+\vspace{0.11cm}
+ \bibitem[Hol07]{Hol07}   Thomas Holenstein. Parallel repetition: simplifications and the no-signaling case. In
+David S. Johnson and Uriel Feige, editors, {\slshape STOC}, pages 411-419. ACM, 2007.
+\vspace{0.11cm}
+\bibitem[HT10]{HT10}   Moritz Hardt and Kunal Talwar. On the geometry of differential privacy. In Leonard J.
+Schulman, editor, {\slshape STOC}, pages 705-714. ACM, 2010.
+\vspace{0.11cm}
+\bibitem[Kra10]{K10} Hugo Krawczyk. Cryptographic Extraction and Key Derivation: The HKDF Scheme. In Tal
+Rabin, editor, {\slshape  Advances in Cryptology-CRYPTO 2010}, volume 6223 of {\slshape LNCS}, pages 631-648.
+Springer-Verlag, 2010.
+\vspace{0.11cm}
+\bibitem[LLS89]{LLS89} David Lichtenstein, Nathan Linial, and Michael E. Saks. Some extremal problems arising form discrete control processes. {\slshape
+    Combinatorica},  9(3): 269-287, 1989.
+ \vspace{0.11cm}
+   \bibitem[Man94]{Man94}  Udi Manber. Finding similar files in a large file system. In {\slshape  Proceedings of the USENIX
+Winter 1994 Technical Conference on USENIX Winter 1994 Technical Conference}, pages
+2-2, Berkeley, CA, USA, 1994. USENIX Association.
+    \vspace{0.11cm}
+ \bibitem[MMP$^+$10]{MMP$^+$10}   Andrew McGregor, Ilya Mironov, Toniann Pitassi, Omer Reingold, Kunal Talwar, and
+Salil P. Vadhan. The limits of two-party differential privacy. In  {\slshape FOCS}, pages 81-90. IEEE
+Computer Society, 2010.
+    \vspace{0.11cm}
+\bibitem[MP90]{MP90} James L. McInnes and Benny Pinkas. On the impossibility of private key cryptography
+with weakly random keys. In Alfred Menezes and Scott A. Vanstone, editors, {\slshape CRYPTO},
+volume 537 of {\slshape LNCS}, pages 421-435. Springer, 1990.
+\vspace{0.11cm}
+\bibitem[MW97]{MW97} Ueli M. Maurer and Stefan Wolf. Privacy amplification secure against active adversaries. In
+Burton S. Kaliski, Jr., editor, {\slshape CRYPTO}, volume 1294 of {\slshape LNCS}, pages 307-321. Springer,
+1997.
+\vspace{0.11cm}
+\bibitem[RVW04]{RVW04} Omer Reingold, Salil Vadhan, and Avi Widgerson. No Deterministic Extraction from
+Santha-Vazirani Sources: a Simple Proof. http://windowsontheory.org/2012/02/21/nodeterministic-extraction-from-santha-vazirani-sources-a-simple-proof/, 2004.
+\vspace{0.11cm}
+\bibitem[SV86]{SV86} Miklos Santha and Umesh V. Vazirani. Generating quasi-random sequences from semirandom
+sources.  {\slshape  J. Comput. Syst. Sci.}, 33(1): 75-87, 1986.
+\vspace{0.11cm}
+\bibitem[vN51]{vN51} J. von Neumann. Various techniques used in connection with random digits. In {\slshape National Bureau of
+Standards, Applied Math. Series}, 12: 36-38, 1951.
+\vspace{0.11cm}
+\bibitem[VV85]{VV85} Umesh V. Vazirani and Vijay V. Vazirani. Random polynomial time is equal to slightly random
+polynomial time. {\slshape FOCS}, pages 417-428, 1985.
+\vspace{0.11cm}
+\bibitem[Zuc96]{Zuc96} David Zuckerman. Simulating BPP using a general weak random source. {\slshape Algorithmica},
+16(4/5): 367-391, 1996.
+
+
+
+
+\end{thebibliography}
+
+\appendix
+
+
+
+
+ Recall that  Lemma  A.1. of \cite{DLMV12}  and partial proof are as follows.
+
+\begin{lemma}
+{\slshape For all $y, k \in \mathbb{Z}$,   $ \frac{|I_y'(k)|}{|I_{y-1}(k)|}  \leq 6 \varepsilon$.
+
+}
+
+\end{lemma}
+
+
+\begin{proof}
+
+$  \ldots  $
+
+
+$\textsf{Case 3}$:  If $ s_y(k-1) <   s_{y-1}(k-1) <   \frac{1}{2} \leq  s_{y-1}(k-1)$, then
+$ \frac{|I'_y(k)|}{|I_{y-1}(k)|} \leq \frac{1- e^{-\varepsilon}}{ 2 (e-1)}$.
+
+
+$  \ldots  $
+
+\end{proof}
+
+
+There are several points to be noted.
+
+1.  Compared with the above lemma, ours is much better. In fact, our upper bound  is tight.
+
+2.  It's obvious that `` $ s_{y-1}(k-1) <   \frac{1}{2} \leq  s_{y-1}(k-1)$'' never holds. It must be a typo.
+
+3.    ``$ \frac{|I'_y(k)|}{|I_{y-1}(k)|} \leq \frac{1- e^{-\varepsilon}}{ 2 (e-1)}$'' is wrong!
+Since $ -1 - \frac{1}{ \varepsilon} \leq  v < -1$, without loss of generality,  assume that $  \frac{1}{  \varepsilon} $  is an even integer and  $ v =  -1 - \frac{1}{ 2 \varepsilon}$.
+Then  $$ \frac{|I'_y(k)|}{|I_{y-1}(k)|}  = \frac{e^\varepsilon -1}{ 2 \cdot e^{- \varepsilon v} - e^{-2 \varepsilon v - \varepsilon -1} -e^\varepsilon  } =  \frac{ 1- e^{-\varepsilon}}{ 2(e^{\frac{1}{2}} -1) } >  \frac{1- e^{-\varepsilon}}{ 2 (e-1)},$$  which stands in contradiction to the inequality
+$ \frac{|I'_y(k)|}{|I_{y-1}(k)|} \leq \frac{1- e^{-\varepsilon}}{ 2 (e-1)}$.
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
