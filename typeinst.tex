@@ -239,12 +239,12 @@ Coupled with the impossibility of traditional privacy with SV sources, this resu
 
 
 
-Dodis et al. \cite{D01} introduced more realistic  source, called Bias-Control Limited (BCL) source, which  realistically generalizes the SV source of Santha and Vazirani  \cite{SV86} and the bit-fixing source of Lichtenstein, Linial and Saks \cite{LLS89}.   BCL source  generates
+Dodis et al. \cite{D01} introduced more realistic  source, called Bias-Control Limited (BCL) source, which  realistically generalizes the SV source of Santha and Vazirani  \cite{SV86} and the bit-fixing source of Lichtenstein, Linial, and Saks \cite{LLS89}.  The BCL source  generates
 $n$ bits $x_1, x_2, \ldots,  x_n$, where for $i =1, 2, \ldots, n$, the value  of $x_i$
 can depend on  $x_1, x_2, \ldots,  x_{i-1}$ in one of the following two ways: (A) $x_i$ is determined by $x_1, \ldots, x_{i-1}$, but this happens for at most $b$ bits, or (B)  $  \frac{1- \delta}{2}  \leq   \Pr[x_i=1 \mid x_1,  x_2, \ldots, x_{i-1}]  \leq \frac{1+\delta}{2}$, where $ 0 \leq \delta < 1$.  In particular, when
 $b=0$, it degenerates into the SV source; when $\delta =0$, it yields   the bit-fixing source; when $b=0$ and  $\delta =0$, it corresponds to the
 perfect randomness. If $b \neq 0$ and  $\delta \neq 0$, we say the BCL source is non-trivial.   The BCL source models the problem that each of the bits produced by a
-streaming source is unlikely to be perfectly random: slight errors ( due to noise, measurement errors, and imperfections)
+streaming source is unlikely to be perfectly random: slight errors (due to noise, measurement errors, and imperfections)
 of the source are inevitable,  and  the situation that some of the bits could have non-trivial dependencies on the previous bits (due to internal
 correlations, poor measurement or improper setup), to the point of being completely determined by them.
 Hence, compared with the SV source, BCL source appears much more realistic, especially if the number of interventions $b$ is somewhat moderate.
@@ -737,7 +737,7 @@ Recall that some  truncation method was proposed in \cite{DLMV12} in order to ge
 
 $ {\textsf{  Step~1}}$  {\slshape   On input any neighboring databases  $D_1, D_2 \in \mathcal{D}$,  $f \in \mathcal{F}$, the  infinite-precision mechanism $M^{   \textsf{CBCLCS} }_{\varepsilon}$ computes $f(D_1)$ and $f(D_2)$. Without  loss of generality, assume that
 $f(D_1)=y$ and $f(D_2)=y-1$. $M^{   \textsf{CBCLCS} }_{\varepsilon}(D_1, f)$ (resp.   $M^{   \textsf{CBCLCS} }_{\varepsilon}(D_2, f)$)
- outputs $ z_1 \leftarrow \frac{1}{ \varepsilon } \cdot \lfloor  \varepsilon \cdot (y +  \textsf{Lap}_{0,   \frac{1}{\varepsilon} }  ) \rceil$ (resp. $ z_2 \leftarrow \frac{1}{ \varepsilon } \cdot \lfloor  \varepsilon \cdot (y -1 +  \textsf{Lap}_{0,   \frac{1}{\varepsilon}}) \rceil$).    Denote  $Z_y$ (resp.  $Z_{y-1}$ ) as  the output distribution
+ outputs $ z_1 \leftarrow \frac{1}{ \varepsilon } \cdot \lfloor  \varepsilon \cdot (y +  \textsf{Lap}_{0,   \frac{1}{\varepsilon} }  ) \rceil$ (resp. $ z_2 \leftarrow \frac{1}{ \varepsilon } \cdot \lfloor  \varepsilon \cdot (y -1 +  \textsf{Lap}_{0,   \frac{1}{\varepsilon}}) \rceil$).    Denote  $Z_y$ (resp.  $Z_{y-1}$) as  the output distribution
 of $ M^{   \textsf{CBCLCS} }_{\varepsilon}(D_1, f)$ (resp. $ M^{   \textsf{CBCLCS} }_{\varepsilon}(D_2, f)$) using arithmetic coding (see \cite{DLMV12}).
  }
 
@@ -1352,7 +1352,7 @@ Due to space limitations,  we will omit the analysis.
 
 \subsubsection*{Acknowledgments.}
 
-We would like to thank  Yevgeniy Dodis,  Adriana  L\'{o}pez-Alt,  and  Frank Mcsherry for helpful discussions. In particular, we thank Prof. Yevgeniy Dodis for proposing the project ``Do differential privacy with BCL sources for reasonably high b''. 
+We would like to thank  Yevgeniy Dodis,  Adriana  L\'{o}pez-Alt,  and  Frank Mcsherry for helpful discussions. In particular, we thank Prof. Yevgeniy Dodis for proposing the project ``Do differential privacy with BCL sources for reasonably high b''.
 This work is supported by the Natural Science Foundation of China
 (60973105, 61370126, and 61170189), the Fund for the Doctoral
 Program of Higher Education of China (20111102130003), the Fund of the State Key Laboratory of Software Development Environment (SKLSDE-2013ZX-19, SKLSDE-2012ZX-11), the Innovation Foundation of Beihang University for Ph.D. Graduates under Grant No. 2011106014,
