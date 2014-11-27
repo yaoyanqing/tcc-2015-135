@@ -159,7 +159,7 @@ Unfortunately, if we  nationally expand SV-consistent sampling to the BCL source
 
 \item   Rigorous proofs about differential privacy and accuracy of this kind of mechanism are shown.
 
-\item  While the result of \cite{DY14} implies a {\slshape possible } result about differentially private mechanisms: If there exist $( \mathcal{BCL}(\delta, b, n), \xi)-$differentially private and $(U_n, \rho)$-accurate mechanisms  for the Hammimg weight queries, then $ \rho > \frac{2^{b \cdot \log (1+ \delta) -9}}{\xi}$.  We build {\slshape explicit} such mechanisms and the parameters match the above condition.
+\item  While the result of \cite{DY14} implies a {\slshape possible } result about differentially private mechanisms: If there exist $( \mathcal{BCL}(\delta, b), \xi)-$differentially private and $(\mathcal{U}, \rho)$-accurate mechanisms  for the Hammimg weight queries, then $ \rho > \frac{2^{b \cdot \log (1+ \delta) -9}}{\xi}$.  We build {\slshape explicit} such mechanisms and the parameters match the above condition.
 
 \end{itemize}
 
@@ -239,8 +239,8 @@ Coupled with the impossibility of traditional privacy with SV sources, this resu
 
 
 
-Dodis et al. \cite{D01} introduced more realistic  source, called Bias-Control Limited (BCL) source, which  realistically generalizes the SV source of Santha and Vazirani  \cite{SV86} and the bit-fixing source of Lichtenstein, Linial, and Saks \cite{LLS89}.  The BCL source  generates
-$n$ bits $x_1, x_2, \ldots,  x_n$, where for $i =1, 2, \ldots, n$, the value  of $x_i$
+Dodis et al. \cite{D01} introduced more realistic  source, called Bias-Control Limited (BCL) source, which  realistically generalizes the SV source of Santha and Vazirani  \cite{SV86} and the bit-fixing source of Lichtenstein, Linial, and Saks \cite{LLS89}.  The BCL source  generates a sequence of bits
+ $x_1, x_2, \ldots$, where for $i =1, 2, \ldots$, the value  of $x_i$
 can depend on  $x_1, x_2, \ldots,  x_{i-1}$ in one of the following two ways: (A) $x_i$ is determined by $x_1, \ldots, x_{i-1}$, but this happens for at most $b$ bits, or (B)  $  \frac{1- \delta}{2}  \leq   \Pr[x_i=1 \mid x_1,  x_2, \ldots, x_{i-1}]  \leq \frac{1+\delta}{2}$, where $ 0 \leq \delta < 1$.  In particular, when
 $b=0$, it degenerates into the SV source; when $\delta =0$, it yields   the bit-fixing source; when $b=0$ and  $\delta =0$, it corresponds to the
 perfect randomness. If $b \neq 0$ and  $\delta \neq 0$, we say the BCL source is non-trivial.   The BCL source models the problem that each of the bits produced by a
@@ -250,7 +250,7 @@ correlations, poor measurement or improper setup), to the point of being complet
 Hence, compared with the SV source, BCL source appears much more realistic, especially if the number of interventions $b$ is somewhat moderate.
 From our perspective, the BCL source will be especially interesting when we deal with differential privacy. Indeed, since it naturally (and realistically!) relaxes the SV source, for which non-trivial differential privacy is possible, it will be interesting to see whether
 existing results can be expanded by using BCL source.
-However, SV-consistent sampling is useless to BCL source as some strings can't be generated from BCL source, which is crucial to the SV-consistent sampling property. Recently, Dodis and Yao \cite{DY14} have shown an impossibility result for BCL source: when $b \geq  \Omega( \log( \xi \rho )/ \delta)$, it's impossible to achieve  $( \mathcal{BCL}(b, \delta, n), \xi)$-differentially private and $(\mathcal{BCL}(b, \delta, n),  \rho)$-accurate mechanism for Hamming weight queries. In other words, if  there exists a   $( \mathcal{BCL}(b, \delta, n), \xi)$-differentially private and $(\mathcal{BCL}(b, \delta, n),  \rho)$-accurate mechanism for Hamming weight queries, then $b \leq O(\log( \xi \rho )/ \delta)$.  This result gives us a bit hope to
+However, SV-consistent sampling is useless to BCL source as some strings can't be generated from BCL source, which is crucial to the SV-consistent sampling property. Recently, Dodis and Yao \cite{DY14} have shown an impossibility result for BCL source: when $b \geq  \Omega( \log( \xi \rho )/ \delta)$, it's impossible to achieve  $( \mathcal{BCL}(\delta, b), \xi)$-differentially private and $(\mathcal{U},  \rho)$-accurate mechanism for Hamming weight queries. In other words, if  there exists a  $( \mathcal{BCL}(\delta, b), \xi)$-differentially private and $(\mathcal{U},  \rho)$-accurate mechanism for Hamming weight queries, then $b \leq O(\log( \xi \rho )/ \delta)$.  This result gives us a bit hope to
 design differentially private and accurate mechanisms for some $b$.
 
 
@@ -262,7 +262,7 @@ design differentially private and accurate mechanisms for some $b$.
 
 We try to naturally expand SV-consistent sampling to BCL-consistent sampling, but can't get optimistic results. Due to space limitations, we omit the concrete pessimistic  results.   It's not surprising,
 as the ``interval'' property (see Definition \ref{SVCS}) is used to achieve SV-differential privacy, while the mechanism based
-on $\mathcal{BCL}(b, \delta, n)$ with $b \neq 0$ can't be an interval one.
+on $\mathcal{BCL}(\delta, b)$ with $b \neq 0$ can't be an interval one.
 
 Essentially, in order to achieve differential privacy,
 we need to restrict the upper bound of $ \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [ \mathbf{r} \in T_1   \backslash T_2 ] / \Pr \limits_{ \mathbf{r} \leftarrow BCL(\delta, b, n)} [\mathbf{r} \in T_2] $.  Similar to \cite{DLMV12}, consistent sampling  is a   necessary  condition  for building BCL-robust, differentially private mechanisms.  From the generation  procedure of $BCL(\delta, b, n)$,
@@ -305,7 +305,7 @@ Aiming at negative results about differential privacy, Dodis and Yao \cite{DY14}
 
 \item  We also give rigorous proofs about differential privacy and accuracy of this kind of mechanism(Theorems \ref{bcl-dp} and \ref{bcl-u}).
 
-\item  While the result of \cite{DY14} implies that if  there exists a $( \mathcal{BCL}(\delta, b, n), \xi)-$differentially private and $(U_n, \rho)$-accurate mechanism  for the Hammimg weight queries, then the parameters should satisfy $ \rho > \frac{2^{b \cdot \log (1+ \delta) -9}}{\xi}$, we build {\slshape explicit} such mechanisms and the parameters match the above condition (Theorem \ref{spe}).  Thus we have made some progress.
+\item  While the result of \cite{DY14} implies that if  there exists a $( \mathcal{BCL}(\delta, b), \xi)-$differentially private and $(\mathcal{U}, \rho)$-accurate mechanism  for the Hammimg weight queries, then the parameters should satisfy $ \rho > \frac{2^{b \cdot \log (1+ \delta) -9}}{\xi}$, we build {\slshape explicit} such mechanisms and the parameters match the above condition (Theorem \ref{spe}).  Thus we have made some progress.
 
 \end{itemize}
 \ignore{
@@ -337,11 +337,25 @@ In Section 4, we show the concrete construction of finite-precision mechanisms, 
 In this section, we present some notations and definitions that will be used later.
 \vspace{0.15cm}
 
+<<<<<<< .mine
+=======
 
 We call a family   $ \mathcal{R}$ of distributions over $\{0, 1\}^*$ a source, where $\{0, 1\}^* \overset{def}{=} \bigcup \limits_{ m \in \mathbb{Z}^+ } \{0, 1\}^m = \{0, 1\} \cup \{0, 1\}^2 \cup \ldots  \cup \{0, 1\}^m \ldots$.       Denote $ \mathcal{U} $  as the uniform source, which
  is the set containing only the distribution $U$  on $\{0, 1\}^*$ that samples each bit independently and uniformly at random. For a set $S$, we write $U_S$ to denote the uniform distribution over $S$.  For a distribution or a random variable $R$, let $\mathbf{r} \leftarrow R$
 denote the operation of sampling a random   $\mathbf{r}$  according to $R$.
 For a positive integer $n$, let $[n] \overset{def}{=}  \{1, 2, \ldots, n\}$.   Denote  $ \lfloor \cdot \rceil$ as the nearest integer function.
+>>>>>>> .r6
+
+
+
+ For a positive integer $n$, let $[n] \overset{def}{=}  \{1, 2, \ldots, n\}$.   Denote  $ \lfloor \cdot \rceil$ as the nearest integer function.
+For a distribution or a random variable $R$, let $\mathbf{r} \leftarrow R$
+denote the operation of sampling a random   $\mathbf{r}$  according to $R$.  For a set $S$, we write $U_S$ to denote the uniform distribution over $S$. Let $\{0, 1\}^* \overset{def}{=} \bigcup \limits_{ m \in \mathbb{Z}^+ } \{0, 1\}^m$.
+We consider a distribution over $\{0, 1\}^*$ as continuously outputting (possibly correlated) bits.
+We call a family   $ \mathcal{R}$ of distributions over $\{0, 1\}^*$ a source.       Denote $ \mathcal{U} $  as the uniform source, which
+ is the set containing only the distribution $U$  over $\{0, 1\}^*$ that samples each bit independently and uniformly at random.
+
+
 
 
 Consider a statistical database as an array of rows from some countable set. Two databases are neighboring if they differ in exactly one row.
@@ -362,13 +376,41 @@ variables and $ 0 \leq \delta < 1$.   A probability distribution $ X  = x_1 x_2 
 is a  $ \delta$-Santha-Vazirani (SV) distribution, denoted by $SV(\delta)$,  if for all $i \in \mathbb{Z}^+$ and for every string $s$ of length $ i-1$,
 we have
 $$ \frac{1-\delta}{2} \leq \Pr[x_i=1 \mid x_1 x_2  \ldots x_{i-1} = s] \leq \frac{1+ \delta}{2}.$$
-We define the $\delta$-Santha-Vazirani source $\mathcal{SV}(\delta)$ to be the set of all-Santha-Vazirani distributions.
+
+We define the $\delta$-Santha-Vazirani source $\mathcal{SV}(\delta)$ to be the set of all $ \delta$-SV distributions.
 For a distribution $SV(\delta) \in \mathcal{SV}(\delta)$,  we define $SV(\delta, n)$  as the distribution $SV(\delta)$
-restricted to the first $n$ coins $ x_1 x_2  \ldots x_n$. We let $\mathcal{SV}(\delta, n)$ to be the set of all distributions $SV(\delta, n)$.
+restricted to the first $n$ coins $ x_1 x_2  \ldots x_n$. We let $\mathcal{SV}(\delta, n)$ be the set of all distributions $SV(\delta, n)$.
 }
 
 \end{definition}
 
+
+
+
+
+\begin{definition}
+(\cite{D01}) {\slshape    Let   $x_1, x_2, \ldots$  be a sequence of Boolean random
+variables and $ 0 \leq \delta < 1$.   A probability distribution $ X  = x_1 x_2   \ldots $  over $  \{0, 1\}^* $
+is a  $ (\delta, b)$-Bias-Control Limited (BCL) distribution, denoted by $BCL(\delta, b)$,  if for all $i \in \mathbb{Z}^+$ and for every string $s$ of length $ i-1$,  the value  of $x_i$
+can depend on  $x_1, x_2, \ldots,  x_{i-1}$ in one of the following two ways:
+
+(A) $x_i$ is determined by $x_1, \ldots, x_{i-1}$, but this happens for at most $b$ bits. This process of determining
+a bit is called intervention.
+
+(B)  $  \frac{1- \delta}{2}  \leq   \Pr[x_i=1   \mid  x_1  x_2 \ldots x_{i-1} =s]  \leq \frac{ 1 + \delta}{2}$.
+
+
+We define the $(\delta, b)$-Bias-Control Limited source $\mathcal{BCL}(\delta, b)$ to be the set of all  $ (\delta, b)$-BCL distributions.
+For a distribution $BCL(\delta, b) \in \mathcal{BCL}(\delta, b)$,  we define $BCL(\delta, b, n)$  as the distribution $BCL(\delta, b)$
+restricted to the first $n$ coins $ x_1 x_2  \ldots x_n$. We let $\mathcal{BCL}(\delta, b, n)$  be the set of all distributions $BCL(\delta, b, n)$.
+
+}
+
+
+\end{definition}
+
+
+\ignore{
 
 
 \begin{definition}
@@ -382,12 +424,15 @@ a bit is called intervention.
 (B)  $  \frac{1- \delta}{2}  \leq   \Pr[x_i=1   \mid  x_1  x_2 \ldots x_{i-1}]  \leq \frac{ 1 + \delta}{2}$.
 
 Every distribution over $\{0, 1\}^n$ generated from $\mathcal{BCL}(\delta, b, n)$ is called  a
- $(\delta, b, n)$-BCL distribution  BCL$(\delta, b, n)$.
+ $(\delta, b, n)$-BCL distribution  $BCL(\delta, b, n)$.  The $(\delta, b)$-BCL source is defined as  $ \mathcal{BCL}(\delta, b) \overset{def}{=} \bigcup \limits_{n \in \mathbb{Z}^+}   \mathcal{BCL}(\delta, b,  n)$.
 
 }
 
 
 \end{definition}
+
+
+}
 
 
 
@@ -419,8 +464,18 @@ to make later calculations a little simpler.  It's reasonable since when $ \xi \
 we have $ e^{\xi} \approx 1+ \xi$, and when $ \xi \geq 0$, we always have $1+ \xi \leq e^{\xi}$.
 
 
- Denote $ T(D, f, z )  \overset{def}{=} \{  \mathbf{r} \in \{0, 1\}^n \mid z = M(D, f; \mathbf{r}) \}$ as   the set of all coins   $\mathbf{r} $
-such that $M$ outputs $z$ when  running on  database $D$, query $f$, and randomness $\mathbf{r}$.
+\begin{remark} In this paper,   we assume that the   random coins  employed by $M$  is in $\{0, 1\}^*$, that is,  though $M$ has at its disposal a
+possibly infinite number of random bits,   for a fixed outcome $z  \in \mathbb{Z}$, $M$ needs only a finite number
+of coins  to determine whether $M(D, f) = z$. More concretely, if $M(D, f; \mathbf{r}) =z$ is already determined from $\mathbf{r} \in \{0, 1\}^n$, then for any $ \mathbf{r}' \in \{0, 1\}^{n'}$ such that $\mathbf{r}$ is a prefix of $ \mathbf{r}'$,  $ M(D, f; \mathbf{r}') =z $ also holds.
+Namely, providing $M$ with extra coins does not change its output.
+
+
+
+\end{remark}
+
+
+
+Consider a mechanism $M$ with randomness space $\{0, 1\}^*$. For all neighboring databases  $D_1, D_2 \in \mathcal{D}$, denote $ \widetilde{T}_i(D_i, f, z)  \overset{def}{=} \{  \mathbf{r} \in \{0, 1\}^* \mid z = M(D_i, f; \mathbf{r}) \}$, where $i \in \{1, 2\}$,   as  the set of all coins  $\mathbf{r} \in \{0, 1\}^*$ such that $M$ outputs $z$ when running on  database $D_i$, query $f$, and random coins $\mathbf{r}$.
 
 
 
@@ -525,8 +580,13 @@ Then we observe
 that these concepts are sufficient to design finite-precision accurate and differentially private mechanisms based on  BCL and SV sources.
 
 
-For a bit sequence $\mathbf{x} =x_1, \ldots,  x_m \in \{0, 1\}^m$, denote $ \textmd{SUFFIX}(\mathbf{x}) \overset{def}{=} \{  \mathbf{y} = y_1, y_2, \ldots \in \{0, 1\}^* \mid x_i = y_i~for~all~i \in [m]\}$ as the set of all bit strings that have $\mathbf{x}$ as a prefix.  Define $ \textmd{SUFFIX}(\mathbf{x}, n)
+For $m \in \mathbb{Z}^+$ and  a bit sequence $\mathbf{x} =x_1, \ldots,  x_m \in \{0, 1\}^m$, denote $ \textmd{SUFFIX}(\mathbf{x}) \overset{def}{=} \{  \mathbf{y} = y_1, y_2, \ldots \in \{0, 1\}^* \mid x_i = y_i~for~all~i \in [m]\}$ as the set of all bit strings that have $\mathbf{x}$ as a prefix. For $n \in \mathbb{Z}^+$ such that $m \leq n$, we define $ \textmd{SUFFIX}(\mathbf{x}, n)
  \overset{def}{=} \textmd{SUFFIX}(\mathbf{x}) \cap \{0, 1\}^n$.
+
+
+
+
+
 
 Assume that $z = \frac{k}{\varepsilon} \in \mathbb{Z}$, where $k \in \mathbb{Z}$.   Denote $n \overset{def}{=} n( \min (f(D_1), f(D_2)), k)$.
  Let $T_1 \overset{def}{=} T(D_1, f, z)$,  $T_2 \overset{def}{=} T(D_2, f, z)$, and  $$\mathbf{u} \overset{def}{=} argmax \{|\mathbf{u}'|  \mid
@@ -535,6 +595,17 @@ $$  \frac{  \Pr \limits_{\mathbf{r} \leftarrow BCL (\delta, b,  n)} [ \mathbf{r}
 the calculation of the  ratio can be simplified.
 
 \vspace{0.15cm}
+
+
+\vspace{0.15cm}
+
+
+
+
+
+
+
+Recall that the concepts of consistent sampling and SV-consistent sampling \cite{DLMV12} are as follows.
 
 \begin{definition}  \label{cv}
  {\slshape  Let  $ \zeta  > 0$. A  mechanism $M$ has $ \zeta$-consistent sampling
@@ -546,15 +617,6 @@ where $ T_1 \overset{def}{=} T(D_1, f, z)$, $ T_2 \overset{def}{=} T(D_2, f, z) 
 
 \end{definition}
 
-\vspace{0.15cm}
-
-
-
-
-
-
-
-Recall that the concept of SV-consistent sampling \cite{DLMV12} is as follows.
 \vspace{0.15cm}
 
 \begin{definition}
@@ -616,7 +678,7 @@ databases $D_1$, $D_2 \in \mathcal{D}$, and all possible outcomes $z \in \mathbb
 
 \begin{theorem}
 \label{CSDP}
-  {\slshape  If Mechanism $M$ is a  compact $(\zeta, c)$-BCL-consistent sampling mechanism for $(\delta, b, n)$-BCL-sources,  then $M$ is $(\mathcal{BCL}(\delta, b, n), \xi)$-differentially private,
+  {\slshape  If Mechanism $M$ is a  compact $(\zeta, c)$-BCL-consistent sampling mechanism for $(\delta, b)$-BCL-sources,  then $M$ is $(\mathcal{BCL}(\delta, b), \xi)$-differentially private,
 where $ \xi \leq (\frac{1+ \delta }{1- \delta})^{c } \cdot  [\frac{1}{2}(1+ \delta)]^{-b}    \cdot  \zeta$.
 In particular, for $\delta \in [0, 1)$, and $c=O(1)$, we have $\lim \limits_{\zeta \rightarrow 0}   (\frac{1+ \delta }{1- \delta})^{c} \cdot  [\frac{1}{2}(1+ \delta)]^{-b}    \cdot  \zeta   =0$. }
 
@@ -720,8 +782,8 @@ In particular, for $\delta \in [0, 1)$, and $c=O(1)$, we have $\lim \limits_{\ze
 \section{ Accurate and Private BCLCS Mechanisms   }
 
 
-In this section, we construct  finite-precision  mechanisms that achieve compact $(\zeta, O(1) )$-BCL-consistent sampling  with sensitivity 1.  We also propose that  the precision of the specific mechanism based on Laplace distribution introduced by Dodis et al. \cite{DLMV12} can be modified via this technique such that it becomes a compact SV-consistent sampling mechanism.
-Then by Theorems 1 and 2, the mechanism here and the modified mechanism of \cite{DLMV12} are  $(\mathcal{BCL}(\delta, b, n), \xi)$-differentially private and $( \mathcal{SV}(\delta), \xi')$-differentially private, where  $\xi'$ is a specific $\xi$ by letting $b=0$.
+In this section, we construct  finite-precision  mechanisms that achieve compact $(\zeta, O(1))$-BCL-consistent sampling  with sensitivity 1.  We also propose that  the precision of the specific mechanism based on Laplace distribution introduced by Dodis et al. \cite{DLMV12} can be modified via this technique such that it becomes a compact SV-consistent sampling mechanism.
+Then by Theorems 1 and 2, the mechanism here and the modified mechanism of \cite{DLMV12} are  $(\mathcal{BCL}(\delta, b), \xi)$-differentially private and $( \mathcal{SV}(\delta), \xi')$-differentially private, where  $\xi'$ is a specific $\xi$ by letting $b=0$.
 We also show that these mechanisms have  good bound on utility  when the random sampling is generated from the BCL source.
 
 \subsection{ Explicit Construction }
@@ -1187,9 +1249,9 @@ Hence, $$|\textmd{SUFFIX}( \mathbf{u}, n ) \cap S_0| \leq  | \textmd{STR }(\bar{
  \label{bcl-dp}
 
   {\slshape    Mechanism $\overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }$ is a
- compact $(   (  2^b+1 ) \cdot e \cdot \varepsilon,  \log (\frac{e \cdot (2^b+1) }{1-e^{-1}}) )$-BCL-consistent sampling mechanism for $(  \delta, b, n )$-BCL sources.
+ compact $(   (  2^b+1 ) \cdot e \cdot \varepsilon,  \log (\frac{e \cdot (2^b+1) }{1-e^{-1}}) )$-BCL-consistent sampling mechanism for $(\delta, b)$-BCL sources.
 Therefore,  $\overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }$ is
-$ (\mathcal{U}, 2 e \cdot \varepsilon)$-differentially private and $(\mathcal{BCL}( \delta, b, n ), \xi)$-differentially private  for  $ \xi =     (\frac{1+ \delta }{1- \delta})^{ \log ( \frac{e \cdot  ( 2^b+1  ) }{1-e^{-1}})  } \cdot (\frac{1+ \delta}{2})^{-b} \cdot  (  2^b+1 ) \cdot e \cdot \varepsilon$.
+$ (\mathcal{U}, 2 e \cdot \varepsilon)$-differentially private and $(\mathcal{BCL}( \delta, b), \xi)$-differentially private  for  $ \xi =     (\frac{1+ \delta }{1- \delta})^{ \log ( \frac{e \cdot  ( 2^b+1  ) }{1-e^{-1}})  } \cdot (\frac{1+ \delta}{2})^{-b} \cdot  (  2^b+1 ) \cdot e \cdot \varepsilon$.
 
 
 }
@@ -1204,7 +1266,7 @@ $ (\mathcal{U}, 2 e \cdot \varepsilon)$-differentially private and $(\mathcal{BC
 \begin{theorem}   \label{bcl-u}
 
   {\slshape Mechanism $\overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }$
-has    $( \mathcal{BCL} ( \delta, b, n), O(\frac{1}{\varepsilon} \cdot   \frac{1}{1- \delta}))$-utility and $(\mathcal{U}, O(\frac{1}{\varepsilon}))$-utility.
+has    $( \mathcal{BCL} (\delta, b), O(\frac{1}{\varepsilon} \cdot   \frac{1}{1- \delta}))$-utility and $(\mathcal{U}, O(\frac{1}{\varepsilon}))$-utility.
      }
 
 \end{theorem}
@@ -1293,8 +1355,8 @@ $ \sum \limits_{l= - \infty}^{l_0} l \cdot a^l =  ?$.
 
 When $\delta =0$ and $b=0$, the BCL source degenerates into the uniform source.
 
-Therefore, the mechanism $\overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }$ has
-$( \mathcal{BCL} ( \delta, b, n),   O(\frac{1}{\varepsilon} \cdot   \frac{1}{1- \delta}))$-utility and $(\mathcal{U}, O(\frac{1}{\varepsilon}))$-utility.
+Therefore, the mechanism $\overline{M} ^{  \textsf{CBCLCS} }_{\varepsilon }$ has
+$( \mathcal{BCL} ( \delta, b),   O(\frac{1}{\varepsilon} \cdot   \frac{1}{1- \delta}))$-utility and $(\mathcal{U}, O(\frac{1}{\varepsilon}))$-utility.
 
 \end{proof}
 
@@ -1303,7 +1365,7 @@ From Theorems \ref{bcl-dp} and  \ref{bcl-u},   we get that
 
 \begin{theorem}
 \label{spe}
-  {\slshape  There exists an explict   $(\mathcal{BCL}(\delta, b, n), \xi)-$differentially private and $(U_n, \rho)$-accurate mechanism M for the
+  {\slshape  There exists an explict   $(\mathcal{BCL}(\delta, b), \xi)-$differentially private and $(\mathcal{U}, \rho)$-accurate mechanism M for the
  Hammimg weight queries where  $$\rho = \frac{ 2^{b \cdot \log (1+ \delta) -9}  }{ \xi } \cdot   (\frac{2}{1+ \delta})^{b+1} \cdot \frac{2^b+1}{(1+ \delta)^b} \cdot (\frac{1+ \delta}{1-\delta})^{\log  \frac{(2^b+1) e}{1-e^{-1}}   }  \cdot \frac{2^{11}}{1- (\frac{1+ \delta}{2})^2} \cdot e  >  \frac{ 2^{b \cdot \log (1+ \delta) -9}  }{ \xi }.$$   }
 
 
@@ -1315,21 +1377,21 @@ From Theorems \ref{bcl-dp} and  \ref{bcl-u},   we get that
 One the other hand, recall that Dodis and Yao \cite{DY14} obtained the following result.
 
 \begin{theorem} \label{bcl-imp}
-{\slshape   If     $b   \geq \frac{  \log ( \xi \rho )  + 9 }{  \log(1+ \delta)} = \Omega (  \frac{\log( \xi \rho)+1}{ \delta})$,    then no $( \mathcal{BCL}(\delta, b, n), \xi  )-$differentially private and $(U_n, \rho)$-accurate mechanism for the Hammimg weight queries exists.          }
+{\slshape   If     $b   \geq \frac{  \log ( \xi \rho )  + 9 }{  \log(1+ \delta)} = \Omega (  \frac{\log( \xi \rho)+1}{ \delta})$,    then no $( \mathcal{BCL}(\delta, b), \xi  )-$differentially private and $(\mathcal{U}, \rho)$-accurate mechanism for the Hammimg weight queries exists.          }
 \end{theorem}
 
 Therefore, we conclude that
 
 \begin{corollary}
 \label{gen}
-  {\slshape  Assume that the mechanism M is  $( \mathcal{BCL}(\delta, b, n), \xi)-$differentially private and $(U_n, \rho)$-accurate for the
+  {\slshape  Assume that the mechanism M is  $( \mathcal{BCL}(\delta, b), \xi)-$differentially private and $(\mathcal{U}, \rho)$-accurate for the
  Hammimg weight queries, then
   $ \rho > \frac{2^{b \cdot \log (1+ \delta) -9}}{\xi}$.
  }
 
 \end{corollary}
 
-Corollary \ref{gen}  implies that  it's possible to construct a   $( \mathcal{BCL}(\delta, b, n), \xi)-$differentially private and $(U_n, \rho)$-accurate mechanism for  Hammimg weight queries, where $ \rho > \frac{2^{b \cdot \log (1+ \delta) -9}}{\xi}$.  In this paper, we show an explicit  construction of such mechanisms.
+Corollary \ref{gen}  implies that  it's possible to construct a   $( \mathcal{BCL}(\delta, b), \xi)-$differentially private and $(\mathcal{U}, \rho)$-accurate mechanism for  Hammimg weight queries, where $ \rho > \frac{2^{b \cdot \log (1+ \delta) -9}}{\xi}$.  In this paper, we show an explicit  construction of such mechanisms.
 
 
 %  Therefore, Corollary \ref{spe} is a special case of Corollary \ref{gen}.
@@ -1410,9 +1472,15 @@ EUROCRYPT 2005}, volume 3494 of {\slshape LNCS}, pages 147-163. Springer-Verlag,
   \bibitem[BDMN05]{BDMN05}   Avrim Blum, Cynthia Dwork, Frank McSherry, and Kobbi Nissim. Practical privacy: the
 sulq framework. In Chen Li, editor,  {\slshape  PODS}, pages 128-138. ACM, 2005.
 \vspace{0.11cm}
+<<<<<<< .mine
+\bibitem[BGMZ97]{BGMZ97} Andrei Z. Broder, Steven C. Glassman, Mark S. Manasse, and Geoffrey Zweig. Syntactic
+clustering of the web. {\slshape  Computer Networks}, 29(8-13): 1157-1166, 1997.
+\vspace{0.11cm}
+=======
 \bibitem[BGMZ97]{BGMZ97} Andrei Z. Broder, Steven C. Glassman, Mark S. Manasse, and Geoffrey Zweig. Syntactic
 clustering of the web. {\slshape  Computer Networks}, 29(8-13): 1157-1166, 1997. 
 \vspace{0.11cm}
+>>>>>>> .r6
 \bibitem[BH05]{BH05} Boaz Barak and Shai Halevi. A model and architecture for pseudo-random generation with applications
 to /dev/random. In {\slshape  Proceedings of the 12th ACM Conference on Computer and Communication
 Security}, pages 203-212, 2005.
