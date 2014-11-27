@@ -811,9 +811,9 @@ of $ M^{   \textsf{CBCLCS} }_{\varepsilon}(D_1, f)$ (resp. $ M^{   \textsf{CBCLC
 
 
  ${\textsf{Step~2}}$  {\slshape Suppose that $y$ is $\underline{fixed}$. Let $ s_y(k) \overset{def}{=}  \textsf{CDF}^{\textsf{Lap} }_{y, \frac{1}{\varepsilon} } ( \frac{k+ \frac{1}{2}}{  \varepsilon})$ and $s_{y-1}(k) \overset{def}{=}  \textsf{CDF}^{\textsf{Lap} }_{y-1, \frac{1}{\varepsilon} } ( \frac{k+ \frac{1}{2}}{  \varepsilon})$ for all $k \in \mathbb{Z}$.  Denote $I_y(k) = [s_{y}(k-1), s_{y}(k))$ and $I_{y-1}(k) = [s_{y-1}(k-1), s_{y-1}(k))$.
-Let $ \bar{s}_{y-1}(k-1)$ (resp. $ \bar{s}_{y-1}(k)$) be  $s_{y-1}(k-1)$ (resp. $s_{y-1}(k)$), rounded  to its  $n \overset{def}{=}\tau (y-1, k/\varepsilon)$ bits after the binary point.
- We round $s_{y}(k-1)$ (resp.  $s_{y}(k)$) to its   $n \overset{def}{=}\tau (y-1, k/\varepsilon)$  bits after the binary point. Assume the binary decimal representation of the rounded $s_{y}(k-1)$ (resp.  $s_{y}(k)$) is $0.r_1 r_2 \ldots r_n$ (resp.  $0.q_1 q_2 \ldots q_n$), then let
- $ \bar{s}_{y}(k-1) = 0.r_1 r_2 \ldots r_n + 0.r'_1 r'_2 \ldots r'_n$ (resp. $\bar{s}_{y}(k) = 0.q_1 q_2 \ldots q_n + 0.q'_1 q'_2 \ldots q'_n$), where  $ r'_i = 0$ for $i \in  [n-1]$, and  $r'_n=1$ (resp. $ q'_i = 0$ for $i \in  [n-1]$ and  $q'_n=1$).
+Let $ \bar{s}_{y-1}(k-1)$ (resp. $ \bar{s}_{y-1}(k)$) be  $s_{y-1}(k-1)$ (resp. $s_{y-1}(k)$), rounded  to its  $n \overset{def}{=}\tau (y-1, k/\varepsilon)$ most significant figures.
+ We round $s_{y}(k-1)$ (resp.  $s_{y}(k)$) to its $n \overset{def}{=}\tau (y-1, k/\varepsilon)$  most significant figures. Assume the binary decimal representation of the rounded $s_{y}(k-1)$ (resp.  $s_{y}(k)$) is $0. 0 \ldots 0 r_1 r_2 \ldots r_n$ (resp.  $0.0 \ldots 0 q_1 q_2 \ldots q_n$), then let
+ $ \bar{s}_{y}(k-1) = 0.0 \ldots 0 r_1 r_2 \ldots r_n + 0.0 \ldots 0 r'_1 r'_2 \ldots r'_n$ (resp. $\bar{s}_{y}(k) = 0.0 \ldots 0 q_1 q_2 \ldots q_n + 0.0 \ldots 0 q'_1 q'_2 \ldots q'_n$), where the position of $r_1$ after the binary point is the same as that of $r'_1$, $ r'_i = 0$ for $i \in  [n-1]$,  and  $r'_n=1$ (resp. the position of $q_1$ after the binary point is the same as that of $q'_1$,  $ q'_i = 0$ for $i \in  [n-1]$ and  $q'_n=1$).
 Denote $ \bar{I}_{y-1}(k) = [ \bar{s}_{y-1}(k-1), \bar{s}_{y-1}(k))$ and $\bar{I}_y(k) = [\bar{s}_{y}(k-1),\bar{s}_{y}(k))$.
 
  }
@@ -822,8 +822,8 @@ Denote $ \bar{I}_{y-1}(k) = [ \bar{s}_{y-1}(k-1), \bar{s}_{y-1}(k))$ and $\bar{I
 
  ${\textsf{Step~3}}$ {\slshape  Denote $\overline{Z}_y$ (resp. $\overline{Z}_{y-1}$) as the  output distribution of  $ \overline{M}^{   \textsf{CBCLCS} }_{\varepsilon}(D_1, f)$ (resp. $ \overline{M}^{   \textsf{CBCLCS} }_{\varepsilon}(D_2, f)$), which approximates  $Z_y$ (resp. $Z_{y-1}$).   
  For any sequence $\mathbf{r}=r_1, r_2, \ldots, r_n \in \{0, 1\}^n$,  the real representation of $\mathbf{r}$ is $REAL( \mathbf{r} ) \overset{def}{=}0.r_1 r_2 \ldots r_n \in [0, 1]$.
- We obtain distribution $\overline{Z}_y$ (resp. $\overline{Z}_{y-1}$) by   
- sampling a sequence of bits $\mathbf{r} \in \{0, 1\}^n$ (resp. $\mathbf{r}' \in \{0, 1\}^n$) from a $(\delta, b, n)$-BCL distribution
+ We obtain distribution $\overline{Z}_y$ (resp. $\overline{Z}_{y-1}$) from a $(\delta, b, n)$-BCL distribution 
+by sampling a sequence of bits $\mathbf{r}=r_1, r_2, \ldots, r_n \in \{0, 1\}^n$ (resp. $\mathbf{r}'=r'_1, r'_2, \ldots, r'_n \in \{0, 1\}^n$)
 and outputting  $ \frac{k_1}{\varepsilon} $ (resp. $ \frac{k_2}{\varepsilon}$) where $k_1 \in \mathbb{Z}$ (resp. $k_2 \in \mathbb{Z}$) is the unique integer such that $REAL( \mathbf{r}) \in \bar{I}_y(k_1)$ (resp. $REAL( \mathbf{r}') \in \bar{I}_{y-1}(k_2)$).
 
 }
