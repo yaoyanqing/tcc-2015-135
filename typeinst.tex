@@ -351,12 +351,8 @@ For a positive integer $n$, let $[n] \overset{def}{=}  \{1, 2, \ldots, n\}$.   D
 
 
 
-Consider a statistical database as an array of rows from some countable set. Two databases are neighboring if they differ in exactly one row.
-Let $ \mathcal{D}$ be the space of all databases.  For simplicity, we only consider the query function $f:  \mathcal{D} \rightarrow \mathbb{Z}$.
- We assume that the randomness $  \mathbf{r}  $ as input of  the mechanism $M$  is in $ \{0, 1\}^*$.  For a fixed outcome $z$, $M$ needs only a finite number of coins $n \overset{def}{=} \tilde{\tau}(D, f, z)$ to determine whether $M(D, f) = z$.  Therefore,
-we assume that  if  $ M(D,f; \mathbf{r}) = z   $ where $ \mathbf{r} \in \{0, 1\}^n$, then for any $\mathbf{r}'$ with $\mathbf{r}$
-as its prefix, we still have $ M(D, f;  \mathbf{r}')=z$, that is, providing $M$ with extra coins does not change its output, which is
-consistent with the model in \cite{DLMV12}.
+
+
 
 
 
@@ -436,6 +432,9 @@ This source models the facts that physical sources can never produce  completely
 In particular, when $b = 0$,   $ \mathcal{BCL}(\delta, b, n)$   degenerates into $ \mathcal{SV}(\delta, n)$ \cite{SV86}; when $ \delta=0$, it yields the sequential-bit-fixing source of Lichtenstein, Linial, and Saks \cite{LLS89}.
 
 
+
+Consider a statistical database as an array of rows from some countable set. Two databases are neighboring if they differ in exactly one row.
+Let $ \mathcal{D}$ be the space of all databases. For simplicity, we only consider the query function $f:  \mathcal{D} \rightarrow \mathbb{Z}$.    
 Recall some concepts mentioned in \cite{DLMV12} as follows.
 
 \begin{definition}
@@ -455,6 +454,19 @@ family of functions. A mechanism $M$ is $(\mathcal{R}, \xi)$-differentially priv
 In this paper we employ the upper bound of the ratio of probabilities introduced in \cite{DLMV12} other than the traditional upper bound ``$e^{\xi}$''
 to make later calculations a little simpler.  It's reasonable since when $ \xi \in [0, 1]$, which is the main useful range,
 we have $ e^{\xi} \approx 1+ \xi$, and when $ \xi \geq 0$, we always have $1+ \xi \leq e^{\xi}$.
+
+
+\begin{remark}
+
+ In this paper, we assume that the randomness $  \mathbf{r}  $ as input of  the mechanism $M$  is in $ \{0, 1\}^*$.  For a fixed outcome $z$, $M$ needs only a finite number of coins $n \overset{def}{=} \tilde{\tau}(D, f, z)$ to determine whether $M(D, f) = z$.  Therefore,
+we assume that  if  $ M(D,f; \mathbf{r}) = z   $ where $ \mathbf{r} \in \{0, 1\}^n$, then for any $\mathbf{r}'$ with $\mathbf{r}$
+as its prefix, we still have $ M(D, f;  \mathbf{r}')=z$, that is, providing $M$ with extra coins does not change its output, which is
+consistent with the model in \cite{DLMV12}.
+
+
+\end{remark}
+
+
 
 
 \ignore{ 
@@ -572,7 +584,7 @@ that these concepts are sufficient to design finite-precision differentially pri
 
 
 Consider a mechanism $M$ with randomness space $\{0, 1\}^*$.
-Denote $ \widetilde{T}(D, f, z)  \overset{def}{=} \{  \mathbf{r} \in \{0, 1\}^* \mid z = M(D, f; \mathbf{r}) \}$ as  the set of all coins  $\mathbf{r} \in \{0, 1\}^*$ such that $M$ outputs $z$ when running on  database $D$, query $f$, and random coins $\mathbf{r}$.   It should be noted that in our model only $n \overset{def}{=} \tilde{\tau} (D, f, z)$ coins need to be sampled to determine if $M(D, f)=z$. Therefore, let $T(D, f, z) \overset{def}{=} \{r \in {0, 1}^n | z = M(D, f; r)\}$, without loss of generality,  we can assume that $\widetilde{T}(D, f, z) =T(D, f, z)$.
+Denote $ \widetilde{T}(D, f, z)  \overset{def}{=} \{  \mathbf{r} \in \{0, 1\}^* \mid z = M(D, f; \mathbf{r}) \}$ as  the set of all coins  $\mathbf{r} \in \{0, 1\}^*$ such that $M$ outputs $z$ when running on  database $D$, query $f$, and random coins $\mathbf{r}$.   It should be noted that in our model only $n \overset{def}{=} \tilde{\tau} (D, f, z)$ coins need to be sampled to determine if $M(D, f)=z$. Therefore, let $T(D, f, z) \overset{def}{=} \{r \in {0, 1}^n \mid z = M(D, f; r)\}$, without loss of generality,  we can assume that $\widetilde{T}(D, f, z) =T(D, f, z)$.
 
 
 
@@ -811,8 +823,8 @@ of $ M^{   \textsf{CBCLCS} }_{\varepsilon}(D_1, f)$ (resp. $ M^{   \textsf{CBCLC
 
 
  ${\textsf{Step~2}}$  {\slshape Suppose that $y$ is $\underline{fixed}$. Let $ s_y(k) \overset{def}{=}  \textsf{CDF}^{\textsf{Lap} }_{y, \frac{1}{\varepsilon} } ( \frac{k+ \frac{1}{2}}{  \varepsilon})$ and $s_{y-1}(k) \overset{def}{=}  \textsf{CDF}^{\textsf{Lap} }_{y-1, \frac{1}{\varepsilon} } ( \frac{k+ \frac{1}{2}}{  \varepsilon})$ for all $k \in \mathbb{Z}$.  Denote $I_y(k) = [s_{y}(k-1), s_{y}(k))$ and $I_{y-1}(k) = [s_{y-1}(k-1), s_{y-1}(k))$.
-Let $ \bar{s}_{y-1}(k-1)$ (resp. $ \bar{s}_{y-1}(k)$) be  $s_{y-1}(k-1)$ (resp. $s_{y-1}(k)$), rounded  to its  $n \overset{def}{=}\tau (y-1, k/\varepsilon)$ bits after the binary point.
- We round $s_{y}(k-1)$ (resp.  $s_{y}(k)$) to its   $n \overset{def}{=}\tau (y-1, k/\varepsilon)$  bits after the binary point. Assume the binary decimal representation of the rounded $s_{y}(k-1)$ (resp.  $s_{y}(k)$) is $0.r_1 r_2 \ldots r_n$ (resp.  $0.q_1 q_2 \ldots q_n$), then let
+Let $ \bar{s}_{y-1}(k-1)$ (resp. $ \bar{s}_{y-1}(k)$) be  $s_{y-1}(k-1)$ (resp. $s_{y-1}(k)$), rounded  to the first $n \overset{def}{=}\tau (y-1, k/\varepsilon)$ bits after the binary point.
+ We round $s_{y}(k-1)$ (resp.  $s_{y}(k)$) to   the first  $n \overset{def}{=}\tau (y-1, k/\varepsilon)$  bits after the binary point. Assume the binary decimal representation of the rounded $s_{y}(k-1)$ (resp.  $s_{y}(k)$) is $0.r_1 r_2 \ldots r_n$ (resp.  $0.q_1 q_2 \ldots q_n$), then let
  $ \bar{s}_{y}(k-1) = 0.r_1 r_2 \ldots r_n + 0.r'_1 r'_2 \ldots r'_n$ (resp. $\bar{s}_{y}(k) = 0.q_1 q_2 \ldots q_n + 0.q'_1 q'_2 \ldots q'_n$), where  $ r'_i = 0$ for $i \in  [n-1]$, and  $r'_n=1$ (resp. $ q'_i = 0$ for $i \in  [n-1]$ and  $q'_n=1$).
 Denote $ \bar{I}_{y-1}(k) = [ \bar{s}_{y-1}(k-1), \bar{s}_{y-1}(k))$ and $\bar{I}_y(k) = [\bar{s}_{y}(k-1),\bar{s}_{y}(k))$.
 
@@ -986,7 +998,7 @@ Denote $I''_y(k)  \overset{def}{=} I_{y-1}(k) \setminus I_y(k) = [s_y(k), s_{y-1
   For all $y, k  \in \mathbb{Z}$,
 we have
 $$    | \bar{I}'_y(k) | \leq | I'_y(k)|, $$
-$$    |  \bar{I}_{y-1}(k)| \geq |I_{y-1}(k)|- 2^{-\tau (y-1, k/\varepsilon)},  $$
+$$  |I_{y-1}(k)|+ 2^{-\tau (y-1, k/\varepsilon)}     \geq  |  \bar{I}_{y-1}(k)| \geq |I_{y-1}(k)|- 2^{-\tau (y-1, k/\varepsilon)},  $$
 $$  |I_{y}(k)| + 2^{-\tau (y-1, k/\varepsilon)}  \geq |  \bar{I}_{y}(k)| \geq |I_{y}(k)|- 2^{-\tau (y-1, k/\varepsilon)}.  $$
  }
 
@@ -998,6 +1010,8 @@ $$  |I_{y}(k)| + 2^{-\tau (y-1, k/\varepsilon)}  \geq |  \bar{I}_{y}(k)| \geq |I
 \begin{proof} Since $s_{y-1}(k-1) \geq  \bar{s}_{y-1}(k-1)$, and $\bar{s} _{y}(k-1) \geq s _{y}(k-1) - 2^{-\tau (y-1, k/\varepsilon)} + 2^{-\tau (y-1, k/\varepsilon)}$, we get $    | \bar{I}'_y(k) | \leq | I'_y(k)|$.
 
  Since $  \bar{s}_{y-1}(k) \geq s _{y-1}(k) - 2^{-\tau (y-1, k/\varepsilon)}$ and $  \bar{s}_{y-1}(k-1) \leq s _{y-1}(k-1 )$,  we have  $ |  \bar{I}_{y-1}(k)| \geq |I_{y-1}(k)|- 2^{-\tau (y-1, k/\varepsilon)}. $
+ 
+ Since $   s _{y-1}(k) \geq  \bar{s}_{y-1}(k)$ and $ s _{y-1}(k-1)  \leq \bar{s}_{y-1}(k-1) + 2^{-\tau (y-1, k/\varepsilon)}$, we have $ |I_{y-1}(k)|+ 2^{-\tau (y-1, k/\varepsilon)} \geq   |  \bar{I}_{y-1}(k)|$.
 
  Since  $ \bar{s}_{y}(k) \geq s _{y}(k) - 2^{-\tau (y-1, k/\varepsilon)} + 2^{-\tau (y-1, k/\varepsilon)} $ and $  \bar{s}_{y}(k-1) \leq s _{y}(k-1) + 2^{-\tau (y-1, k/\varepsilon)}$,  we have  $ |  \bar{I}_{y}(k)| \geq |I_{y}(k)|- 2^{-\tau (y-1, k/\varepsilon)}. $
 
@@ -1275,19 +1289,22 @@ has    $( \mathcal{BCL} (\delta, b), O(\frac{1}{\varepsilon} \cdot   \frac{1}{1-
 \end{theorem}
 
 
-\begin{proof}  For any $BCL(\delta, b, n)$ distribution, we calculate the  upper bound of $$ \mathbb{E}_{ \textbf{r} \leftarrow  BCL (\delta, b, n) }
-[| \overline{M} ^{  \textsf{CBCLCS} }_{\varepsilon } (D, f; \textbf{r}) - f(D) |]$$ as follows.
-Let $f(D)=y$. Then
+\begin{proof} We only need to  prove that for all neighboring databases $D_1, D_2 \in   \mathcal{D}$, all queries $f \in \mathcal{F}$, and all distributions  $ BCL(\delta, b)  \in \mathcal{BCL} (\delta, b)$,  
+$ \mathbb{E}_{ \mathbf{r} \leftarrow  BCL(\delta, b)} [ | \overline{M} ^{  \textsf{CBCLCS} }_{\varepsilon } (D_1, f; \textbf{r}) -  f(D_1)| ]$ and  $ \mathbb{E}_{ \mathbf{r} \leftarrow  BCL(\delta, b)} [ | \overline{M} ^{  \textsf{CBCLCS} }_{\varepsilon } (D_2, f; \textbf{r}) -  f(D_2)| ]$ are both upper bounded by $O(\frac{1}{\varepsilon} \cdot   \frac{1}{1- \delta})$. Without loss of generality, assume that $f(D_1)=y$ and $f(D_2)=y-1$. Then
+ 
 
 \begin{align*}
-& \mathbb{E}_{ \textbf{r} \leftarrow BCL(\delta, b, n) } [|  \overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }(D, f; \textbf{r})-y|]\\
-& = \sum \limits_{k = - \infty}^{\infty} \Pr \limits_{ \textbf{r} \leftarrow  BCL (\delta, b, n) } [  \overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }(D, f; \textbf{r}) = \frac{k}{ \varepsilon}] \cdot | \frac{k}{ \varepsilon} - y|.\\
+& \mathbb{E}_{ \textbf{r} \leftarrow BCL(\delta, b) } [|  \overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }(D_1, f; \textbf{r})-y|]\\
+& = \sum \limits_{k = - \infty}^{\infty} \Pr \limits_{ \textbf{r} \leftarrow  BCL (\delta, b) } [  \overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }(D_1, f; \textbf{r}) = \frac{k}{ \varepsilon}] \cdot | \frac{k}{ \varepsilon} - y|.\\
 \end{align*}
 
 
-Let $\textbf{a}$ be the longest common  prefix of all strings in $\textmd{STR } (\bar{I}_y(k), n)$. Denote $I_0  \overset{def}{=} \textmd{SUFFIX} (\textbf{a}0, n) \cap \textmd{STR} (\bar{I}_y(k), n)$ and $I_1 \overset{def}{=} \textmd{SUFFIX} (\textbf{a}1, n) \cap \textmd{STR} (\bar{I}_y(k), n)$. Thus, $I_0 \cup I_1 =  \textmd{STR} (\bar{I}_y(k), n)$.
+Let $\textbf{a}$ be the longest common  prefix of all strings in $\textmd{STR } (\bar{I}_y(k), \tau(y-1, k/\varepsilon))$. Denote $I_0  \overset{def}{=} \textmd{SUFFIX} (\textbf{a}0, \tau(y-1, k/\varepsilon)) \cap \textmd{STR} (\bar{I}_y(k), \tau(y-1, k/\varepsilon))$ and $I_1 \overset{def}{=} \textmd{SUFFIX} (\textbf{a}1, \tau(y-1, k/\varepsilon)) \cap \textmd{STR} (\bar{I}_y(k),\tau(y-1, k/\varepsilon))$. Thus, $I_0 \cup I_1 =  \textmd{STR} (\bar{I}_y(k),\tau(y-1, k/\varepsilon))$.
 Correspondingly,  we have
-$$ \Pr \limits_{ \textbf{r} \leftarrow BCL(\delta, b, n) } [  \overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }(D, f; \textbf{r}) = \frac{k}{\varepsilon}] \leq ( \frac{1+ \delta}{2})^{|\textbf{a}0 |}  + ( \frac{1+ \delta}{2})^{|\textbf{a}1 |} \leq 2 \cdot ( \frac{1+ \delta}{2})^{  \log ( \frac{1}{ | \bar{I}_y(k)|}  )}.$$
+$$ \Pr \limits_{ \textbf{r} \leftarrow BCL(\delta, b) } [  \overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }(D_1, f; \textbf{r}) = \frac{k}{\varepsilon}] \leq ( \frac{1+ \delta}{2})^{|\textbf{a}0 |}  + ( \frac{1+ \delta}{2})^{|\textbf{a}1 |} \leq 2 \cdot ( \frac{1+ \delta}{2})^{  \log ( \frac{1}{ | \bar{I}_y(k)|}  )}.$$
+
+Similarly, we can conclude that
+$$ \Pr \limits_{ \textbf{r} \leftarrow BCL(\delta, b) } [  \overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }(D_2, f; \textbf{r}) = \frac{k}{\varepsilon}]  \leq 2 \cdot ( \frac{1+ \delta}{2})^{  \log ( \frac{1}{ | \bar{I}_{y-1}(k)|}  )}.$$
 
 
 
@@ -1311,9 +1328,9 @@ Then $ | I_y(k)|  = \frac{1}{2} \cdot  e^{- \frac{1}{2}} \cdot  (e-1) \cdot e^{-
 
 \end{proof}
 
- By Lemma \ref{f-inf},  $ |\bar{I}_y(k)| \leq |I_y(k)| + 2^{-n(k-1,y)} = |I_y(k)| +    \frac{1}{2^b+1}   |I_{y-1}(k)|$.  Hence,
+ By Lemma \ref{f-inf},  $ |\bar{I}_y(k)| \leq |I_y(k)| + 2^{-\tau(k-1,y)} = |I_y(k)| +  \frac{1}{2^b+1}   |I_{y-1}(k)|$.  Hence,
  $$\log ( \frac{1}{ | \bar{I}_y(k)|}  ) \geq  \log \frac{1}{ \frac{1}{2} e^{- \frac{1}{2}} (e-1) (1+ \frac{1}{2^b+1}  ) }  + \log ( e^ {\min \{ | k- \varepsilon y |,   | k- \varepsilon y + \varepsilon | \} } ) \geq  \min \{ | k- \varepsilon y |,   | k- \varepsilon y + \varepsilon | \}  \geq  | k- \varepsilon y | -1.$$
-Therefore,
+Similarly, $ \log ( \frac{1}{ | \bar{I}_{y-1}(k)|}  ) \geq  | k- \varepsilon y | -1.$ Therefore,  
 
 \ignore{
 \begin{align*}
@@ -1348,13 +1365,15 @@ $ \sum \limits_{l= - \infty}^{l_0} l \cdot a^l =  ?$.
 }
 
 \begin{align*}
-&  \sum \limits_{k = - \infty}^{\infty} \Pr \limits_{ \textbf{r} \leftarrow \textsf{BCL} (\delta, b, n) } [  \overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }(D, f; \textbf{r}) = \frac{k}{ \varepsilon}] \cdot | \frac{k}{ \varepsilon} - y | \\
+&  \sum \limits_{k = - \infty}^{\infty} \Pr \limits_{ \textbf{r} \leftarrow \textsf{BCL} (\delta, b) } [  \overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }(D_1, f; \textbf{r}) = \frac{k}{ \varepsilon}] \cdot | \frac{k}{ \varepsilon} - y | \\
 & \leq  \sum \limits_{k = -\infty}^{0}  2 \cdot (\frac{1+ \delta}{2}  )^{ |  \varepsilon y  -k | -1}  \cdot |y- \frac{k}{\varepsilon}| +  \sum \limits_{k = 1}^{ \infty}  2 \cdot (\frac{1+ \delta}{2}  )^{|k- \varepsilon y| -1} \cdot | \frac{k}{ \varepsilon} - y |   \\
 & \leq  \frac{2}{ \varepsilon} \cdot (\frac{1+ \delta}{2}  )^{-1} \cdot [ \sum \limits_{k = 1}^{ \infty}  (\frac{1+ \delta}{2}  )^{k-1} \cdot k +  \sum \limits_{k = -\infty}^{0}  (\frac{1+ \delta}{2}  )^{-k } \cdot (-k+1)    ]\\
 & =   (\frac{1+ \delta}{2}  )^{-1} \cdot \frac{4}{\varepsilon} \cdot \frac{1}{1- ( \frac{1+ \delta}{2}  )^2} = O(\frac{1}{\varepsilon} \cdot \frac{1}{1- \delta}).\\
 \end{align*}
 
-
+Similarly, we get that 
+ 
+$$ \sum \limits_{k = - \infty}^{\infty} \Pr \limits_{ \textbf{r} \leftarrow \textsf{BCL} (\delta, b) } [  \overline{M} ^{    \textsf{CBCLCS} }_{\varepsilon }(D_2, f; \textbf{r}) = \frac{k}{ \varepsilon}] \cdot | \frac{k}{ \varepsilon} - (y-1) |  \leq   O(\frac{1}{\varepsilon} \cdot \frac{1}{1- \delta}).   $$
 
 When $\delta =0$ and $b=0$, the BCL source degenerates into the uniform source.
 
