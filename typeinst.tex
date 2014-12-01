@@ -34,6 +34,8 @@
 
 \newcommand{\wuhao}{\fontsize{8pt}{\baselineskip}\selectfont}
 
+\newcommand\argmax{\operatorname{arg\,max}}
+
 \usepackage{amssymb}
 \setcounter{tocdepth}{3}
 \usepackage{graphicx}
@@ -159,7 +161,7 @@ Unfortunately, if we  nationally expand SV-consistent sampling to the BCL source
 
 \item   Rigorous proofs about differential privacy and accuracy of this kind of mechanism are shown.
 
-\item  While the result of \cite{DY14} implies a {\slshape possible } result about differentially private mechanisms: If there exist $( \mathcal{BCL}(\delta, b), \xi)-$differentially private and $(\mathcal{U}, \rho)$-accurate mechanisms  for the Hammimg weight queries, then $ \rho > \frac{2^{b \cdot \log (1+ \delta) -9}}{\xi}$.  We build {\slshape explicit} such mechanisms and the parameters match the above condition.
+\item  While the result of \cite{DY14} implies a {\slshape possible} result about differentially private mechanisms: If there exist $( \mathcal{BCL}(\delta, b), \xi)-$differentially private and $(\mathcal{U}, \rho)$-accurate mechanisms  for the Hammimg weight queries, then $ \rho > \frac{2^{b \cdot \log (1+ \delta) -9}}{\xi}$.  We build {\slshape explicit} such mechanisms and the parameters match the above condition.
 
 \end{itemize}
 
@@ -193,7 +195,7 @@ extractor $\Ext: \bit^n\rightarrow \bit$ capable of extracting even a {\em singl
 Despite this pessimistic result, ruling out the ``black-box compiler'' from perfect to imperfect (e.g., SV) randomness for {\em all} applications, one may still hope that specific ``non-extractable'' sources, such as SV-sources, might  be sufficient for {\em concrete} applications, such as simulating probabilistic algorithms or cryptography. Indeed, a series of results~\cite{VV85,SV86,CG88,Zuc96,ACRT99} showed that very ``weak'' sources
 (including SV-sources and even much more realistic ``weak'' sources) are sufficient for simulating probabilistic polynomial-time
 algorithms; namely, for problems which do not inherently need randomness, but which could potentially
-be sped up using randomization. Moreover, even in the area of cryptography --- where randomness is {\em essential} (e.g., for key generation) --- it turns out that many ``non-extractable''  sources (again, including SV sources and more) are sufficient for {\em authentication} applications, such as the designs of MACs~\cite{MW97,DKRS06} and even signature schemes~\cite{DOPS04,ACMPS14} (under appropriate hardness assumptions). Intuitively, the reason for the latter ``success story'' is that authentication applications only require that it is hard for the attacker to completely guess (i.e., ``forge'') some long string, so having (min-)entropy in our source should be sufficient to achieve this goal.
+be sped up using randomization. Moreover, even in the area of cryptography --- where randomness is {\em essential} (e.g., for key generation) --- it turns out that many ``non-extractable''  sources (again, including SV sources and more) are sufficient for {\em authentication} applications, such as the designs of MACs~\cite{MW97,DKRS06} and even signature schemes~\cite{DOPS04,ACMPS14} (under appropriate hardness assumptions). Intuitively, the reason for the latter ``success story'' is that authentication applications only require that it is hard for the attacker to completely guess (i.e., ``forge'') a certain long string, so having (min-)entropy in our source should be sufficient to achieve this goal.
 
 Unfortunately, the situation appears to be much less bright when dealing with {\em privacy} applications, such as encryption, commitment, zero-knowledge, and some others. First, McInnes and Pinkas~\cite{MP90} showed that unconditionally secure symmetric encryption cannot be based on SV sources, even if one is restricted to encrypting a single bit. This result was subsequently strengthened by Dodis et al.~\cite{DOPS04}, who showed that SV sources are not sufficient for building even computationally secure encryption (again, even of a single bit), and, in fact, essentially any other cryptographic task involving ``privacy'' (e.g., commitment, zero-knowledge, secret sharing and others). This was again strengthened by Austrin et al.~\cite{ACMPS14}, who showed that the negative results still hold even if the SV source is efficiently samplable.  Bosley and Dodis~\cite{BD07} showed an even more negative result: if a source of randomness $\R$ is ``good enough'' to generate a secret key capable of encrypting $k$ bits, then one can deterministically extract nearly $k$ almost uniform bits from $\R$, suggesting that traditional privacy {\em requires} an ``extractable'' source of randomness.
 
@@ -220,14 +222,14 @@ fact, any accurate and private additive-noise mechanism for a source $R$ implies
 randomness extractor for $R$, essentially collapsing the notion of differential privacy to that of traditional
 privacy, and showing the impossibility of accurate and private additive-noise mechanisms for
 SV sources \cite{DLMV12}.  From another perspective,  an additive-noise mechanism must satisfy $T_1 \cap T_2 = \emptyset$,
-based on which a SV adversary can always succeed in amplifying the ratio $\Pr[\mathbf{r} \in  T_1] / \Pr[\mathbf{r} \in  T_2]$ (see \cite{DLMV12}), or $ | \Pr[\mathbf{r} \in  T_1] -\Pr[\mathbf{r} \in  T_2]  |$ (see \cite{DY14}),
+based on which an SV adversary can always succeed in amplifying the ratio $\Pr[\mathbf{r} \in  T_1] / \Pr[\mathbf{r} \in  T_2]$ (see \cite{DLMV12}), or $ | \Pr[\mathbf{r} \in  T_1] -\Pr[\mathbf{r} \in  T_2]  |$ (see \cite{DY14}),
 where $T_i$ is the set of coins $ \mathbf{r}$ with $M(D, f;  \mathbf{r})=z$.
 
 Dodis et al. \cite{DLMV12} observed a necessary condition, called  consistent sampling (i.e., informally, $|T_1 \cap T_2| \approx |T_1 |  \approx |T_2|$), to  build SV-robust mechanisms.  This property is similar to the concept of ``consistent sampling" \cite{Man94,Hol07}
  with applications in differential privacy \cite{MMP$^+$10}, web search  \cite{BGMZ97} and parallel repetition theorems \cite{Hol07}, among others.
  They also introduced another condition to match the bit-by-bit property of SV sources.  The combination of the above two conditions
 is called SV-consistent sampling (see Definition \ref{SVCS}). They builded a concrete accurate and private Laplace mechanism by using some rounding and arithmetic coding
-techniques.  Such mechanism  is capable to work with all such distributions, provided that the utility $\rho$ is now relaxed to be polynomial of $1/\eps$, whose degree and coefficients depend on $\delta$, but {\em not} on the size of the database $D$.
+techniques.  Such a mechanism  is capable to work with all such distributions, provided that the utility $\rho$ is now relaxed to be polynomial of $1/\eps$, whose degree and coefficients depend on $\delta$, but {\em not} on the size of the database $D$.
 Coupled with the impossibility of traditional privacy with SV sources, this result suggested a qualitative gap between traditional and differential privacy, but left the following open problem.
 
 
@@ -240,14 +242,14 @@ Coupled with the impossibility of traditional privacy with SV sources, this resu
 
 
 Dodis et al. \cite{D01} introduced more realistic  source, called Bias-Control Limited (BCL) source, which  realistically generalizes the SV source of Santha and Vazirani  \cite{SV86} and the bit-fixing source of Lichtenstein, Linial, and Saks \cite{LLS89}.  The BCL source  generates a sequence of bits
- $x_1, x_2, \ldots$, where for $i =1, 2, \ldots$, the value  of $x_i$
-can depend on  $x_1, x_2, \ldots,  x_{i-1}$ in one of the following two ways: (A) $x_i$ is determined by $x_1, \ldots, x_{i-1}$, but this happens for at most $b$ bits, or (B)  $  \frac{1- \delta}{2}  \leq   \Pr[x_i=1 \mid x_1,  x_2, \ldots, x_{i-1}]  \leq \frac{1+\delta}{2}$, where $ 0 \leq \delta < 1$.  In particular, when
+ $x_1, x_2, \ldots, x_n$, where for $i =1, 2, \ldots, n$, the value  of $x_i$
+can depend on  $x_1, x_2, \ldots,  x_{i-1}$ in one of the following two ways: (A) $x_i$ is determined by $x_1, \ldots, x_{i-1}$, but this happens for at most $b$ bits, or (B)  $  \frac{1- \delta}{2}  \leq   \Pr[x_i=1 \mid x_1,  x_2, \ldots, x_{i-1}]  \leq \frac{1+\delta}{2}$, where $ 0 \leq \delta < 1$. (See Definition \ref{DFBCL} for details.)  In particular, when
 $b=0$, it degenerates into the SV source; when $\delta =0$, it yields   the bit-fixing source; when $b=0$ and  $\delta =0$, it corresponds to the
 perfect randomness. If $b \neq 0$ and  $\delta \neq 0$, we say the BCL source is non-trivial.   The BCL source models the problem that each of the bits produced by a
 streaming source is unlikely to be perfectly random: slight errors (due to noise, measurement errors, and imperfections)
 of the source are inevitable,  and  the situation that some of the bits could have non-trivial dependencies on the previous bits (due to internal
 correlations, poor measurement or improper setup), to the point of being completely determined by them.
-Hence, compared with the SV source, BCL source appears much more realistic, especially if the number of interventions $b$ is somewhat moderate.
+Hence, compared with the SV source, the  BCL source appears much more realistic, especially if the number of interventions $b$ is somewhat moderate.
 From our perspective, the BCL source will be especially interesting when we deal with differential privacy. Indeed, since it naturally (and realistically!) relaxes the SV source, for which non-trivial differential privacy is possible, it will be interesting to see whether
 existing results can be expanded by using BCL source.
 However, SV-consistent sampling is useless to BCL source as some strings can't be generated from BCL source, which is crucial to the SV-consistent sampling property. Recently, Dodis and Yao \cite{DY14} have shown an impossibility result for BCL source: when $b \geq  \Omega( \log( \xi \rho )/ \delta)$, it's impossible to achieve  $( \mathcal{BCL}(\delta, b), \xi)$-differentially private and $(\mathcal{U},  \rho)$-accurate mechanism for Hamming weight queries. In other words, if  there exists a  $( \mathcal{BCL}(\delta, b), \xi)$-differentially private and $(\mathcal{U},  \rho)$-accurate mechanism for Hamming weight queries, then $b \leq O(\log( \xi \rho )/ \delta)$.  This result gives us a bit hope to
@@ -301,7 +303,7 @@ Aiming at negative results about differential privacy, Dodis and Yao \cite{DY14}
 \item   We prove that if the BCL source satisfies this property, then the corresponding mechanism is differentially private (see Theorem \ref{CSDP}).
        Even if the BCL source is degenerated into the SV-source, compared with \cite{DLMV12}, our theorem is more intuitive and our proof is much simpler(see Corollary \ref{CSVCSDP} and Theorem 4.4 of \cite{DLMV12}).
 
-\item   We use a new truncation technique in the design of a finite-precision mechanism to satisfy this property (see Step 2 of Section 4.1).
+\item   We use a new truncation technique for the design of a finite-precision mechanisms to satisfy this property (see Step 2 of Section 4.1).
 
 \item  We also give rigorous proofs about differential privacy and accuracy of this kind of mechanism(Theorems \ref{bcl-dp} and \ref{bcl-u}).
 
@@ -378,7 +380,9 @@ restricted to the first $n$ coins $ x_1 x_2  \ldots x_n$. We let $\mathcal{SV}(\
 
 
 \begin{definition}
-(\cite{D01}) {\slshape    Let   $x_1, x_2, \ldots$  be a sequence of Boolean random
+(\cite{D01}) {\slshape
+\label{DFBCL}
+Let   $x_1, x_2, \ldots$  be a sequence of Boolean random
 variables and $ 0 \leq \delta < 1$.   A probability distribution $ X  = x_1 x_2   \ldots $  over $  \{0, 1\}^* $
 is a  $ (\delta, b)$-Bias-Control Limited (BCL) distribution, denoted by $BCL(\delta, b)$,  if for all $i \in \mathbb{Z}^+$ and for every string $s$ of length $ i-1$,  the value  of $x_i$
 can depend on  $x_1, x_2, \ldots,  x_{i-1}$ in one of the following two ways:
@@ -403,7 +407,9 @@ restricted to the first $n$ coins $ x_1 x_2  \ldots x_n$. We let $\mathcal{BCL}(
 
 
 \begin{definition}
-(\cite{D01}) {\slshape  Assume that   $ 0 \leq \delta < 1$.  The $(\delta, b, n)$-Bias-Control Limited (BCL) source   $\mathcal{BCL}(\delta, b, n)$  generates
+(\cite{D01}) {\slshape
+\label{DFBCL}
+  Assume that   $ 0 \leq \delta < 1$.  The $(\delta, b, n)$-Bias-Control Limited (BCL) source   $\mathcal{BCL}(\delta, b, n)$  generates
 $n$ bits $x_1, x_2, \ldots,  x_n$, where for $i =1, 2, \ldots, n$, the value  of $x_i$
 can depend on  $x_1, x_2, \ldots,  x_{i-1}$ in one of the following two ways:
 
@@ -572,7 +578,7 @@ If a  random variable $X$ has this distribution, denote $ X \sim \textsf{Lap}_{\
 \section{ Compact BCL-Consistent Sampling and SV-Consistent Sampling   }
 
 Dodis et al. \cite{DLMV12}  introduced  the  concept of SV-consistent sampling. However, the
-proof of ``SV-consistent sampling implies differential privacy" (see Theorem 4.4 in \cite{DLMV12} for details) is complex. Moreover,  its natural expansion to BCL source is difficult and unknown  to achieve differential privacy, as the proof of Theorem 4.4 in \cite{DLMV12} depends on the fact that the values in $T_2$ (resp.  $T_1$) constitutes an interval, while it may not be the case for $BCL$ sources.
+proof of ``SV-consistent sampling implies differential privacy" (see Theorem 4.4 in \cite{DLMV12} for details) is complex. Moreover,  its natural expansion to BCL source is difficult and unknown  to achieve differential privacy, as the proof of Theorem 4.4 in \cite{DLMV12} depends on the fact that the values in $T_2$ (resp.  $T_1$) constitutes an interval (see Definition \ref{SVCS}), while it may not be the case for $BCL$ sources.
 
 
 In this section, we introduce the  concept  of compact  $(\zeta, c)$-BCL-consistent sampling. When $b =0$, we get the concept of  compact $(\zeta', c)$-SV-consistent sampling.
@@ -580,7 +586,7 @@ Then we observe
 that these concepts are sufficient to design finite-precision differentially private and  accurate mechanisms based on  BCL and SV sources.
 
 
-Consider a mechanism $M$ with randomness space $\{0, 1\}^*$.  Denote $ \widetilde{T}(D_i, f, z)  \overset{def}{=} \{  \mathbf{r} \in \{0, 1\}^* \mid z = M(D_i, f; \mathbf{r}) \}$, where $i \in \{1, 2\}$,  as the sets of all coins such that $M$ outputs $z$ when running on  two neighboring databases  $D_1$ and  $D_2$,   query $f$,  and randomness $\mathbf{r}$.   It should be noted that in our model only $n \overset{def}{=} \tilde{\tau} (D_1, D_2, f, z)$ coins need to be sampled to determine if $M(D_1, f)=z$ and $M(D_2, f)=z$. Therefore, let  $T(D_i, f, z) \overset{def}{=} \{\mathbf{r} \in \{0, 1\}^n \mid z = M(D_i, f; \mathbf{r})\}$ for $i \in \{1, 2\}$,  we can assume that $\widetilde{T}(D_i, f, z) =T(D_i, f, z)$ for $i \in \{1, 2\}$  without loss of generality.
+Consider a mechanism $M$ with randomness space $\{0, 1\}^*$.  Denote $ \widetilde{T}(D_i, f, z)  \overset{def}{=} \{  \mathbf{r} \in \{0, 1\}^* \mid z = M(D_i, f; \mathbf{r}) \}$, where $i \in \{1, 2\}$,  as the set of all coins such that $M$ outputs $z$ when running on  two neighboring databases  $D_1$ and  $D_2$,   query $f$,  and randomness $\mathbf{r}$.   It should be noted that in our model only $n \overset{def}{=} \tilde{\tau} (D_1, D_2, f, z)$ coins need to be sampled to determine if $M(D_1, f)=z$ and $M(D_2, f)=z$. Therefore, let  $T(D_i, f, z) \overset{def}{=} \{\mathbf{r} \in \{0, 1\}^n \mid z = M(D_i, f; \mathbf{r})\}$ for $i \in \{1, 2\}$,  we can assume that $\widetilde{T}(D_i, f, z) =T(D_i, f, z)$ for $i \in \{1, 2\}$  without loss of generality.
 
 
 
@@ -605,8 +611,9 @@ For $m \in \mathbb{Z}^+$ and  a bit sequence $\mathbf{x} =x_1, \ldots,  x_m \in 
 
 
  Now consider two neighboring databases $D_1$ and $D_2$, $f \in \mathcal{F}$, and a possible outcome $z$.
-Denote  $n \overset{def}{=} \tilde{\tau} (D_1, D_2, f, z)$. 
- Let $T_1 \overset{def}{=} T(D_1, f, z)$,  $T_2 \overset{def}{=} T(D_2, f, z)$, and  $$\mathbf{u} \overset{def}{=} argmax \{|\mathbf{u}'|  \mid
+Denote  $n \overset{def}{=} \tilde{\tau} (D_1, D_2, f, z)$.
+ Let $T_1 \overset{def}{=} T(D_1, f, z)$,  $T_2 \overset{def}{=} T(D_2, f, z)$, and  $$\mathbf{u} \overset{def}{=}
+\argmax \{|\mathbf{u}'|  \mid
  \mathbf{u}' \in \{0, 1\}^{ \leq n  } ~and ~ T_1 \cup T_2 \subseteq \textmd{SUFFIX} ( \mathbf{u}', n)\}.$$  Then the ratio is
 $$  \frac{  \Pr \limits_{\mathbf{r} \leftarrow BCL (\delta, b,  n)} [ \mathbf{r} \in T_1    \backslash T_2  ]}{\Pr \limits_{ \mathbf{r} \leftarrow BCL (\delta, b,  n)} [\mathbf{r} \in T_2] } = \frac{\Pr \limits_{\mathbf{r} \leftarrow BCL (\delta, b,  n)} [ \mathbf{r} \in T_1  \backslash T_2 \mid  \mathbf{r} \in \textmd{SUFFIX} ( \mathbf{u} ) ]}{\Pr \limits_{ \mathbf{r} \leftarrow BCL (\delta, b,  n)} [ \mathbf{r} \in T_2  \mid  \mathbf{r} \in \textmd{SUFFIX} ( \mathbf{u})]}.$$ Since SV source and BCL source both generate strings bit by bit,
 the calculation of the  ratio can be simplified.
@@ -623,17 +630,14 @@ Recall that the concepts of consistent sampling and SV-consistent sampling \cite
 if for all potential  outputs $z \in \mathbb{Z}$, all queries $f \in \mathcal{F}$,  all neighboring databases  $D_1, D_2 \in \mathcal{D}$:
 $$ \frac{|T_1 \setminus T_2|}{| T_2|} \leq \zeta,$$
 where $ T_1 \overset{def}{=} T(D_1, f, z)$, $ T_2 \overset{def}{=} T(D_2, f, z) \neq \emptyset.$
-
- }
-
+}
 \end{definition}
 
-\vspace{0.15cm}
 
 \begin{definition}
 \label{SVCS}
- {\slshape  Let $ \tilde{c} > 1$ be a constant and $\zeta > 0$.  We say that a mechanism M is an interval mechanism \cite{DLMV12} if for all queries $f \in \mathcal{F}$, all
-databases $D \in \mathcal{D}$, and all possible outcomes $z \in \mathbb{Z}$, $T \overset{def}{=} T(D,f, z)$, $\{ \sum \limits_{i=1}^n r_i \cdot 2^{n-i} \mid r_1\ldots r_n \in T \}$ contains consecutive integers.
+ {\slshape  Let $ \tilde{c} > 1$ be a constant and $\zeta > 0$.  We say that a mechanism M is an interval mechanism (see \cite{DLMV12}) if for all queries $f \in \mathcal{F}$, all
+databases $D \in \mathcal{D}$, and all possible outcomes $z \in \mathbb{Z}$, $T \overset{def}{=} T(D,f, z)$, the set $\{ \sum \limits_{i=1}^n r_i \cdot 2^{n-i} \mid r_1\ldots r_n \in T \}$ contains consecutive integers.
  An {\slshape \underline{interval}} mechanism has $(\zeta, \tilde{c})$-SV-consistent sampling if it has $\zeta$-consistent sampling and for all queries $f \in \mathcal{F}$, all neighboring
 databases $D_1, D_2 \in \mathcal{D}$, and all possible outcomes $z \in \mathbb{Z}$, which define $T_1, T_2$ and $\mathbf{u}$ as above,  we have $
 \frac{|\textmd{SUFFIX} ( \mathbf{u}, n)  | }{|T_1 \cup T_2|} \leq \tilde{c}.$
@@ -642,12 +646,7 @@ databases $D_1, D_2 \in \mathcal{D}$, and all possible outcomes $z \in \mathbb{Z
 \end{definition}
 
 
-
-
-
-\vspace{0.15cm}
-
-It should  be noted that when $b \neq 0$,  $\mathcal{BCL}(\delta, b, n)$  can't generate all $n$-bit strings. The corresponding mechanism can't be an interval mechanism.  Though Dodis et al.  \cite{DLMV12} proposed that if M has $(\zeta, \tilde{c})$-SV-consistent sampling, then   M is $(\mathcal{SV}(\delta), \xi)$-differentially private. In that proof, the ``interval'' property is a basic condition, we can't follow that thought.
+It should  be noted that when $b \neq 0$,  $\mathcal{BCL}(\delta, b, n)$  can't generate all $n$-bit strings. The corresponding mechanism can't be an interval mechanism.  Though Dodis et al.  \cite{DLMV12} proposed that if $M$ has $(\zeta, \tilde{c})$-SV-consistent sampling, then   $M$  is $(\mathcal{SV}(\delta), \xi)$-differentially private. In that proof, the ``interval'' property is a basic condition, we can't follow that thought.
 We resort to a new property instead.
 
 
@@ -661,7 +660,7 @@ We resort to a new property instead.
 \begin{definition}
  \label{BCLCSCON}
  {\slshape  Let $c$ be a constant and $\zeta > 0$. A mechanism is a compact  $(\zeta, c)$-BCL-consistent sampling mechanism  if it has $\zeta$-consistent sampling and for all queries $f \in \mathcal{F}$, all neighboring
-databases $D_1$, $D_2 \in \mathcal{D}$, and all possible outcomes $z \in \mathbb{Z}$, which define $T_1, T_2$ and $\mathbf{u}$ as above,  we have $ n- |\mathbf{u}| \leq c.$  This kind of mechanism is denoted as $ \overline{M}^{\textsf{CBCLCS} }_{(\zeta) }$ for simplicity.     }
+databases $D_1$, $D_2 \in \mathcal{D}$, and all possible outcomes $z \in \mathbb{Z}$, which define $T_1, T_2$ and $\mathbf{u}$ as above,  we have $ n- |\mathbf{u}| \leq c.$   }
 
 \end{definition}
 
@@ -672,7 +671,7 @@ databases $D_1$, $D_2 \in \mathcal{D}$, and all possible outcomes $z \in \mathbb
 \begin{definition}
 
   {\slshape  Let $c$ be a constant and $\zeta' > 0$. A mechanism is  a compact $(\zeta', c)$-SV-consistent sampling mechanism  if it has $\zeta'$-consistent sampling and for all queries $f \in \mathcal{F}$, all neighboring
-databases $D_1$, $D_2 \in \mathcal{D}$, and all possible outcomes $z \in \mathbb{Z}$, which define $T_1, T_2$ and $\mathbf{u}$ as above,  we have $ n- |\mathbf{u}| \leq c.$  This kind of mechanism is denoted as $ \overline{M}^{ \textsf{CSVCS} }_{(\zeta')}$ for simplicity.
+databases $D_1$, $D_2 \in \mathcal{D}$, and all possible outcomes $z \in \mathbb{Z}$, which define $T_1, T_2$ and $\mathbf{u}$ as above,  we have $ n- |\mathbf{u}| \leq c.$
  }
 \end{definition}
 
@@ -711,10 +710,10 @@ Assume that $n- |\mathbf{u}| \leq c$, then
  {\wuhao{
 \begin{align*}
 & \frac{  \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [ \mathbf{r} \in T_1    \backslash T_2  ] }{\Pr \limits_{ \mathbf{r} \leftarrow BCL(\delta, b, n)} [\mathbf{r} \in T_2] } = \frac{\Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [ \mathbf{r} \in T_1  \backslash T_2 \mid  \mathbf{r} \in \textmd{SUFFIX} ( \mathbf{u} ) ]}{\Pr \limits_{ \mathbf{r} \leftarrow BCL(\delta, b, n)} [ \mathbf{r} \in T_2  \mid  \mathbf{r} \in \textmd{SUFFIX} ( \mathbf{u} )] }\\&
-  = \frac{ \sum \limits_{ \mathbf{r}' \in  T_1  \backslash T_2 }  \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [\mathbf{r} = \mathbf{r}' | \mathbf{r}' \in \textmd{SUFFIX} ( \mathbf{u}) ] }{    \sum \limits_{ \mathbf{r}' \in  T_2 }  \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [\mathbf{r}  = \mathbf{r}' | \mathbf{r}' \in \textmd{SUFFIX} ( \mathbf{u}) ]}\\&
-  =  \frac{   \sum \limits_{ \mathbf{r}' \in  T_1  \backslash T_2 }   \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [r_{ |\mathbf{u}|+1} = r'_{ |\mathbf{u}|+1} | r_1 \ldots r_{|\mathbf{u}|    } =\mathbf{u}   ]  \ldots
+  = \frac{ \sum \limits_{ \mathbf{r}' \in  T_1  \backslash T_2 }  \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [\mathbf{r} = \mathbf{r}' \mid \mathbf{r}' \in \textmd{SUFFIX} ( \mathbf{u}) ] }{    \sum \limits_{ \mathbf{r}' \in  T_2 }  \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [\mathbf{r}  = \mathbf{r}' \mid \mathbf{r}' \in \textmd{SUFFIX} ( \mathbf{u}) ]}\\&
+  =  \frac{   \sum \limits_{ \mathbf{r}' \in  T_1  \backslash T_2 }   \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [r_{ |\mathbf{u}|+1} = r'_{ |\mathbf{u}|+1} \mid r_1 \ldots r_{|\mathbf{u}|    } =\mathbf{u}   ]  \ldots
    \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)}  [r_n =r'_n  \mid r_1 \ldots r_{n-1} = \mathbf{u} r'_{ |\mathbf{u}|+1} \ldots r'_{n-1} ] }  { \sum \limits_{ \mathbf{r}' \in T_2 }
-  \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [r_{ |\mathbf{u}|+1} = r'_{ |\mathbf{u}|+1} | r_1 \ldots r_{|\mathbf{u}|    } =\mathbf{u}] \ldots  \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [r_n =r'_n  |  r_1 \ldots r_{n-1} = \mathbf{u} r'_{ |\mathbf{u}|+1} \ldots r'_{n-1} ]  }\\&
+  \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [r_{ |\mathbf{u}|+1} = r'_{ |\mathbf{u}|+1} \mid r_1 \ldots r_{|\mathbf{u}|    } =\mathbf{u}] \ldots  \Pr \limits_{\mathbf{r} \leftarrow BCL(\delta, b, n)} [r_n =r'_n  \mid  r_1 \ldots r_{n-1} = \mathbf{u} r'_{ |\mathbf{u}|+1} \ldots r'_{n-1} ]  }\\&
   \leq \frac{  [ \frac{1}{2}(1+ \delta)]^{n- | \mathbf{u}  |-b}  }{ [ \frac{1}{2}(1- \delta)]^{n- | \mathbf{u}  |} }  \cdot \frac{|T_1 \backslash T_2|}{|T_2|}
   \leq (\frac{1+ \delta }{1- \delta})^{n- | \mathbf{u}  | } \cdot  [\frac{1}{2}(1+ \delta)]^{-b}    \cdot  \zeta \leq  (\frac{1+ \delta }{1- \delta})^{c} \cdot  [\frac{1}{2}(1+ \delta)]^{-b}    \cdot  \zeta
 \end{align*}
